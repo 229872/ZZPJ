@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: zzpjdb
+      POSTGRES_USER: zzpj
+      POSTGRES_PASSWORD: zzpjpassword
+    ports:
+      - 5432:5432
+    volumes:
+      - pg:/var/lib/postgresql/data
+#  test:
+## FIXME
+#    image: postgres:14
+#    environment:
+#      POSTGRES_DB: zzpjdb
+#      POSTGRES_USER: zzpj
+#      POSTGRES_PASSWORD: zzpjpassword
+#    ports:
+#      - 5554:5432
+#    volumes:
+#      - pgTest:/var/lib/postgresql/data
+volumes:
+  pg:
+#  pgTest:
