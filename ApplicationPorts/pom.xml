@@ -10,5 +10,18 @@
     </parent>
 
     <artifactId>ApplicationPorts</artifactId>
+    <name>ApplicationPorts</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>DomainModel</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
