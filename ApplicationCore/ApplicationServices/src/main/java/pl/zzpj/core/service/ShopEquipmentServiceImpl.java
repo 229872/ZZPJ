@@ -1,21 +1,34 @@
 package pl.zzpj.core.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.ApplicationScope;
-import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
 import pl.zzpj.core.domain.model.shopModel.ShopEquipment;
 import pl.zzpj.ports.command.ShopEquipment.ShopEquipmentCommandPort;
 import pl.zzpj.ports.command.ShopEquipment.ShopEquipmentCommandService;
 import pl.zzpj.ports.query.ShopEquipment.ShopEquipmentQueryPort;
 import pl.zzpj.ports.query.ShopEquipment.ShopEquipmentQueryService;
 
+
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @ApplicationScope
 @Service
-public class ShopEquipmentService implements ShopEquipmentCommandService, ShopEquipmentQueryService {
+public class ShopEquipmentServiceImpl implements ShopEquipmentCommandService, ShopEquipmentQueryService {
+
+
+    private final ShopEquipmentCommandPort commandPort;
+
+    private final ShopEquipmentQueryPort queryPort;
+
+    @Autowired
+    public ShopEquipmentServiceImpl(ShopEquipmentCommandPort commandPort, ShopEquipmentQueryPort queryPort) {
+        this.commandPort = commandPort;
+
+        this.queryPort = queryPort;
+    }
+
     @Override
     public ShopEquipment addEquipment(ShopEquipment equipment) {
         return null;

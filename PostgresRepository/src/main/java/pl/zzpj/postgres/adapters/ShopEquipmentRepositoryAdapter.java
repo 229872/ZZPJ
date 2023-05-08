@@ -3,6 +3,8 @@ package pl.zzpj.postgres.adapters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.RequestScope;
 import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
 import pl.zzpj.core.domain.model.shopModel.ShopEquipment;
 import pl.zzpj.ports.command.ShopEquipment.ShopEquipmentCommandPort;
@@ -13,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@RequestScope
 @Component
 public class ShopEquipmentRepositoryAdapter implements ShopEquipmentCommandPort, ShopEquipmentQueryPort {
 

@@ -16,6 +16,7 @@
 
 
     <dependencies>
+
         <dependency>
             <groupId>pl.lodz.p.edu.zzpj</groupId>
             <artifactId>ApplicationPorts</artifactId>
