@@ -1,28 +1,28 @@
 package pl.zzpj.core.domain.model.shopModel;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ShopTire extends ShopEquipment{
 
     private String size;
 
-    private int width;
+    private Long maximumSpeed;
 
-    private int diameter;
+    private Long maximumWeight;
+
+    private LocalDateTime productionDate;
 
     private TireSeason season;
 
-
-    public void update(ShopTire tire) {
-        this.name = tire.getName();
-        this.description = tire.getDescription();
-        this.cost = tire.getCost();
-        this.size = tire.getSize();
-        this.width = tire.getWidth();
-        this.diameter = tire.getDiameter();
-        this.season = tire.getSeason();
-    }
 }

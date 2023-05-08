@@ -1,11 +1,11 @@
-package pl.zzpj.ports.command;
+package pl.zzpj.ports.command.ShopEquipment;
 
 import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
 import pl.zzpj.core.domain.model.shopModel.ShopEquipment;
 
 import java.util.UUID;
 
-public interface ShopEquipmentCommandServicePort { //todo exceptions?
+public interface ShopEquipmentCommandPort { //todo exceptions?
 
     ShopEquipment add(ShopEquipment equipment);
 

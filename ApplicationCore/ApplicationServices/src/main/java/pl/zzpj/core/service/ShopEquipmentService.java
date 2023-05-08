@@ -4,39 +4,46 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.ApplicationScope;
 import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
 import pl.zzpj.core.domain.model.shopModel.ShopEquipment;
-import pl.zzpj.ports.command.ShopEquipmentCommandServicePort;
-import pl.zzpj.ports.query.ShopEquipmentQueryServicePort;
+import pl.zzpj.ports.command.ShopEquipment.ShopEquipmentCommandPort;
+import pl.zzpj.ports.command.ShopEquipment.ShopEquipmentCommandService;
+import pl.zzpj.ports.query.ShopEquipment.ShopEquipmentQueryPort;
+import pl.zzpj.ports.query.ShopEquipment.ShopEquipmentQueryService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @ApplicationScope
 @Service
-public class ShopEquipmentService implements ShopEquipmentCommandServicePort, ShopEquipmentQueryServicePort { //TODO
-
-
-    public ShopEquipment add(ShopEquipment equipment) {
-        return null;
-    }
-
-
-    public ShopEquipment update(UUID id, ShopEquipment equipment) throws EquipmentNotFoundServiceException {
+public class ShopEquipmentService implements ShopEquipmentCommandService, ShopEquipmentQueryService {
+    @Override
+    public ShopEquipment addEquipment(ShopEquipment equipment) {
         return null;
     }
 
     @Override
-    public void remove(ShopEquipment id) {
-
-    }
-
-
-    @Override
-    public List<ShopEquipment> getAll() {
+    public ShopEquipment updateEquipment(UUID id, ShopEquipment equipment) {
         return null;
     }
 
     @Override
-    public ShopEquipment get(UUID id) throws EquipmentNotFoundServiceException {
+    public void removeEquipment(UUID id) {
+
+    }
+
+    @Override
+    public List<ShopEquipment> getAllEquipment() {
         return null;
     }
+
+    @Override
+    public ShopEquipment getEquipmentById(UUID id) {
+        return null;
+    }
+
+
+    //TODO
+
+
+
 }

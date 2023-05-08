@@ -1,18 +1,16 @@
 package pl.zzpj.core.domain.model.shopModel;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 import pl.zzpj.core.domain.model.AbstractDataModel;
 
 import java.util.UUID;
 
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
 @Data
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class ShopEquipment extends AbstractDataModel {
 
     protected String name;
@@ -21,8 +19,10 @@ public abstract class ShopEquipment extends AbstractDataModel {
 
     protected double cost;
 
+    protected boolean archive;
+
     protected ShopEquipment(UUID uuid, String name, String description, double cost) {
-        super();
+        super(uuid);
         this.name = name;
         this.description = description;
         this.cost = cost;

@@ -10,16 +10,14 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Version;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.UUID;
 
-@MappedSuperclass
 @Entity
+@MappedSuperclass
 @NoArgsConstructor
 public class AbstractEntity implements Serializable {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

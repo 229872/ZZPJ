@@ -15,5 +15,7 @@ public abstract class AbstractDataModel implements Serializable {
     @Getter
     private UUID uuid;
 
-    private LocalDateTime addDate;
+    public AbstractDataModel(UUID uuid) {
+        this.uuid = uuid;
+    }
 }

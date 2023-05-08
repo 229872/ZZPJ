@@ -29,5 +29,10 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>ApplicationPorts</artifactId>
+        </dependency>
+
     </dependencies>
 </project>
