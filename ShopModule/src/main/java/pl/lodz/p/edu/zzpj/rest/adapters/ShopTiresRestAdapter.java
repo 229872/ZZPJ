@@ -38,12 +38,12 @@ public class ShopTiresRestAdapter implements ShopTiresCommandRest, ShopTiresQuer
 
 
     @Override
-    public List<ShopTireOutputDto> getAllShopTires() {
+    public List<ShopTireOutputDto> getAllEquipment() {
         return null;
     }
 
     @Override
-    public ShopTireOutputDto getTireById(UUID uuid) {
+    public ShopTireOutputDto getEquipmentById(UUID uuid) {
         return null;
     }
 

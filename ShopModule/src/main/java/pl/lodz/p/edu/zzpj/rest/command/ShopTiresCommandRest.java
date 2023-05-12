@@ -7,7 +7,7 @@ import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Output.ShopTireOutputDto;
 
 import java.util.UUID;
 
-public interface ShopTiresCommandRest {
+public interface ShopTiresCommandRest extends ShopEquipmentCommandRest<ShopTireInputDto, ShopTireOutputDto> {
 
     //Fixme Think about it
     ShopTireOutputDto addEquipment(ShopTireInputDto dto);

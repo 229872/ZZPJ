@@ -1,0 +1,14 @@
+package pl.lodz.p.edu.zzpj.rest.command;
+
+import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Input.ShopEquipmentInputDto;
+import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Output.ShopEquipmentOutputDto;
+
+import java.util.UUID;
+
+public interface ShopEquipmentCommandRest<T extends ShopEquipmentInputDto, U extends ShopEquipmentOutputDto> {
+    U addEquipment(T dto);
+
+    U updateEquipment(UUID id, T dto);
+
+    void removeEquipment(UUID id);
+}
