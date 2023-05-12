@@ -32,9 +32,10 @@
 	<modules>
 		<module>ApplicationCore</module>
 		<module>ApplicationPorts</module>
-		<module>RestControllers</module>
-        <module>PostgresRepository</module>
-    </modules>
+		<module>StartApplication</module>
+		<module>ShopModule</module>
+
+	</modules>
 
 	<properties>
 		<java.version>17</java.version>
