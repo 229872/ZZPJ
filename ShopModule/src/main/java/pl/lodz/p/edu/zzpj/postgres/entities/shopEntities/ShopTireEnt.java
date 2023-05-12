@@ -3,15 +3,15 @@ package pl.lodz.p.edu.zzpj.postgres.entities.shopEntities;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
@@ -20,15 +20,29 @@ import java.time.LocalDateTime;
 public class ShopTireEnt extends ShopEquipmentEnt {
 
     @Column
+    @NotBlank
     private String size;
 
     @Column
+    @Positive
     private Long maximumSpeed;
 
     @Column
+    @Positive
     private Long maximumWeight;
 
     @Column
-    private LocalDateTime productionDate;
+    @DateTimeFormat
+    private LocalDateTime productionDate; //todo date mapper?
 
+    @Builder(builderMethodName = "toDataBuilder")
+    public ShopTireEnt(String name, String description,
+                       double cost, String size, Long maximumSpeed,
+                       Long maximumWeight, LocalDateTime productionDate) {
+        super(name, description, cost);
+        this.size = size;
+        this.maximumSpeed = maximumSpeed;
+        this.maximumWeight = maximumWeight;
+        this.productionDate = productionDate;
+    }
 }

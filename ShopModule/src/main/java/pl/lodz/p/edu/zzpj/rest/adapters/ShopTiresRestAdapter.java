@@ -3,12 +3,13 @@ package pl.lodz.p.edu.zzpj.rest.adapters;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.lodz.p.edu.zzpj.rest.adapters.mappers.shopEquipment.ShopTireFromDomainToDtoMapper;
-import pl.lodz.p.edu.zzpj.rest.adapters.mappers.shopEquipment.ShopTireFromInputDtoToDomainMapper;
+import pl.lodz.p.edu.zzpj.rest.adapters.mappers.shopTire.ShopTireFromDomainToDtoMapper;
+import pl.lodz.p.edu.zzpj.rest.adapters.mappers.shopTire.ShopTireFromInputDtoToDomainMapper;
 import pl.lodz.p.edu.zzpj.rest.command.ShopTiresCommandRest;
 import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Input.ShopTireInputDto;
 import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Output.ShopTireOutputDto;
 import pl.lodz.p.edu.zzpj.rest.query.ShopTiresQueryRest;
+import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
 import pl.zzpj.ports.command.ShopEquipment.ShopTiresCommandService;
 import pl.zzpj.ports.query.ShopEquipment.ShopTiresQueryService;
 
@@ -43,7 +44,7 @@ public class ShopTiresRestAdapter implements ShopTiresCommandRest, ShopTiresQuer
     }
 
     @Override
-    public ShopTireOutputDto getEquipmentById(UUID uuid) {
+    public ShopTireOutputDto getEquipmentById(UUID uuid) throws EquipmentNotFoundServiceException {
         return fromDomainMapper.convertDomainModelToTireOutputDto(queryService.getEquipmentById(uuid));
     }
 
@@ -54,7 +55,7 @@ public class ShopTiresRestAdapter implements ShopTiresCommandRest, ShopTiresQuer
     }
 
     @Override
-    public ShopTireOutputDto updateEquipment(UUID id, ShopTireInputDto dto) {
+    public ShopTireOutputDto updateEquipment(UUID id, ShopTireInputDto dto) throws EquipmentNotFoundServiceException {
         return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
                 updateEquipment(id, fromInputDtoMapper.convertTireInputDtoToDomainModel(dto)));
     }

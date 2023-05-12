@@ -1,10 +1,6 @@
 package pl.zzpj.core.domain.model.shopModel;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -13,7 +9,7 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShopTire extends ShopEquipment{
+public class ShopTire extends ShopEquipment {
 
     private String size;
 
@@ -34,7 +30,7 @@ public class ShopTire extends ShopEquipment{
         this.productionDate = productionDate;
     }
 
-    @Builder(builderMethodName = "fromDomainBuilder")
+    @Builder(builderMethodName = "fromDataBuilder")
     public ShopTire(UUID uuid, String name, String description,
                     double cost, String size, Long maximumSpeed,
                     Long maximumWeight, LocalDateTime productionDate) {

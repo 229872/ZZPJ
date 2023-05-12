@@ -1,0 +1,19 @@
+package pl.lodz.p.edu.zzpj.postgres.adapters.mappers.shopTire;
+
+import pl.lodz.p.edu.zzpj.postgres.entities.shopEntities.ShopTireEnt;
+import pl.zzpj.core.domain.model.shopModel.ShopTire;
+
+public class ShopTireFromDataToDomainMapper {
+    public ShopTire convertTireEntToDomainModel(ShopTireEnt tireEnt) {
+        return ShopTire.fromDataBuilder()
+                .uuid(tireEnt.getId())
+                .name(tireEnt.getName())
+                .description(tireEnt.getDescription())
+                .cost(tireEnt.getCost()) //Cost as another entity?
+                .size(tireEnt.getSize())
+                .maximumSpeed(tireEnt.getMaximumSpeed())
+                .maximumWeight(tireEnt.getMaximumWeight())
+                .productionDate(tireEnt.getProductionDate()).build();
+    }
+
+}
