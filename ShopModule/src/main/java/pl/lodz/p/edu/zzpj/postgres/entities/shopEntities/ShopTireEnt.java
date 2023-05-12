@@ -31,6 +31,4 @@ public class ShopTireEnt extends ShopEquipmentEnt {
     @Column
     private LocalDateTime productionDate;
 
-    @Column
-    private TireSeasonEntity season;
 }

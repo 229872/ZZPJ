@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>RestControllers</artifactId>
+    <artifactId>StartApplication</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>

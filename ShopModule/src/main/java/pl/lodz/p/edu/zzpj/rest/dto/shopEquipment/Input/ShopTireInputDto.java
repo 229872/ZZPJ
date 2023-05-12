@@ -3,7 +3,6 @@ package pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Input;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.TireSeason;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +17,4 @@ public class ShopTireInputDto extends ShopEquipmentInputDto {
     private Long maximumWeight;
 
     private LocalDateTime productionDate;
-
-    private TireSeason season;
 }

@@ -6,8 +6,9 @@ import org.springframework.web.context.annotation.RequestScope;
 import pl.lodz.p.edu.zzpj.postgres.repository.ShopEquipmentRepository;
 import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
 import pl.zzpj.core.domain.model.shopModel.ShopEquipment;
-import pl.zzpj.ports.command.ShopEquipment.ShopEquipmentCommandPort;
-import pl.zzpj.ports.query.ShopEquipment.ShopEquipmentQueryPort;
+import pl.zzpj.core.domain.model.shopModel.ShopTire;
+import pl.zzpj.ports.command.ShopEquipment.ShopTiresCommandPort;
+import pl.zzpj.ports.query.ShopEquipment.ShopTiresQueryPort;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,37 +16,37 @@ import java.util.UUID;
 
 @RequestScope
 @Component
-public class ShopEquipmentRepositoryAdapter implements ShopEquipmentCommandPort, ShopEquipmentQueryPort {
+public class ShopTiresRepositoryAdapter implements ShopTiresCommandPort, ShopTiresQueryPort {
 
     private ShopEquipmentRepository repository;
 
     @Autowired
-    public ShopEquipmentRepositoryAdapter(ShopEquipmentRepository repository) {
+    public ShopTiresRepositoryAdapter(ShopEquipmentRepository repository) {
         this.repository = repository;
     }
 
     @Override
-    public ShopEquipment add(ShopEquipment equipment) {
+    public ShopTire add(ShopTire equipment) {
         return null;
     }
 
     @Override
-    public ShopEquipment update(UUID id, ShopEquipment equipment) throws EquipmentNotFoundServiceException {
+    public ShopTire update(UUID id, ShopTire tire) throws EquipmentNotFoundServiceException {
         return null;
     }
 
     @Override
-    public void remove(ShopEquipment id) {
+    public void remove(UUID id) {
 
     }
 
     @Override
-    public List<ShopEquipment> getAllEquipment() {
+    public List<ShopTire> getAllEquipment() {
         return null;
     }
 
     @Override
-    public Optional<ShopEquipment> getById(UUID id) throws EquipmentNotFoundServiceException {
-        return Optional.empty();
+    public ShopTire getById(UUID id) throws EquipmentNotFoundServiceException {
+        return null;
     }
 }

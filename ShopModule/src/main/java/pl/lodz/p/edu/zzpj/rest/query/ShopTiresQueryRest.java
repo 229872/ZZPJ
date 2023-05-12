@@ -6,11 +6,9 @@ import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Output.ShopTireOutputDto;
 import java.util.List;
 import java.util.UUID;
 
-public interface ShopEquipmentQueryRest {
+public interface ShopTiresQueryRest {
 
-    List<ShopEquipmentOutputDto> getAllShopEquipment();
-
-    List<ShopTireOutputDto> getAllTires();
+    List<ShopTireOutputDto> getAllShopTires();
 
     ShopEquipmentOutputDto getTireById(UUID uuid);
 }

@@ -5,10 +5,12 @@ import pl.zzpj.core.domain.model.shopModel.ShopTire;
 
 import java.util.UUID;
 
-public interface ShopEquipmentCommandService<T extends ShopEquipment> {
-    T addEquipment(T o); //todo throws
+public interface ShopTiresCommandService extends ShopEquipmentCommandService<ShopTire> {
 
-    T updateEquipment(UUID id, T o); //todo throws
+    ShopTire addEquipment(ShopTire equipment); //todo throws
+
+    ShopTire updateEquipment(UUID id, ShopTire equipment); //todo throws
 
     void removeEquipment(UUID id); //todo
+
 }
