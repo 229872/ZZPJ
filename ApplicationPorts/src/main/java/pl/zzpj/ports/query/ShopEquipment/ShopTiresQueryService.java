@@ -1,5 +1,6 @@
 package pl.zzpj.ports.query.ShopEquipment;
 
+import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
 import pl.zzpj.core.domain.model.shopModel.ShopTire;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface ShopTiresQueryService extends ShopEquipmentQueryService<ShopTir
 
     List<ShopTire> getAllEquipment();
 
-    ShopTire getEquipmentById(UUID id); //todo throws
+    ShopTire getEquipmentById(UUID id) throws EquipmentNotFoundServiceException; //todo throws
 
 //    List<ShopEquipment> getAllEquipmentByType()
 

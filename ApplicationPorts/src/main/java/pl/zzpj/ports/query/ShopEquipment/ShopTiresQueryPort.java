@@ -4,14 +4,13 @@ import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceExcep
 import pl.zzpj.core.domain.model.shopModel.ShopTire;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-public interface ShopTiresQueryPort extends ShopEquipmentQueryPort<ShopTire>  {
+public interface ShopTiresQueryPort extends ShopEquipmentQueryPort<ShopTire> {
 
     public List<ShopTire> getAllEquipment();
 
-    public ShopTire getById(UUID id) throws EquipmentNotFoundServiceException;
+    public ShopTire getEquipmentById(UUID id) throws EquipmentNotFoundServiceException;
 
     //todo some more?
 }

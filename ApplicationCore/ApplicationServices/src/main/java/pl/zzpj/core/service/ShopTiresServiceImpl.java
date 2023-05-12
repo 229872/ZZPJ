@@ -3,13 +3,12 @@ package pl.zzpj.core.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.ApplicationScope;
-import pl.zzpj.core.domain.model.shopModel.ShopEquipment;
+import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
 import pl.zzpj.core.domain.model.shopModel.ShopTire;
 import pl.zzpj.ports.command.ShopEquipment.ShopTiresCommandPort;
 import pl.zzpj.ports.command.ShopEquipment.ShopTiresCommandService;
 import pl.zzpj.ports.query.ShopEquipment.ShopTiresQueryPort;
 import pl.zzpj.ports.query.ShopEquipment.ShopTiresQueryService;
-
 
 import java.util.List;
 import java.util.UUID;
@@ -30,32 +29,31 @@ public class ShopTiresServiceImpl implements ShopTiresCommandService, ShopTiresQ
 
     @Override
     public ShopTire addEquipment(ShopTire tire) {
-        return null;
+        return commandPort.add(tire);
     }
 
     @Override
-    public ShopTire updateEquipment(UUID id, ShopTire tire) {
-        return null;
+    public ShopTire updateEquipment(UUID id, ShopTire tire) throws EquipmentNotFoundServiceException {
+        return commandPort.update(id, tire);
     }
 
     @Override
-    public void removeEquipment(UUID id) {
-
+    public void removeEquipment(UUID id) { //else throws?
+        commandPort.remove(id);
     }
 
     @Override
     public List<ShopTire> getAllEquipment() {
-        return null;
+        return queryPort.getAllEquipment();
     }
 
     @Override
-    public ShopTire getEquipmentById(UUID id) {
-        return null;
+    public ShopTire getEquipmentById(UUID id) throws EquipmentNotFoundServiceException {
+        return queryPort.getEquipmentById(id);
     }
 
 
     //TODO
-
 
 
 }
