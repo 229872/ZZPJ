@@ -17,18 +17,18 @@ public abstract class ShopEquipment extends AbstractDataModel {
 
     protected String description;
 
-    protected double cost;
+    protected Double cost;
 
-    protected boolean archive;
+    protected Boolean archive;
 
-    protected ShopEquipment(UUID uuid, long version, String name, String description, double cost) {
+    protected ShopEquipment(UUID uuid, long version, String name, String description, Double cost) {
         super(uuid, version);
         this.name = name;
         this.description = description;
         this.cost = cost;
     }
 
-    protected ShopEquipment(String name, String description, double cost) {
+    protected ShopEquipment(String name, String description, Double cost) {
         super();
         this.name = name;
         this.description = description;

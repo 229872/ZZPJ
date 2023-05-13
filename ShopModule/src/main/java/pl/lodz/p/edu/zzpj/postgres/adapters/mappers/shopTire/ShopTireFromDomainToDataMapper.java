@@ -1,8 +1,12 @@
 package pl.lodz.p.edu.zzpj.postgres.adapters.mappers.shopTire;
 
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 import pl.lodz.p.edu.zzpj.postgres.entities.shopEntities.ShopTireEnt;
 import pl.zzpj.core.domain.model.shopModel.ShopTire;
 
+@Component
+@NoArgsConstructor
 public class ShopTireFromDomainToDataMapper {
     public ShopTireEnt convertDomainModelToDataRepository(ShopTire shopTire) {
         return ShopTireEnt.toDataBuilder()

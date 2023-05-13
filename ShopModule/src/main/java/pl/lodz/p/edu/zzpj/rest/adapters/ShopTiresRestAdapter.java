@@ -6,7 +6,8 @@ import org.springframework.stereotype.Component;
 import pl.lodz.p.edu.zzpj.rest.adapters.mappers.shopTire.ShopTireFromDomainToDtoMapper;
 import pl.lodz.p.edu.zzpj.rest.adapters.mappers.shopTire.ShopTireFromInputDtoToDomainMapper;
 import pl.lodz.p.edu.zzpj.rest.command.ShopTiresCommandRest;
-import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Input.ShopTireInputDto;
+import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Input.ShopTireCreateInputDto;
+import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Input.ShopTireUpdateInputDto;
 import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Output.ShopTireOutputDto;
 import pl.lodz.p.edu.zzpj.rest.query.ShopTiresQueryRest;
 import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
@@ -49,15 +50,16 @@ public class ShopTiresRestAdapter implements ShopTiresCommandRest, ShopTiresQuer
     }
 
     @Override
-    public ShopTireOutputDto addEquipment(ShopTireInputDto dto) {
+    public ShopTireOutputDto addEquipment(ShopTireCreateInputDto dto) {
         return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
-                addEquipment(fromInputDtoMapper.convertTireInputDtoToDomainModel(dto)));
+                addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto)));
     }
 
     @Override
-    public ShopTireOutputDto updateEquipment(UUID id, ShopTireInputDto dto) throws EquipmentNotFoundServiceException {
+    public ShopTireOutputDto updateEquipment(UUID id, ShopTireUpdateInputDto dto)
+            throws EquipmentNotFoundServiceException {
         return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
-                updateEquipment(id, fromInputDtoMapper.convertTireInputDtoToDomainModel(dto)));
+                updateEquipment(id, fromInputDtoMapper.convertTireInputUpdateDtoToDomainModel(dto)));
     }
 
     @Override

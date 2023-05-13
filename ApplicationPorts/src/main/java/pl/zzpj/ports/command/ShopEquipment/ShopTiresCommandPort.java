@@ -1,10 +1,12 @@
 package pl.zzpj.ports.command.ShopEquipment;
 
+import org.springframework.stereotype.Component;
 import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
 import pl.zzpj.core.domain.model.shopModel.ShopTire;
 
 import java.util.UUID;
 
+@Component
 public interface ShopTiresCommandPort extends ShopEquipmentCommandPort<ShopTire> { //todo exceptions?
 
     ShopTire add(ShopTire tire);

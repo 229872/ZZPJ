@@ -21,7 +21,7 @@ public class ShopTire extends ShopEquipment {
 
     @Builder(builderMethodName = "fromApiBuilder")
     public ShopTire(String name, String description,
-                    double cost, String size, Long maximumSpeed,
+                    Double cost, String size, Long maximumSpeed,
                     Long maximumWeight, LocalDateTime productionDate) {
         super(name, description, cost);
         this.size = size;
@@ -32,12 +32,21 @@ public class ShopTire extends ShopEquipment {
 
     @Builder(builderMethodName = "fromDataBuilder")
     public ShopTire(UUID uuid, long version, String name, String description,
-                    double cost, String size, Long maximumSpeed,
+                    Double cost, String size, Long maximumSpeed,
                     Long maximumWeight, LocalDateTime productionDate) {
         super(uuid, version, name, description, cost);
         this.size = size;
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;
         this.productionDate = productionDate;
+    }
+
+    public void merge(ShopTire tire) {
+        if (tire.getName() != null) this.name = tire.getName();
+        if (tire.getDescription() != null) this.name = tire.getDescription();
+        if (tire.size != null) this.size = tire.getSize();
+        if (tire.maximumSpeed != null) this.maximumSpeed = tire.getMaximumSpeed();
+        if (tire.maximumWeight != null) this.maximumWeight = tire.getMaximumWeight();
+        if (tire.productionDate != null) this.productionDate = tire.getProductionDate();
     }
 }

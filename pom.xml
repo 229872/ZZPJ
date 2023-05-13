@@ -60,13 +60,12 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-validation</artifactId>
                 <scope>provided</scope>
-                <version>3.0.0</version>
+                <version>3.0.6</version>
             </dependency>
 
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <scope>provided</scope>
                 <version>42.5.4</version>
             </dependency>
             <dependency>
@@ -115,6 +114,12 @@
             <dependency>
                 <groupId>pl.lodz.p.edu.zzpj</groupId>
                 <artifactId>RestControllers</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>pl.lodz.p.edu.zzpj</groupId>
+                <artifactId>ShopModule</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
 

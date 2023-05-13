@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface ShopEquipmentQueryPort<T extends ShopEquipment> {
 
-    public List<T> getAllEquipment();
+    public List<T> getAllTires();
 
-    public T getEquipmentById(UUID id) throws EquipmentNotFoundServiceException;
+    public T getTireById(UUID id) throws EquipmentNotFoundServiceException;
 }

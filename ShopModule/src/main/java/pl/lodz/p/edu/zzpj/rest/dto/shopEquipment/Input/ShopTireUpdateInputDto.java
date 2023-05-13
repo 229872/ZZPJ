@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class ShopTireInputDto extends ShopEquipmentInputDto {
+public class ShopTireUpdateInputDto extends ShopEquipmentUpdateInputDto {
+
     private String size;
 
     private Long maximumSpeed;

@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,6 +35,7 @@ public class ShopTireEnt extends ShopEquipmentEnt {
 
     @Column
     @DateTimeFormat
+    @NotNull
     private LocalDateTime productionDate; //todo date mapper?
 
     @Builder(builderMethodName = "toDataBuilder")

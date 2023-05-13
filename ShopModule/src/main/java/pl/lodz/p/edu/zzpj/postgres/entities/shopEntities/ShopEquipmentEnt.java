@@ -3,16 +3,16 @@ package pl.lodz.p.edu.zzpj.postgres.entities.shopEntities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
-import lombok.Getter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import pl.lodz.p.edu.zzpj.postgres.entities.AbstractEntity;
 
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.JOINED)
