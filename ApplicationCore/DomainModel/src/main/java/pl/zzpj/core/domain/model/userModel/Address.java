@@ -1,5 +1,4 @@
-package pl.zzpj.core.domain.model.clientModel;
-
+package pl.zzpj.core.domain.model.userModel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

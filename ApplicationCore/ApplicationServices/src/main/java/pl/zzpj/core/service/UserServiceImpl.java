@@ -2,7 +2,7 @@ package pl.zzpj.core.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.zzpj.core.domain.model.clientModel.User;
+import pl.zzpj.core.domain.model.userModel.User;
 import pl.zzpj.ports.command.user.UserCommandServicePort;
 import pl.zzpj.ports.query.user.UserQueryRepositoryPort;
 import pl.zzpj.ports.query.user.UserQueryServicePort;

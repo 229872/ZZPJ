@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.zzpj.repository.data.AbstractEntity;
@@ -13,6 +14,7 @@ import pl.zzpj.repository.data.AbstractEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class Account extends AbstractEntity {
 
   private String login;

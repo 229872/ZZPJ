@@ -3,7 +3,7 @@ package pl.zzpj.repository.adapter.user;
 import lombok.AllArgsConstructor;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Component;
-import pl.zzpj.core.domain.model.clientModel.User;
+import pl.zzpj.core.domain.model.userModel.User;
 import pl.zzpj.ports.command.user.UserCommandRepositoryPort;
 import pl.zzpj.ports.query.user.UserQueryRepositoryPort;
 import pl.zzpj.repository.adapter.user.mapper.AccountToUserMapper;
@@ -24,12 +24,14 @@ public class UserRepositoryAdapter implements UserQueryRepositoryPort, UserComma
 
   @Override
   public List<User> getAllUsers() {
-    throw new NotYetImplementedException();
+    return accountRepository.findAll().stream()
+            .map(accountToUserMapper::mapToUser)
+            .toList();
   }
 
   @Override
   public Optional<User> getUserById(UUID id) {
-    throw new NotYetImplementedException();
+    return accountRepository.findById(id).map(accountToUserMapper::mapToUser);
   }
 
   @Override

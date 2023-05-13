@@ -1,6 +1,6 @@
 package pl.zzpj.rest.api;
 
-import pl.zzpj.core.domain.model.clientModel.User;
+import pl.zzpj.core.domain.model.userModel.User;
 
 import java.util.List;
 import java.util.Optional;

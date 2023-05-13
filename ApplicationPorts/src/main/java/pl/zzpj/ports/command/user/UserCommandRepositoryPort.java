@@ -1,6 +1,6 @@
 package pl.zzpj.ports.command.user;
 
-import pl.zzpj.core.domain.model.clientModel.User;
+import pl.zzpj.core.domain.model.userModel.User;
 import java.util.UUID;
 
 public interface UserCommandRepositoryPort {
