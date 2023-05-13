@@ -34,6 +34,7 @@
 		<module>ApplicationPorts</module>
 		<module>StartApplication</module>
 		<module>ShopModule</module>
+		<module>Repositories</module>
 
 	</modules>
 
