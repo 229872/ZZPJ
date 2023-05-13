@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.lodz.p.edu.zzpj.postgres.entities.AbstractEntity;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
@@ -28,14 +30,8 @@ public abstract class ShopEquipmentEnt extends AbstractEntity {
     @Positive
     protected double cost;
 
-//    public ShopEquipmentEnt(UUID uuid, String name, String description, double cost) {
-//        super(uuid);
-//        this.name = name;
-//        this.description = description;
-//        this.cost = cost;
-//    }
-
-    public ShopEquipmentEnt(String name, String description, double cost) {
+    protected ShopEquipmentEnt(UUID uuid, long version, String name, String description, double cost) {
+        super(uuid, version);
         this.name = name;
         this.description = description;
         this.cost = cost;

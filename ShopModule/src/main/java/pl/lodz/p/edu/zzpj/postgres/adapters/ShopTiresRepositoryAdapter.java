@@ -2,6 +2,7 @@ package pl.lodz.p.edu.zzpj.postgres.adapters;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.annotation.RequestScope;
 import pl.lodz.p.edu.zzpj.postgres.adapters.mappers.shopTire.ShopTireFromDataToDomainMapper;
 import pl.lodz.p.edu.zzpj.postgres.adapters.mappers.shopTire.ShopTireFromDomainToDataMapper;
@@ -14,13 +15,14 @@ import pl.zzpj.ports.query.ShopEquipment.ShopTiresQueryPort;
 import java.util.List;
 import java.util.UUID;
 
-@RequestScope
 @Component
+@RequestScope
+@Transactional
 public class ShopTiresRepositoryAdapter implements ShopTiresCommandPort, ShopTiresQueryPort {
 
-    private ShopEquipmentRepository repository;
-    private ShopTireFromDataToDomainMapper fromDataMapper;
-    private ShopTireFromDomainToDataMapper fromDomainMapper;
+    private final ShopEquipmentRepository repository;
+    private final ShopTireFromDataToDomainMapper fromDataMapper;
+    private final ShopTireFromDomainToDataMapper fromDomainMapper;
 
     @Autowired
     public ShopTiresRepositoryAdapter(ShopEquipmentRepository repository,
@@ -38,7 +40,7 @@ public class ShopTiresRepositoryAdapter implements ShopTiresCommandPort, ShopTir
     }
 
     @Override
-    public ShopTire update(UUID id, ShopTire tire) throws EquipmentNotFoundServiceException {
+    public ShopTire update(ShopTire tire) throws EquipmentNotFoundServiceException {
         //FIXME probably doesn't have UUID, and/or won't merge entity because it's not in managed state
         return fromDataMapper.convertTireEntToDomainModel(repository
                 .saveAndFlush(fromDomainMapper.convertDomainModelToDataRepository(tire)));

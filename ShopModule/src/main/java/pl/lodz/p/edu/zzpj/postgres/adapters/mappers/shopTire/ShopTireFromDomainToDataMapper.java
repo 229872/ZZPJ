@@ -6,6 +6,8 @@ import pl.zzpj.core.domain.model.shopModel.ShopTire;
 public class ShopTireFromDomainToDataMapper {
     public ShopTireEnt convertDomainModelToDataRepository(ShopTire shopTire) {
         return ShopTireEnt.toDataBuilder()
+                .uuid(shopTire.getUuid())
+                .version(shopTire.getVersion())
                 .name(shopTire.getName())
                 .description(shopTire.getDescription())
                 .cost(shopTire.getCost())

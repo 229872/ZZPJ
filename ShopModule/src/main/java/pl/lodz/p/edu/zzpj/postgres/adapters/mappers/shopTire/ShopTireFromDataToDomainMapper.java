@@ -6,7 +6,8 @@ import pl.zzpj.core.domain.model.shopModel.ShopTire;
 public class ShopTireFromDataToDomainMapper {
     public ShopTire convertTireEntToDomainModel(ShopTireEnt tireEnt) {
         return ShopTire.fromDataBuilder()
-                .uuid(tireEnt.getId())
+                .uuid(tireEnt.getUuid())
+                .version(tireEnt.getVersion())
                 .name(tireEnt.getName())
                 .description(tireEnt.getDescription())
                 .cost(tireEnt.getCost()) //Cost as another entity?

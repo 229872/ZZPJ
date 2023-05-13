@@ -9,7 +9,7 @@ public interface ShopTiresCommandPort extends ShopEquipmentCommandPort<ShopTire>
 
     ShopTire add(ShopTire tire);
 
-    ShopTire update(UUID id, ShopTire tire) throws EquipmentNotFoundServiceException;
+    ShopTire update(ShopTire tire) throws EquipmentNotFoundServiceException;
 
     void remove(UUID id);
 }

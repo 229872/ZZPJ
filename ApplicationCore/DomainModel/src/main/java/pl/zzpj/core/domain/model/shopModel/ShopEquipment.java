@@ -21,8 +21,8 @@ public abstract class ShopEquipment extends AbstractDataModel {
 
     protected boolean archive;
 
-    protected ShopEquipment(UUID uuid, String name, String description, double cost) {
-        super(uuid);
+    protected ShopEquipment(UUID uuid, long version, String name, String description, double cost) {
+        super(uuid, version);
         this.name = name;
         this.description = description;
         this.cost = cost;

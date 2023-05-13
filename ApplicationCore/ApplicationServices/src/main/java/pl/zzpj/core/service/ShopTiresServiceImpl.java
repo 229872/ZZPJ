@@ -34,7 +34,7 @@ public class ShopTiresServiceImpl implements ShopTiresCommandService, ShopTiresQ
 
     @Override
     public ShopTire updateEquipment(UUID id, ShopTire tire) throws EquipmentNotFoundServiceException {
-        return commandPort.update(id, tire);
+        return commandPort.update(tire);
     }
 
     @Override

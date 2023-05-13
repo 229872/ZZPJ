@@ -19,7 +19,7 @@ public class ShopTire extends ShopEquipment {
 
     private LocalDateTime productionDate;
 
-    @Builder(builderMethodName = "toDomainBuilder")
+    @Builder(builderMethodName = "fromApiBuilder")
     public ShopTire(String name, String description,
                     double cost, String size, Long maximumSpeed,
                     Long maximumWeight, LocalDateTime productionDate) {
@@ -31,10 +31,10 @@ public class ShopTire extends ShopEquipment {
     }
 
     @Builder(builderMethodName = "fromDataBuilder")
-    public ShopTire(UUID uuid, String name, String description,
+    public ShopTire(UUID uuid, long version, String name, String description,
                     double cost, String size, Long maximumSpeed,
                     Long maximumWeight, LocalDateTime productionDate) {
-        super(uuid, name, description, cost);
+        super(uuid, version, name, description, cost);
         this.size = size;
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;
