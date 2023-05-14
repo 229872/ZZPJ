@@ -9,7 +9,7 @@ public class ShopTireFromDomainToDtoMapper {
 
     public ShopTireOutputDto convertDomainModelToTireOutputDto(ShopTire shopTire) { //change it a bit?
         return ShopTireOutputDto.builder()
-                .uuid(shopTire.getUuid())
+                .uuid(shopTire.getId())
                 .name(shopTire.getName())
                 .description(shopTire.getDescription())
                 .cost(shopTire.getCost()) //Cost as another entity?

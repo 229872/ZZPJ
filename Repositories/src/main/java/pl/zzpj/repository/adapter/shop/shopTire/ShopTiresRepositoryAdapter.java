@@ -1,14 +1,14 @@
-package pl.lodz.p.edu.zzpj.postgres.adapters;
+package pl.zzpj.repository.adapter.shop.shopTire;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.lodz.p.edu.zzpj.postgres.adapters.mappers.shopTire.ShopTireFromDataToDomainMapper;
-import pl.lodz.p.edu.zzpj.postgres.adapters.mappers.shopTire.ShopTireFromDomainToDataMapper;
-import pl.lodz.p.edu.zzpj.postgres.repository.ShopTireRepository;
 import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
 import pl.zzpj.core.domain.model.shopModel.ShopTire;
 import pl.zzpj.ports.command.ShopEquipment.ShopTiresCommandPort;
 import pl.zzpj.ports.query.ShopEquipment.ShopTiresQueryPort;
+import pl.zzpj.repository.adapter.shop.shopTire.mapper.ShopTireFromDataToDomainMapper;
+import pl.zzpj.repository.adapter.shop.shopTire.mapper.ShopTireFromDomainToDataMapper;
+import pl.zzpj.repository.api.ShopTireRepository;
 
 import java.util.List;
 import java.util.UUID;

@@ -1,16 +1,18 @@
-package pl.lodz.p.edu.zzpj.postgres.entities.shopEntities;
+package pl.zzpj.repository.data.shop;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import pl.lodz.p.edu.zzpj.postgres.entities.AbstractEntity;
+import pl.zzpj.repository.data.AbstractEntity;
 
 import java.util.UUID;
 
-@Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor

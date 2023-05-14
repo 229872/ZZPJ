@@ -1,8 +1,9 @@
-package pl.lodz.p.edu.zzpj.postgres.entities.shopEntities;
+package pl.zzpj.repository.data.shop;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @Entity
 @Data
+@Table(name = "Shop_Tire")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
@@ -39,10 +41,10 @@ public class ShopTireEnt extends ShopEquipmentEnt {
     private LocalDateTime productionDate; //todo date mapper?
 
     @Builder(builderMethodName = "toDataBuilder")
-    public ShopTireEnt(UUID uuid, long version, String name, String description,
+    public ShopTireEnt(UUID id, long version, String name, String description,
                        double cost, String size, Long maximumSpeed,
                        Long maximumWeight, LocalDateTime productionDate) {
-        super(uuid, version, name, description, cost);
+        super(id, version, name, description, cost);
         this.size = size;
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;

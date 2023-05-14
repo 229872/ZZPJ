@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractDataModel implements Serializable {
 
-    private UUID uuid;
+    private UUID id;
 
     private long version;
 }

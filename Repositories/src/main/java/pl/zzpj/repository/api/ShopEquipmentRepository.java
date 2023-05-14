@@ -1,8 +1,8 @@
-package pl.lodz.p.edu.zzpj.postgres.repository;
+package pl.zzpj.repository.api;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
-import pl.lodz.p.edu.zzpj.postgres.entities.shopEntities.ShopEquipmentEnt;
+import pl.zzpj.repository.data.shop.ShopEquipmentEnt;
 
 import java.util.UUID;
 

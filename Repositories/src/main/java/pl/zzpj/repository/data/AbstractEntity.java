@@ -1,18 +1,22 @@
 package pl.zzpj.repository.data;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
 
+@Data
 @MappedSuperclass
 @NoArgsConstructor
-@Data
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
+    @Id
+    @Column
+    @Getter
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    @Version
+    @Getter
+    private long version;
 }

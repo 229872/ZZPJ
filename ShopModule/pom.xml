@@ -52,6 +52,11 @@
             <artifactId>DomainModel</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>Repositories</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

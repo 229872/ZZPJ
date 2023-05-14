@@ -3,7 +3,7 @@ package pl.zzpj;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = {"pl"})
+@SpringBootApplication
 public class ZzpjApplication {
 
     public static void main(String[] args) {
