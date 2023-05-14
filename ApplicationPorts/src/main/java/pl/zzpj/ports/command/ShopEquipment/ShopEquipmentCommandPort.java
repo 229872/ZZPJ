@@ -1,16 +1,15 @@
 package pl.zzpj.ports.command.ShopEquipment;
 
-import org.springframework.stereotype.Component;
 import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
 import pl.zzpj.core.domain.model.shopModel.ShopEquipment;
 
 import java.util.UUID;
 
-public interface ShopEquipmentCommandPort { //todo exceptions?
+public interface ShopEquipmentCommandPort<T extends ShopEquipment> {
 
-    ShopEquipment add(ShopEquipment equipment);
+    T add(T obj);
 
-    ShopEquipment update(UUID id, ShopEquipment equipment) throws EquipmentNotFoundServiceException;
+    T update(T tire) throws EquipmentNotFoundServiceException;
 
-    void remove(ShopEquipment id);
+    void remove(UUID o);
 }

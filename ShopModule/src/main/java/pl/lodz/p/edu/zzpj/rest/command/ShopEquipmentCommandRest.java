@@ -5,13 +5,10 @@ import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Output.ShopEquipmentOutputDto;
 
 import java.util.UUID;
 
-public interface ShopEquipmentCommandRest {
+public interface ShopEquipmentCommandRest<T extends ShopEquipmentInputDto, U extends ShopEquipmentOutputDto> {
+    U addEquipment(T dto);
 
-    //Fixme Think about it
-    ShopEquipmentOutputDto addEquipment(ShopEquipmentInputDto dto);
-
-    ShopEquipmentOutputDto updateEquipment(UUID id, ShopEquipmentInputDto dto);
+//    U updateEquipment(UUID id, T dto) throws EquipmentNotFoundServiceException;
 
     void removeEquipment(UUID id);
-
 }

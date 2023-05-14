@@ -1,41 +1,39 @@
-package pl.lodz.p.edu.zzpj.postgres.entities.shopEntities;
+package pl.zzpj.repository.data.shop;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.MappedSuperclass;
-import lombok.Getter;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import pl.lodz.p.edu.zzpj.postgres.entities.AbstractEntity;
+import pl.zzpj.repository.data.AbstractEntity;
 
-@Entity
-@Getter
-@Setter
+import java.util.UUID;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ShopEquipmentEnt extends AbstractEntity {
 
     @Column
+    @NotBlank
     protected String name;
 
     @Column
+    @NotBlank
     protected String description;
 
     @Column
+    @Positive
     protected double cost;
 
-//    public ShopEquipmentEnt(UUID uuid, String name, String description, double cost) {
-//        super(uuid);
-//        this.name = name;
-//        this.description = description;
-//        this.cost = cost;
-//    }
-
-    public ShopEquipmentEnt(String name, String description, double cost) {
-        super();
+    protected ShopEquipmentEnt(UUID uuid, long version, String name, String description, double cost) {
+        super(uuid, version);
         this.name = name;
         this.description = description;
         this.cost = cost;

@@ -1,21 +1,19 @@
 package pl.zzpj.core.domain.model;
 
-import lombok.Getter;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
-@ToString
+@Data
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractDataModel implements Serializable {
 
-    @Getter
-    private UUID uuid;
+    private UUID id;
 
-    public AbstractDataModel(UUID uuid) {
-        this.uuid = uuid;
-    }
+    private long version;
 }
