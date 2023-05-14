@@ -9,8 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ApplicationPorts</artifactId>
-    <name>ApplicationPorts</name>
+    <artifactId>UserRest</artifactId>
 
     <dependencies>
         <dependency>
@@ -18,5 +17,10 @@
             <artifactId>DomainModel</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>ApplicationPorts</artifactId>
+        </dependency>
     </dependencies>
+
 </project>

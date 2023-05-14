@@ -14,8 +14,28 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>ApplicationPorts</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>ApplicationServices</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>DomainModel</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>Repositories</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>UserRest</artifactId>
         </dependency>
 
         <dependency>
@@ -27,15 +47,5 @@
             <artifactId>postgresql</artifactId>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <skip>false</skip>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+
 </project>

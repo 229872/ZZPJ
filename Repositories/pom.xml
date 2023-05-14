@@ -9,14 +9,23 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ApplicationPorts</artifactId>
-    <name>ApplicationPorts</name>
+    <artifactId>Repositories</artifactId>
+    <name>Repositories</name>
 
     <dependencies>
         <dependency>
-            <groupId>pl.lodz.p.edu.zzpj</groupId>
-            <artifactId>DomainModel</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>ApplicationPorts</artifactId>
+        </dependency>
     </dependencies>
 </project>
