@@ -5,11 +5,12 @@ import pl.zzpj.core.domain.model.shopModel.ShopEquipment;
 
 import java.util.UUID;
 
-public interface ShopEquipmentCommandPort<T extends ShopEquipment> {
 
-    T add(T obj);
+public interface ShopEquipmentCommandPort { //todo exceptions?
 
-    T update(T tire) throws EquipmentNotFoundServiceException;
+    ShopEquipment add(ShopEquipment tire);
 
-    void remove(UUID o);
+    ShopEquipment update(ShopEquipment tire) throws EquipmentNotFoundServiceException;
+
+    void remove(UUID id);
 }

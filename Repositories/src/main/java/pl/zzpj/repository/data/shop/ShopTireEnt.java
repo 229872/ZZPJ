@@ -43,11 +43,12 @@ public class ShopTireEnt extends ShopEquipmentEnt {
     @Builder(builderMethodName = "toDataBuilder")
     public ShopTireEnt(UUID id, long version, String name, String description,
                        double cost, String size, Long maximumSpeed,
-                       Long maximumWeight, LocalDateTime productionDate) {
+                       Long maximumWeight, LocalDateTime productionDate, String equipmentType) {
         super(id, version, name, description, cost);
         this.size = size;
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;
         this.productionDate = productionDate;
+        this.equipmentType = equipmentType;
     }
 }

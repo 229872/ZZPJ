@@ -6,9 +6,12 @@ import pl.zzpj.core.domain.model.shopModel.ShopEquipment;
 import java.util.List;
 import java.util.UUID;
 
-public interface ShopEquipmentQueryService<T extends ShopEquipment> {
+public interface ShopEquipmentQueryService {
 
-    List<T> getAllEquipment();
+    List<ShopEquipment> getAllEquipment();
 
-    T getEquipmentById(UUID id) throws EquipmentNotFoundServiceException; //todo throws
+    ShopEquipment getEquipmentById(UUID id) throws EquipmentNotFoundServiceException; //todo throws
+
+//    List<ShopEquipment> getAllEquipmentByType()
+
 }

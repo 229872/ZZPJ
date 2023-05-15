@@ -28,6 +28,7 @@ public class ShopTire extends ShopEquipment {
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;
         this.productionDate = productionDate;
+        this.type = EquipmentType.TIRE;
     }
 
     @Builder(builderMethodName = "fromDataBuilder")
@@ -39,6 +40,7 @@ public class ShopTire extends ShopEquipment {
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;
         this.productionDate = productionDate;
+        this.type = EquipmentType.TIRE;
     }
 
     public void merge(ShopTire tire) {

@@ -18,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class ShopEquipmentEnt extends AbstractEntity {
+public abstract class ShopEquipmentEnt extends AbstractEntity { //TODO
 
     @Column
     @NotBlank
@@ -31,6 +31,9 @@ public abstract class ShopEquipmentEnt extends AbstractEntity {
     @Column
     @Positive
     protected double cost;
+
+    @Column
+    protected String equipmentType;
 
     protected ShopEquipmentEnt(UUID uuid, long version, String name, String description, double cost) {
         super(uuid, version);
