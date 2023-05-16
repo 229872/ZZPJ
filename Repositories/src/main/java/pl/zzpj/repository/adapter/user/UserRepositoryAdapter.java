@@ -9,6 +9,7 @@ import pl.zzpj.ports.query.user.UserQueryRepositoryPort;
 import pl.zzpj.repository.adapter.user.mapper.AccountToUserMapper;
 import pl.zzpj.repository.adapter.user.mapper.UserToAccountMapper;
 import pl.zzpj.repository.api.AccountRepository;
+import pl.zzpj.repository.data.user.Account;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +37,8 @@ public class UserRepositoryAdapter implements UserQueryRepositoryPort, UserComma
 
   @Override
   public User add(User user) {
-    throw new NotYetImplementedException();
+    Account account = accountRepository.save(userToAccountMapper.mapToAccount(user));
+    return accountToUserMapper.mapToUser(account);
   }
 
   @Override
