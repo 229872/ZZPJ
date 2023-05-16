@@ -2,13 +2,13 @@ package pl.zzpj.rest.adapters.mappers.shopTire;
 
 import org.springframework.stereotype.Component;
 import pl.zzpj.core.domain.model.shopModel.ShopTire;
-import pl.zzpj.rest.dto.shopEquipment.Input.ShopTireCreateInputDto;
-import pl.zzpj.rest.dto.shopEquipment.Input.ShopTireUpdateInputDto;
+import pl.zzpj.core.domain.model.shopModel.TireType;
+import pl.zzpj.rest.dto.shopEquipment.Input.ShopTireInputDto;
 
 @Component
-public class ShopTireFromInputDtoToDomainMapper { //FIXME acceptable only for now
+public class ShopTireFromInputDtoToDomainMapper {
 
-    public ShopTire convertTireInputCreateDtoToDomainModel(ShopTireCreateInputDto inputDto) {
+    public ShopTire convertTireInputCreateDtoToDomainModel(ShopTireInputDto inputDto) {
         return ShopTire.fromApiBuilder()
                 .name(inputDto.getName())
                 .description(inputDto.getDescription())
@@ -16,17 +16,7 @@ public class ShopTireFromInputDtoToDomainMapper { //FIXME acceptable only for no
                 .size(inputDto.getSize())
                 .maximumSpeed(inputDto.getMaximumSpeed())
                 .maximumWeight(inputDto.getMaximumWeight())
-                .productionDate(inputDto.getProductionDate()).build();
-    }
-
-    public ShopTire convertTireInputUpdateDtoToDomainModel(ShopTireUpdateInputDto inputDto) {
-        return ShopTire.fromApiBuilder()
-                .name(inputDto.getName())
-                .description(inputDto.getDescription())
-                .cost(inputDto.getCost()) //Cost as another entity?
-                .size(inputDto.getSize())
-                .maximumSpeed(inputDto.getMaximumSpeed())
-                .maximumWeight(inputDto.getMaximumWeight())
-                .productionDate(inputDto.getProductionDate()).build();
+                .productionDate(inputDto.getProductionDate())
+                .type(TireType.valueOf(inputDto.getType().name())).build();
     }
 }

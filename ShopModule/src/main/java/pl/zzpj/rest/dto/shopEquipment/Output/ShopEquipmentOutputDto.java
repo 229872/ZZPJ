@@ -10,9 +10,9 @@ public class ShopEquipmentOutputDto {
 
     protected String description;
 
-    protected double cost;
+    protected Double cost;
 
-    public ShopEquipmentOutputDto(UUID uuid, String name, String description, double cost) {
+    public ShopEquipmentOutputDto(UUID uuid, String name, String description, Double cost) {
         this.uuid = uuid;
         this.name = name;
         this.description = description;

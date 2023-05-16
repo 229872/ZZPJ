@@ -1,18 +1,17 @@
 package pl.zzpj.rest.command;
 
+import pl.zzpj.core.domain.exception.BadEquipmentTypeException;
 import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
-import pl.zzpj.rest.dto.shopEquipment.Input.ShopTireCreateInputDto;
-import pl.zzpj.rest.dto.shopEquipment.Input.ShopTireUpdateInputDto;
+import pl.zzpj.rest.dto.shopEquipment.Input.ShopTireInputDto;
 import pl.zzpj.rest.dto.shopEquipment.Output.ShopTireOutputDto;
 
 import java.util.UUID;
 
-public interface ShopTiresCommandRest extends ShopEquipmentCommandRest<ShopTireCreateInputDto, ShopTireOutputDto> {
+public interface ShopTiresCommandRest {
 
-    //Fixme Think about it
-    ShopTireOutputDto addEquipment(ShopTireCreateInputDto dto);
+    ShopTireOutputDto addEquipment(ShopTireInputDto dto);
 
-    ShopTireOutputDto updateEquipment(UUID id, ShopTireUpdateInputDto dto) throws EquipmentNotFoundServiceException;
+    ShopTireOutputDto updateEquipment(UUID id, ShopTireInputDto dto) throws EquipmentNotFoundServiceException, BadEquipmentTypeException;
 
     void removeEquipment(UUID id);
 

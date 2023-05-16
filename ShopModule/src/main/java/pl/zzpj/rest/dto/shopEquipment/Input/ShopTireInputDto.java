@@ -7,13 +7,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
+import pl.zzpj.rest.dto.shopEquipment.RestTireType;
 
 import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class ShopTireCreateInputDto extends ShopEquipmentInputDto {
+public class ShopTireInputDto extends ShopEquipmentInputDto {
 
     @NotBlank
     private String size;
@@ -29,4 +30,18 @@ public class ShopTireCreateInputDto extends ShopEquipmentInputDto {
     @NotNull
     @DateTimeFormat
     private LocalDateTime productionDate;
+
+    @NotNull
+    private RestTireType type;
+
+    public ShopTireInputDto(String name,
+                            String description, Double cost, String size,
+                            Long maximumSpeed, Long maximumWeight, LocalDateTime productionDate, RestTireType type) {
+        super(name, description, cost);
+        this.size = size;
+        this.maximumSpeed = maximumSpeed;
+        this.maximumWeight = maximumWeight;
+        this.productionDate = productionDate;
+        this.type = type;
+    }
 }

@@ -6,9 +6,9 @@ import pl.zzpj.rest.dto.shopEquipment.Output.ShopTireOutputDto;
 import java.util.List;
 import java.util.UUID;
 
-public interface ShopTiresQueryRest extends ShopEquipmentQueryRest<ShopTireOutputDto> {
+public interface ShopTiresQueryRest {
 
     List<ShopTireOutputDto> getAllEquipment();
 
-    ShopTireOutputDto getEquipmentById(UUID uuid) throws EquipmentNotFoundServiceException;
+    ShopTireOutputDto getEquipmentById(UUID id) throws EquipmentNotFoundServiceException;
 }

@@ -11,6 +11,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -38,4 +39,20 @@ public class ShopTireEnt extends ShopEquipmentEnt {
     @DateTimeFormat
     @NotNull
     private LocalDateTime productionDate;
+
+    @Column
+    @NotNull
+    private TireTypeEnt typeEnt;
+
+    @Builder(builderMethodName = "toDataBuilder")
+    public ShopTireEnt(UUID id, Long version, @NotBlank String name, @NotBlank String description,
+                       @Positive double cost, String equipmentType, String size,
+                       Long maximumSpeed, Long maximumWeight, LocalDateTime productionDate, TireTypeEnt typeEnt) {
+        super(id, version, name, description, cost, equipmentType);
+        this.size = size;
+        this.maximumSpeed = maximumSpeed;
+        this.maximumWeight = maximumWeight;
+        this.productionDate = productionDate;
+        this.typeEnt = typeEnt;
+    }
 }
