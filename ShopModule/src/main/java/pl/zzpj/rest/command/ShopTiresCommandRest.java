@@ -1,9 +1,9 @@
-package pl.lodz.p.edu.zzpj.rest.command;
+package pl.zzpj.rest.command;
 
-import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Input.ShopTireCreateInputDto;
-import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Input.ShopTireUpdateInputDto;
-import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Output.ShopTireOutputDto;
 import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
+import pl.zzpj.rest.dto.shopEquipment.Input.ShopTireCreateInputDto;
+import pl.zzpj.rest.dto.shopEquipment.Input.ShopTireUpdateInputDto;
+import pl.zzpj.rest.dto.shopEquipment.Output.ShopTireOutputDto;
 
 import java.util.UUID;
 

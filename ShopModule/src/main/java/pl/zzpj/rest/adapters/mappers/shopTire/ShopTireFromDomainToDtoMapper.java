@@ -1,8 +1,8 @@
-package pl.lodz.p.edu.zzpj.rest.adapters.mappers.shopTire;
+package pl.zzpj.rest.adapters.mappers.shopTire;
 
 import org.springframework.stereotype.Component;
-import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Output.ShopTireOutputDto;
 import pl.zzpj.core.domain.model.shopModel.ShopTire;
+import pl.zzpj.rest.dto.shopEquipment.Output.ShopTireOutputDto;
 
 @Component
 public class ShopTireFromDomainToDtoMapper {

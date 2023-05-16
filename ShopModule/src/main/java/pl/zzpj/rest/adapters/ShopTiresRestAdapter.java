@@ -1,18 +1,18 @@
-package pl.lodz.p.edu.zzpj.rest.adapters;
+package pl.zzpj.rest.adapters;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.lodz.p.edu.zzpj.rest.adapters.mappers.shopTire.ShopTireFromDomainToDtoMapper;
-import pl.lodz.p.edu.zzpj.rest.adapters.mappers.shopTire.ShopTireFromInputDtoToDomainMapper;
-import pl.lodz.p.edu.zzpj.rest.command.ShopTiresCommandRest;
-import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Input.ShopTireCreateInputDto;
-import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Input.ShopTireUpdateInputDto;
-import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Output.ShopTireOutputDto;
-import pl.lodz.p.edu.zzpj.rest.query.ShopTiresQueryRest;
 import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
 import pl.zzpj.ports.command.ShopEquipment.ShopTireCommandService;
 import pl.zzpj.ports.query.ShopEquipment.ShopTireQueryService;
+import pl.zzpj.rest.adapters.mappers.shopTire.ShopTireFromDomainToDtoMapper;
+import pl.zzpj.rest.adapters.mappers.shopTire.ShopTireFromInputDtoToDomainMapper;
+import pl.zzpj.rest.command.ShopTiresCommandRest;
+import pl.zzpj.rest.dto.shopEquipment.Input.ShopTireCreateInputDto;
+import pl.zzpj.rest.dto.shopEquipment.Input.ShopTireUpdateInputDto;
+import pl.zzpj.rest.dto.shopEquipment.Output.ShopTireOutputDto;
+import pl.zzpj.rest.query.ShopTiresQueryRest;
 
 import java.util.List;
 import java.util.UUID;

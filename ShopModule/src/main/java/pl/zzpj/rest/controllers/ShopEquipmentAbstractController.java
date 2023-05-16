@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.zzpj.rest.controllers;
+package pl.zzpj.rest.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 

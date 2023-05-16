@@ -1,7 +1,7 @@
-package pl.lodz.p.edu.zzpj.rest.command;
+package pl.zzpj.rest.command;
 
-import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Input.ShopEquipmentInputDto;
-import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Output.ShopEquipmentOutputDto;
+import pl.zzpj.rest.dto.shopEquipment.Input.ShopEquipmentInputDto;
+import pl.zzpj.rest.dto.shopEquipment.Output.ShopEquipmentOutputDto;
 
 import java.util.UUID;
 

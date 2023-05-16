@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Input;
+package pl.zzpj.rest.dto.shopEquipment.Input;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

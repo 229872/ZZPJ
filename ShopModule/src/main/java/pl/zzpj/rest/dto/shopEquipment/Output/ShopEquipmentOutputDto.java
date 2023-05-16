@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Output;
+package pl.zzpj.rest.dto.shopEquipment.Output;
 
 import java.util.UUID;
 

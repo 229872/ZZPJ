@@ -1,11 +1,11 @@
-package pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Output;
+package pl.zzpj.rest.dto.shopEquipment.Output;
 
 import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class ShopTireOutputDto extends ShopEquipmentOutputDto{
+public class ShopTireOutputDto extends ShopEquipmentOutputDto {
     private String size;
 
     private Long maximumSpeed;
