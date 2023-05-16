@@ -34,6 +34,11 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
     }
 
     @Override
+    public List<Rent> findFutureRentsByVehicle(String vehicle) {
+        return null;
+    }
+
+    @Override
     public List<Rent> findRentsByStatus(RentStatus status) {
         return null;
     }
