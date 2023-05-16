@@ -55,7 +55,7 @@ public class RentEnt {
     @NotNull
     private LocalDateTime declaredEndDate;
 
-    @Column(name = "actual_end_date")
+    @Column(name = "actual_start_date")
     @DateTimeFormat
     private LocalDateTime actualStartDate;
 
@@ -63,7 +63,7 @@ public class RentEnt {
     @DateTimeFormat
     private LocalDateTime actualEndDate;
 
-    @Column(name = "actual_end_date")
+    @Column(name = "created_at")
     @DateTimeFormat
     private LocalDateTime createdAt;
 
