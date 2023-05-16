@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import pl.zzpj.core.domain.model.userModel.Person;
+import pl.zzpj.core.domain.model.userModel.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ import java.time.Period;
 @AllArgsConstructor
 public class Rent {
     private RentStatus status;
-    private Person person;
+    private User user;
     private String vehicle; // todo
     private BigDecimal price;
     private BigDecimal penalty;
@@ -22,11 +23,12 @@ public class Rent {
     private LocalDateTime declaredEndDate;
     private LocalDateTime actualStartDate;
     private LocalDateTime actualEndDate;
+    private LocalDateTime createdAt;
 
     @Builder
-    public Rent(Person person, String vehicle, BigDecimal price, LocalDateTime startDate, LocalDateTime endDate) {
+    public Rent(User user, String vehicle, BigDecimal price, LocalDateTime startDate, LocalDateTime endDate) {
         this.status = RentStatus.CREATED;
-        this.person = person;
+        this.user = user;
         this.vehicle = vehicle;
         this.declaredStartDate = startDate;
         this.declaredEndDate = endDate;
@@ -34,5 +36,6 @@ public class Rent {
         this.penalty = new BigDecimal(0);
         this.actualStartDate = null;
         this.actualEndDate = null;
+        this.createdAt = LocalDateTime.now();
     }
 }

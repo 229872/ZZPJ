@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.zzpj.core.domain.model.rentModel.Rent;
 import pl.zzpj.core.domain.model.rentModel.RentStatus;
 import pl.zzpj.core.domain.model.userModel.Person;
+import pl.zzpj.core.domain.model.userModel.User;
 import pl.zzpj.ports.command.rent.RentCommandPort;
 import pl.zzpj.ports.command.rent.RentCommandService;
 import pl.zzpj.ports.query.rent.RentQueryPort;
@@ -28,7 +29,7 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
     }
 
     @Override
-    public List<Rent> findUserRents(UUID userId) {
+    public List<Rent> findRentsByUser(User user) {
         return null;
     }
 
@@ -58,11 +59,49 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
     }
 
     @Override
-    public BigDecimal calculatePrice(String vehicle, Person person, LocalDateTime start, LocalDateTime end) {
+    public boolean isCancellable(Rent rent) {
+        return false;
+    }
+
+    @Override
+    public BigDecimal calculatePrice(String vehicle, User user, LocalDateTime start, LocalDateTime end) {
         return null;
     }
 
+    @Override
+    public Rent createRent(Rent rent) {
+        return null;
+    }
+
+    @Override
+    public Rent issueVehicle(Rent rent) {
+        return null;
+    }
+
+    @Override
+    public Rent returnVehicle(Rent rent) {
+        return null;
+    }
+
+    @Override
+    public Rent returnDamagedVehicle(Rent rent) {
+        return null;
+    }
+
+    @Override
+    public Rent returnMissingVehicle(Rent rent) {
+        return null;
+    }
+
+    @Override
+    public void updateRentsNotIssued() {
+
+    }
+
     /*
+    anulowanie wypożyczenia:
+        w krótkim czasie po jego utworzeniu
+        jeśli jest przed tygodniem od rozpoczęcia
     koszt wypożyczenia:
         w momencie tworzenia rezerwacji jest obliczany na podstawie wyniku konta
         przy oddaniu może być naliczona kara:
@@ -72,7 +111,5 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
     wynik konta:
         przechowywany w userze
         aktualizowany przy każdorazowej zmianie stanu statusu wyporzyczenia
-
-
      */
 }
