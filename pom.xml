@@ -26,6 +26,10 @@
             <name>Bartłomiej Czajkowski</name>
             <id>236512</id>
         </developer>
+        <developer>
+            <name>Jakub Wardyn</name>
+            <id>236683</id>
+        </developer>
 
     </developers>
 
@@ -73,6 +77,11 @@
                 <artifactId>lombok</artifactId>
                 <optional>true</optional>
                 <version>1.18.26</version>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <scope>runtime</scope>
             </dependency>
 
 
