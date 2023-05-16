@@ -30,6 +30,10 @@ public class Person extends AbstractEntity {
   @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @JoinColumn(unique = true, nullable = false)
   private Address address;
+
+  public static PersonBuilder builder(String firstName, String lastName, String gender, LocalDate dateOfBirth, Address address) {
+    return new PersonBuilder().firstName(firstName).lastName(lastName).gender(gender).dateOfBirth(dateOfBirth).address(address);
+  }
 }
 
 

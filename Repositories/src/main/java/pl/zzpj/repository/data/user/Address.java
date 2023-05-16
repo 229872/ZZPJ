@@ -6,7 +6,7 @@ import pl.zzpj.repository.data.AbstractEntity;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

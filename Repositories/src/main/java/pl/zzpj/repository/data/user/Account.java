@@ -34,4 +34,8 @@ public class Account extends AbstractEntity {
   @JoinColumn(nullable = false, unique = true)
   private Person person;
 
+  public static AccountBuilder builder(String login, String password, String email, Double score, Person person) {
+    return new AccountBuilder().login(login).password(password).email(email).score(score).person(person);
+  }
+
 }
