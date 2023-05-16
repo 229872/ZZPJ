@@ -11,7 +11,6 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -38,17 +37,5 @@ public class ShopTireEnt extends ShopEquipmentEnt {
     @Column
     @DateTimeFormat
     @NotNull
-    private LocalDateTime productionDate; //todo date mapper?
-
-    @Builder(builderMethodName = "toDataBuilder")
-    public ShopTireEnt(UUID id, long version, String name, String description,
-                       double cost, String size, Long maximumSpeed,
-                       Long maximumWeight, LocalDateTime productionDate, String equipmentType) {
-        super(id, version, name, description, cost);
-        this.size = size;
-        this.maximumSpeed = maximumSpeed;
-        this.maximumWeight = maximumWeight;
-        this.productionDate = productionDate;
-        this.equipmentType = equipmentType;
-    }
+    private LocalDateTime productionDate;
 }

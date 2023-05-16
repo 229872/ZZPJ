@@ -11,8 +11,8 @@ import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Input.ShopTireUpdateInputDto;
 import pl.lodz.p.edu.zzpj.rest.dto.shopEquipment.Output.ShopTireOutputDto;
 import pl.lodz.p.edu.zzpj.rest.query.ShopTiresQueryRest;
 import pl.zzpj.core.domain.exception.shopEquipment.EquipmentNotFoundServiceException;
-import pl.zzpj.ports.command.ShopEquipment.ShopEquipmentCommandService;
-import pl.zzpj.ports.query.ShopEquipment.ShopEquipmentQueryService;
+import pl.zzpj.ports.command.ShopEquipment.ShopTireCommandService;
+import pl.zzpj.ports.query.ShopEquipment.ShopTireQueryService;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,14 +21,14 @@ import java.util.stream.Collectors;
 @Component
 public class ShopTiresRestAdapter implements ShopTiresCommandRest, ShopTiresQueryRest {
 
-    private final ShopEquipmentCommandService commandService;
-    private final ShopEquipmentQueryService queryService;
+    private final ShopTireCommandService commandService;
+    private final ShopTireQueryService queryService;
     private final ShopTireFromInputDtoToDomainMapper fromInputDtoMapper;
     private final ShopTireFromDomainToDtoMapper fromDomainMapper;
 
     @Autowired
-    public ShopTiresRestAdapter(ShopEquipmentCommandService commandService,
-                                ShopEquipmentQueryService queryService,
+    public ShopTiresRestAdapter(ShopTireCommandService commandService,
+                                ShopTireQueryService queryService,
                                 ShopTireFromInputDtoToDomainMapper fromInputDtoMapper,
                                 ShopTireFromDomainToDtoMapper fromDomainMapper) {
         this.commandService = commandService;

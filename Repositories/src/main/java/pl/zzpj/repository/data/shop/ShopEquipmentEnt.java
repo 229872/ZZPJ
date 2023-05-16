@@ -11,8 +11,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import pl.zzpj.repository.data.AbstractEntity;
 
-import java.util.UUID;
-
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -34,11 +32,4 @@ public abstract class ShopEquipmentEnt extends AbstractEntity { //TODO
 
     @Column
     protected String equipmentType;
-
-    protected ShopEquipmentEnt(UUID uuid, long version, String name, String description, double cost) {
-        super(uuid, version);
-        this.name = name;
-        this.description = description;
-        this.cost = cost;
-    }
 }
