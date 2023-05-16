@@ -9,6 +9,7 @@ public class RentFromDataToDomain {
     public static Rent map(RentEnt rentEnt) {
         AccountToUserMapper mapper = new AccountToUserMapper();//todo
         return Rent.builder()
+                .id(rentEnt.getId())
                 .status(rentEnt.getStatus())
                 .user(mapper.mapToUser(rentEnt.getUser()))
                 .vehicle(rentEnt.getVehicle())

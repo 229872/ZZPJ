@@ -8,11 +8,13 @@ import pl.zzpj.core.domain.model.userModel.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @Builder
 public class Rent {
+    private UUID id;
     private RentStatus status;
     private User user;
     private String vehicle; // todo
@@ -26,6 +28,7 @@ public class Rent {
 
     @Builder(builderMethodName = "createRentBuilder")
     public Rent(User user, String vehicle, BigDecimal price, LocalDateTime startDate, LocalDateTime endDate) {
+        this.id = null;
         this.status = RentStatus.CREATED;
         this.user = user;
         this.vehicle = vehicle;

@@ -1,23 +1,33 @@
 package pl.zzpj.rest.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import pl.zzpj.core.domain.model.userModel.User;
+import org.springframework.web.bind.annotation.*;
+import pl.zzpj.rest.adapter.RentRestAdapter;
+import pl.zzpj.rest.dto.get.RentDto;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/rent")
+@RequestMapping("rent")
+@AllArgsConstructor
 public class RentController {
 
-    @GetMapping(value = "/test")
-    @ResponseBody
-    public String getAll() {
-        return "123";
+    private RentRestAdapter adapter;
+
+    @GetMapping
+    public List<RentDto> getAllRents() {
+        return null;
+    }
+
+    @GetMapping(value = "{uuid}")
+    public RentDto getRent(@PathVariable UUID uuid) {
+        return null;
+    }
+
+    @PostMapping
+    public RentDto createRent(@RequestBody CreateRentDto) {
+
     }
 
 }
