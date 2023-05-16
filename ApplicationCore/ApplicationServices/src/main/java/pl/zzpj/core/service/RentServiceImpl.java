@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Service
@@ -25,77 +26,116 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
 
     @Override
     public Rent findRent(UUID rentId) {
-        return null;
+        return queryPort.getRent(rentId);
     }
 
     @Override
     public List<Rent> findRentsByUser(User user) {
-        return null;
+        return queryPort.getRentsByUser(user);
     }
 
     @Override
     public List<Rent> findFutureRentsByVehicle(String vehicle) {
-        return null;
+        return queryPort.getRentsByVehicle(vehicle);
     }
 
     @Override
     public List<Rent> findRentsByStatus(RentStatus status) {
-        return null;
+        return queryPort.getRentsByStatus(status);
     }
 
     @Override
     public List<Rent> findRentsToIssue(Period timeToDeclared) {
-        return null;
+        LocalDateTime declaredStartTime = LocalDateTime.now().plus(timeToDeclared);
+        return queryPort.getRentsByStatusAndDeclaredStartDate(
+                RentStatus.CREATED, declaredStartTime);
     }
 
     @Override
     public List<Rent> findRentsToReturn(Period timeToDeclared) {
-        return null;
+        LocalDateTime declaredStartTime = LocalDateTime.now().plus(timeToDeclared);
+        return queryPort.getRentsByStatusAndDeclaredStartDate(
+                RentStatus.ISSUED, declaredStartTime);
     }
 
     @Override
     public List<Rent> findAllRents() {
-        return null;
+        return queryPort.getAllRents();
     }
 
     @Override
     public boolean isVehicleAvailable(String vehicle, LocalDateTime start, LocalDateTime end) {
+        List<Rent> vehicleRents = queryPort.getRentsByVehicle(vehicle);
+
         return false;
     }
 
-    @Override
     public boolean isCancellable(Rent rent) {
         return false;
     }
 
     @Override
     public BigDecimal calculatePrice(String vehicle, User user, LocalDateTime start, LocalDateTime end) {
-        return null;
+        double points = 0; // get from user
+        double vehicleCostPerHour = 10; // get from vehicle
+        List<Rent> userRents = queryPort.getRentsByUser(user);
+        Period period = Period.between(start.toLocalDate(), end.toLocalDate());
+        return new BigDecimal(10);
     }
 
     @Override
-    public Rent createRent(Rent rent) {
-        return null;
+    public Rent createRent(User user, String vehicle, BigDecimal price, LocalDateTime startDate, LocalDateTime endDate) {
+        Rent rent = Rent.createRentBuilder()
+                .user(user)
+                .vehicle(vehicle)
+                .price(price)
+                .startDate(startDate)
+                .endDate(endDate)
+                .build();
+        return commandPort.add(rent);
     }
 
     @Override
-    public Rent issueVehicle(Rent rent) {
-        return null;
+    public Rent cancelRent(UUID id) {
+        Rent rent = queryPort.getRent(id);
+        if(!this.isCancellable(rent)) {
+            //todo throw
+            return null;
+        }
+        rent.setStatus(RentStatus.CANCELLED);
+        return commandPort.update(rent);
     }
 
     @Override
-    public Rent returnVehicle(Rent rent) {
-        return null;
+    public Rent issueVehicle(UUID id) {
+        Rent rent = queryPort.getRent(id);
+        rent.setStatus(RentStatus.ISSUED);
+        rent.setActualStartDate(LocalDateTime.now());
+        return commandPort.update(rent);
     }
 
     @Override
-    public Rent returnDamagedVehicle(Rent rent) {
-        return null;
+    public Rent returnVehicle(UUID id) {
+        Rent rent = queryPort.getRent(id);
+        rent.setStatus(RentStatus.RETURNED_GOOD);
+        rent.setActualEndDate(LocalDateTime.now());
+        return commandPort.update(rent);
     }
 
     @Override
-    public Rent returnMissingVehicle(Rent rent) {
-        return null;
+    public Rent returnDamagedVehicle(UUID id) {
+        Rent rent = queryPort.getRent(id);
+        rent.setStatus(RentStatus.RETURNED_DAMAGED);
+        rent.setActualEndDate(LocalDateTime.now());
+        return commandPort.update(rent);
+    }
+
+    @Override
+    public Rent returnMissingVehicle(UUID id) {
+        Rent rent = queryPort.getRent(id);
+        rent.setStatus(RentStatus.NOT_RETURNED);
+        rent.setActualEndDate(LocalDateTime.now());
+        return commandPort.update(rent);
     }
 
     @Override

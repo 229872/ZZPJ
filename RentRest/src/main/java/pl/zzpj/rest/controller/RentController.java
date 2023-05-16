@@ -25,9 +25,5 @@ public class RentController {
         return null;
     }
 
-    @PostMapping
-    public RentDto createRent(@RequestBody CreateRentDto) {
-
-    }
 
 }
