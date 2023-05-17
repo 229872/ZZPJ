@@ -1,4 +1,4 @@
-package pl.zzpj.repository.data.shop;
+package pl.zzpj.data.shop;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

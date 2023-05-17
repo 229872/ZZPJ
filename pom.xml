@@ -26,6 +26,10 @@
             <name>Bartłomiej Czajkowski</name>
             <id>236512</id>
         </developer>
+        <developer>
+            <name>Jakub Wardyn</name>
+            <id>236683</id>
+        </developer>
 
     </developers>
 
@@ -36,6 +40,7 @@
         <module>ShopModule</module>
         <module>Repositories</module>
         <module>UserRest</module>
+        <module>RentVehicleRest</module>
 
         <module>RentRest</module>
     </modules>
@@ -83,6 +88,11 @@
                 <artifactId>lombok</artifactId>
                 <optional>true</optional>
                 <version>1.18.26</version>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <scope>runtime</scope>
             </dependency>
             <dependency>
                 <groupId>at.favre.lib</groupId>
@@ -139,6 +149,11 @@
             <dependency>
                 <groupId>pl.lodz.p.edu.zzpj</groupId>
                 <artifactId>ShopModule</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.lodz.p.edu.zzpj</groupId>
+                <artifactId>RentVehicleRest</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
         </dependencies>

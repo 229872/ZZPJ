@@ -1,4 +1,4 @@
-package pl.zzpj.repository.data.user;
+package pl.zzpj.data.user;
 
 import jakarta.persistence.*;
 import lombok.*;

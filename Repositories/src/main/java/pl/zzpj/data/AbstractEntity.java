@@ -1,4 +1,4 @@
-package pl.zzpj.repository.data;
+package pl.zzpj.data;
 
 import jakarta.persistence.*;
 import lombok.Data;
