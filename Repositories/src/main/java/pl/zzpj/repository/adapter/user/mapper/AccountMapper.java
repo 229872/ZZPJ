@@ -14,8 +14,7 @@ public class AccountMapper {
   public User mapToUser(Account account) {
     var person = personMapper.mapToDomainModelPerson(account.getPerson());
 
-    return User.builder(account.getLogin(), account.getPassword(), account.getEmail(),
-            account.getScore(), person)
+    return User.builder(account.getLogin(), account.getPassword(), account.getEmail(), person)
             .phoneNumber(account.getPhoneNumber())
             .socialInsuranceNumber(account.getSocialInsuranceNumber())
             .creditCard(account.getCreditCard())
@@ -26,8 +25,7 @@ public class AccountMapper {
   public Account mapToAccount(User user) {
     Person person = personMapper.mapToDatabasePerson(user.getPerson());
 
-    return Account.builder(user.getLogin(), user.getPassword(), user.getEmail(),
-                    user.getScore(), person)
+    return Account.builder(user.getLogin(), user.getPassword(), user.getEmail(), person)
             .phoneNumber(user.getPhoneNumber())
             .socialInsuranceNumber(user.getSocialInsuranceNumber())
             .creditCard(user.getCreditCard())

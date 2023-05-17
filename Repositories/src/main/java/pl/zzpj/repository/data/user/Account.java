@@ -28,14 +28,13 @@ public class Account extends AbstractEntity {
   private String socialInsuranceNumber;
   @Column(name = "credit_card", unique = true)
   private String creditCard;
-  @Column(nullable = false)
   private Double score;
   @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @JoinColumn(nullable = false, unique = true)
   private Person person;
 
-  public static AccountBuilder builder(String login, String password, String email, Double score, Person person) {
-    return new AccountBuilder().login(login).password(password).email(email).score(score).person(person);
+  public static AccountBuilder builder(String login, String password, String email, Person person) {
+    return new AccountBuilder().login(login).password(password).email(email).person(person);
   }
 
 }

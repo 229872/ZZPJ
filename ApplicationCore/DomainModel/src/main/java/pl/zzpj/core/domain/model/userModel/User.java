@@ -19,7 +19,7 @@ public class User {
   private Double score;
   private Person person;
 
-  public static UserBuilder builder(String login, String password, String email, Double score, Person person) {
-    return new UserBuilder().login(login).password(password).email(email).score(score).person(person);
+  public static UserBuilder builder(String login, String password, String email, Person person) {
+    return new UserBuilder().login(login).password(password).email(email).person(person);
   }
 }

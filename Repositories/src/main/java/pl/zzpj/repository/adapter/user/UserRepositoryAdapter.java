@@ -9,7 +9,6 @@ import pl.zzpj.ports.query.user.UserQueryRepositoryPort;
 import pl.zzpj.repository.adapter.user.mapper.AccountMapper;
 import pl.zzpj.repository.api.AccountRepository;
 import pl.zzpj.repository.data.user.Account;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
