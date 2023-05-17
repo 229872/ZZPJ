@@ -3,13 +3,14 @@ package pl.zzpj.core.domain.model.shopModel;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShopTire extends ShopEquipment {
+public class ShopTire {
 
     private String size;
 
@@ -19,34 +20,41 @@ public class ShopTire extends ShopEquipment {
 
     private LocalDateTime productionDate;
 
+    private ShopEquipment equipment;
+
+    private TireType type;
+
+
     @Builder(builderMethodName = "fromApiBuilder")
     public ShopTire(String name, String description,
-                    Double cost, String size, Long maximumSpeed,
-                    Long maximumWeight, LocalDateTime productionDate) {
-        super(name, description, cost);
+                    Double cost, Boolean archive, String size, Long maximumSpeed,
+                    Long maximumWeight, LocalDateTime productionDate, TireType type) {
+        this.equipment = new ShopEquipment(name, description, cost, archive);
         this.size = size;
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;
         this.productionDate = productionDate;
+        this.type = type;
     }
 
     @Builder(builderMethodName = "fromDataBuilder")
-    public ShopTire(UUID uuid, long version, String name, String description,
+    public ShopTire(UUID uuid, long version, String name, boolean archive, String description,
                     Double cost, String size, Long maximumSpeed,
-                    Long maximumWeight, LocalDateTime productionDate) {
-        super(uuid, version, name, description, cost);
+                    Long maximumWeight, LocalDateTime productionDate, TireType type) {
+        this.equipment = new ShopEquipment(uuid, version, name, description, cost, archive);
         this.size = size;
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;
         this.productionDate = productionDate;
+        this.type = type;
     }
 
     public void merge(ShopTire tire) {
-        if (tire.getName() != null) this.name = tire.getName();
-        if (tire.getDescription() != null) this.name = tire.getDescription();
-        if (tire.size != null) this.size = tire.getSize();
-        if (tire.maximumSpeed != null) this.maximumSpeed = tire.getMaximumSpeed();
-        if (tire.maximumWeight != null) this.maximumWeight = tire.getMaximumWeight();
-        if (tire.productionDate != null) this.productionDate = tire.getProductionDate();
+        this.equipment.merge(tire.getEquipment());
+        if (!Objects.equals(tire.size, this.size)) this.size = tire.getSize();
+        if (!Objects.equals(tire.maximumSpeed, this.maximumSpeed)) this.maximumSpeed = tire.getMaximumSpeed();
+        if (!Objects.equals(tire.maximumWeight, this.maximumWeight)) this.maximumWeight = tire.getMaximumWeight();
+        this.productionDate = tire.getProductionDate();
+        if (tire.type != this.type) this.type = tire.getType();
     }
 }
