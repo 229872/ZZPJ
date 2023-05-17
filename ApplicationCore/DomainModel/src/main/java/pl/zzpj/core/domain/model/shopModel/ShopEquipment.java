@@ -1,9 +1,6 @@
 package pl.zzpj.core.domain.model.shopModel;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -23,8 +20,9 @@ public class ShopEquipment {
 
     private SuperDataModel superModel;
 
+    @Builder
     public ShopEquipment(UUID uuid, long version, String name, String description, Double cost, boolean archive) {
-        this.superModel = new SuperDataModel(uuid, version);
+        this.superModel = SuperDataModel.builder().id(uuid).version(version).build();
         this.name = name;
         this.description = description;
         this.cost = cost;

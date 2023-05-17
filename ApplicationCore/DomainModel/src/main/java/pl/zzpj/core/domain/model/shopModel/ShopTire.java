@@ -41,7 +41,8 @@ public class ShopTire {
     public ShopTire(UUID uuid, long version, String name, boolean archive, String description,
                     Double cost, String size, Long maximumSpeed,
                     Long maximumWeight, LocalDateTime productionDate, TireType type) {
-        this.equipment = new ShopEquipment(uuid, version, name, description, cost, archive);
+        this.equipment = ShopEquipment.builder().uuid(uuid).version(version)
+                .name(name).description(description).cost(cost).archive(archive).build();
         this.size = size;
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;

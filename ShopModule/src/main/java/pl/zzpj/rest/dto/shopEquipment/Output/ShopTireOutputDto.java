@@ -1,11 +1,20 @@
 package pl.zzpj.rest.dto.shopEquipment.Output;
 
 import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.extern.jackson.Jacksonized;
+import org.springframework.format.annotation.DateTimeFormat;
 import pl.zzpj.rest.dto.shopEquipment.RestTireType;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@Jacksonized
 public class ShopTireOutputDto extends ShopEquipmentOutputDto {
     private String size;
 
@@ -13,6 +22,7 @@ public class ShopTireOutputDto extends ShopEquipmentOutputDto {
 
     private Long maximumWeight;
 
+    @DateTimeFormat
     private LocalDateTime productionDate;
 
     private RestTireType type;

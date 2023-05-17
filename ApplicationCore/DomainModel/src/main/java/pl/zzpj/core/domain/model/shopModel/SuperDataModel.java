@@ -1,5 +1,6 @@
 package pl.zzpj.core.domain.model.shopModel;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ public class SuperDataModel {
 
     private long version;
 
+    @Builder
     public SuperDataModel(UUID id, long version) {
         this.id = id;
         this.version = version;

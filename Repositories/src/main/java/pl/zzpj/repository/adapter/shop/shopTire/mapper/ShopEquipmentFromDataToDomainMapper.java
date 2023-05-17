@@ -11,7 +11,7 @@ import pl.zzpj.repository.data.shop.ShopTireEnt;
 public class ShopEquipmentFromDataToDomainMapper {
 
     public ShopTire convertDataToDomainModel(ShopTireEnt tireEnt) {
-        return ShopTire.fromDataBuilder()
+        ShopTire returnTire = ShopTire.fromDataBuilder()
                 .uuid(tireEnt.getId())
                 .version(tireEnt.getVersion())
                 .name(tireEnt.getName())
@@ -24,5 +24,6 @@ public class ShopEquipmentFromDataToDomainMapper {
                 .productionDate(tireEnt.getProductionDate())
                 .type(TireType.valueOf(tireEnt.getTypeEnt().name()))
                 .build();
+        return returnTire;
     }
 }
