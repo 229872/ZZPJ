@@ -1,10 +1,10 @@
 package pl.zzpj.repository.adapter.rent;
 
-import pl.zzpj.core.domain.model.rentModel.Rent;
-import pl.zzpj.core.domain.model.rentModel.RentStatus;
-import pl.zzpj.core.domain.model.userModel.User;
-import pl.zzpj.ports.command.rent.RentCommandPort;
-import pl.zzpj.ports.query.rent.RentQueryPort;
+import pl.zzpj.repository.core.domain.model.rentModel.Rent;
+import pl.zzpj.repository.core.domain.model.rentModel.RentStatus;
+import pl.zzpj.repository.core.domain.model.userModel.User;
+import pl.zzpj.repository.ports.command.rent.RentCommandPort;
+import pl.zzpj.repository.ports.query.rent.RentQueryPort;
 
 import java.time.LocalDateTime;
 import java.util.List;

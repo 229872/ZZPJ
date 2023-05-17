@@ -1,12 +1,17 @@
 package pl.zzpj.repository.adapter.rent.mapper;
 
-import pl.zzpj.core.domain.model.rentModel.Rent;
-import pl.zzpj.repository.adapter.user.mapper.UserToAccountMapper;
+import lombok.AllArgsConstructor;
+import pl.zzpj.repository.adapter.user.mapper.AccountMapper;
+import pl.zzpj.repository.core.domain.model.rentModel.Rent;
 import pl.zzpj.repository.data.rent.RentEnt;
 
+@AllArgsConstructor
 public class RentFromDomainToData {
+
+    private static AccountMapper mapper;
+
+
     public static RentEnt map(Rent rent) {
-        UserToAccountMapper mapper = new UserToAccountMapper();
         return RentEnt.builder()
                 .id(rent.getId())
                 .status(rent.getStatus())
