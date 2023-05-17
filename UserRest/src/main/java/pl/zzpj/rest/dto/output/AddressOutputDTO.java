@@ -1,18 +1,18 @@
-package pl.zzpj.core.domain.model.userModel;
+package pl.zzpj.rest.dto.output;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
+@NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Builder
-public class Address {
+public class AddressOutputDTO {
   private String country;
   private String countryCode;
   private String city;
   private String streetName;
   private String streetAddress;
-  private String zipCode;
-
 }
