@@ -38,16 +38,21 @@ public class ShopTireEnt extends ShopEquipmentEnt {
     @Column
     @DateTimeFormat
     @NotNull
-    private LocalDateTime productionDate; //todo date mapper?
+    private LocalDateTime productionDate;
+
+    @Column
+    @NotNull
+    private TireTypeEnt typeEnt;
 
     @Builder(builderMethodName = "toDataBuilder")
-    public ShopTireEnt(UUID id, long version, String name, String description,
-                       double cost, String size, Long maximumSpeed,
-                       Long maximumWeight, LocalDateTime productionDate) {
-        super(id, version, name, description, cost);
+    public ShopTireEnt(UUID id, Long version, @NotBlank String name, @NotBlank String description,
+                       @Positive double cost, boolean archive, String size,
+                       Long maximumSpeed, Long maximumWeight, LocalDateTime productionDate, TireTypeEnt typeEnt) {
+        super(id, version, name, description, cost, archive);
         this.size = size;
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;
         this.productionDate = productionDate;
+        this.typeEnt = typeEnt;
     }
 }

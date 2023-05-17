@@ -45,6 +45,11 @@
 
         <dependency>
             <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>RentRest</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
             <artifactId>ShopModule</artifactId>
         </dependency>
         <dependency>

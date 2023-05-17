@@ -1,26 +1,30 @@
 package pl.zzpj.data.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import pl.zzpj.repository.data.AbstractEntity;
 
-@Embeddable
+@Entity
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Builder
-public class Address {
+@SecondaryTable(
+        name = "address_additional_data",
+        pkJoinColumns = @PrimaryKeyJoinColumn(name = "address_id")
+)
+public class Address extends AbstractEntity {
+  @Column(nullable = false)
   private String country;
   @Column(name = "country_code")
   private String countryCode;
+  @Column(nullable = false)
   private String city;
-  @Column(name = "street_name")
+  @Column(name = "street_name", nullable = false)
   private String streetName;
-  @Column(name = "street_address")
+  @Column(name = "street_address", nullable = false)
   private String streetAddress;
   @Column(name = "secondary_address")
   private String secondaryAddress;
@@ -28,24 +32,28 @@ public class Address {
   private Integer buildingNumber;
   @Column(name = "mail_box")
   private String mailBox;
-  private String community;
   @Column(name = "zip_code")
   private String zipCode;
+
+  @Column(table = "address_additional_data")
+  private String community;
+  @Column(table = "address_additional_data")
   private String zip;
-  @Column(name = "time_zone")
+  @Column(name = "time_zone", table = "address_additional_data")
   private String timeZone;
-  @Column(name = "street_suffix")
+  @Column(name = "street_suffix", table = "address_additional_data")
   private String streetSuffix;
-  @Column(name = "city_suffix")
+  @Column(name = "city_suffix", table = "address_additional_data")
   private String citySuffix;
-  @Column(name = "city_prefix")
+  @Column(name = "city_prefix", table = "address_additional_data")
   private String cityPrefix;
+  @Column(table = "address_additional_data")
   private String state;
-  @Column(name = "state_abbr")
+  @Column(name = "state_abbr", table = "address_additional_data")
   private String stateAbbr;
   @Embedded
   private Coordinates coordinates;
-  @Column(name = "full_address")
+  @Column(name = "full_address", table = "address_additional_data")
   private String fullAddress;
 
 
