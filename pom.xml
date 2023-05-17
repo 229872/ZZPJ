@@ -79,6 +79,11 @@
                 <optional>true</optional>
                 <version>1.18.26</version>
             </dependency>
+            <dependency>
+                <groupId>at.favre.lib</groupId>
+                <artifactId>bcrypt</artifactId>
+                <version>0.10.2</version>
+            </dependency>
 
 
             <dependency>

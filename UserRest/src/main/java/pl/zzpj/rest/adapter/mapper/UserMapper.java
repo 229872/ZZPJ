@@ -7,11 +7,13 @@ import pl.zzpj.core.domain.model.userModel.User;
 import pl.zzpj.rest.dto.input.UserInputDTO;
 import pl.zzpj.rest.dto.output.UserOutputDTO;
 import pl.zzpj.rest.dto.output.PersonOutputDTO;
+import pl.zzpj.rest.security.CryptUtils;
 
 @Component
 @AllArgsConstructor
 public class UserMapper {
   private final PersonRestMapper personMapper;
+  private final CryptUtils cryptUtils;
 
   public UserOutputDTO mapToUserOutputDTO(User user) {
     PersonOutputDTO person = personMapper.mapToPersonOutputDTO(user.getPerson());
@@ -30,8 +32,8 @@ public class UserMapper {
 
   public User mapToDomainModelUser(UserInputDTO user) {
     Person person = personMapper.mapToModelDomainPerson(user.getPerson());
-    //todo hashpassword
-    return User.builder(user.getLogin(), user.getPassword(), user.getEmail(), person)
+
+    return User.builder(user.getLogin(), cryptUtils.hashPassword(user.getPassword()), user.getEmail(), person)
             .build();
   }
 

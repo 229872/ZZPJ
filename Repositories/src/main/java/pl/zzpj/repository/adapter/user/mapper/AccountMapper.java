@@ -15,6 +15,7 @@ public class AccountMapper {
     var person = personMapper.mapToDomainModelPerson(account.getPerson());
 
     return User.builder(account.getLogin(), account.getPassword(), account.getEmail(), person)
+            .clientId(account.getId())
             .phoneNumber(account.getPhoneNumber())
             .socialInsuranceNumber(account.getSocialInsuranceNumber())
             .creditCard(account.getCreditCard())

@@ -2,7 +2,9 @@ package pl.zzpj.repository.adapter.user;
 
 import lombok.AllArgsConstructor;
 import org.hibernate.cfg.NotYetImplementedException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
+import pl.zzpj.core.domain.exception.user.UserServiceCreateException;
 import pl.zzpj.core.domain.model.userModel.User;
 import pl.zzpj.ports.command.user.UserCommandRepositoryPort;
 import pl.zzpj.ports.query.user.UserQueryRepositoryPort;
@@ -33,9 +35,24 @@ public class UserRepositoryAdapter implements UserQueryRepositoryPort, UserComma
   }
 
   @Override
-  public User add(User user) {
-    Account account = accountRepository.save(accountMapper.mapToAccount(user));
-    return accountMapper.mapToUser(account);
+  public Optional<User> getUserByLogin(String login) {
+    return accountRepository.findByLogin(login).map(accountMapper::mapToUser);
+  }
+
+  @Override
+  public Optional<User> getUserByEmail(String email) {
+    return accountRepository.findByEmail(email).map(accountMapper::mapToUser);
+  }
+
+  @Override
+  public User add(User user) throws UserServiceCreateException {
+    try {
+      Account account = accountRepository.save(accountMapper.mapToAccount(user));
+      return accountMapper.mapToUser(account);
+
+    } catch (DataIntegrityViolationException e) {
+      throw new UserServiceCreateException(e.getMessage(), e);
+    }
   }
 
   @Override

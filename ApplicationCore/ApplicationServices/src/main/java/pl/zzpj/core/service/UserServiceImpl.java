@@ -2,6 +2,7 @@ package pl.zzpj.core.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.zzpj.core.domain.exception.user.UserServiceCreateException;
 import pl.zzpj.core.domain.model.userModel.User;
 import pl.zzpj.ports.command.user.UserCommandRepositoryPort;
 import pl.zzpj.ports.command.user.UserCommandServicePort;
@@ -28,7 +29,17 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
   }
 
   @Override
-  public User add(User user) {
+  public Optional<User> getUserByLogin(String login) {
+    return userQueryRepositoryPort.getUserByLogin(login);
+  }
+
+  @Override
+  public Optional<User> getUserByEmail(String email) {
+    return userQueryRepositoryPort.getUserByEmail(email);
+  }
+
+  @Override
+  public User add(User user) throws UserServiceCreateException {
     return userCommandRepositoryPort.add(user);
   }
 

@@ -18,6 +18,11 @@
         </dependency>
 
         <dependency>
+            <groupId>at.favre.lib</groupId>
+            <artifactId>bcrypt</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>pl.lodz.p.edu.zzpj</groupId>
             <artifactId>DomainModel</artifactId>
         </dependency>

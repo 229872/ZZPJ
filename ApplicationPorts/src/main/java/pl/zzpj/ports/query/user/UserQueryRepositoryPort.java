@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface UserQueryRepositoryPort {
   List<User> getAllUsers();
   Optional<User> getUserById(UUID id);
+  Optional<User> getUserByLogin(String login);
+  Optional<User> getUserByEmail(String email);
 }
