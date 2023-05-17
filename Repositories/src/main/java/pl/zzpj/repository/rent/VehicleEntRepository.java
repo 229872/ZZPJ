@@ -7,5 +7,5 @@ import pl.zzpj.data.rent.VehicleEnt;
 import java.util.UUID;
 
 @Repository
-public class VehicleEntRepository implements JpaRepository<VehicleEnt, UUID> {
+public interface VehicleEntRepository extends JpaRepository<VehicleEnt, UUID> {
 }

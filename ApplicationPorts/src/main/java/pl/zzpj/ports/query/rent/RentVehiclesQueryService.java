@@ -7,9 +7,7 @@ import java.util.UUID;
 
 public interface RentVehiclesQueryService {
     Vehicle findById(UUID id);
-    Vehicle findByMake(String make);
+    List<Vehicle> findAllByMake(String make);
     List<Vehicle> findAll();
     List<Vehicle> findAllAvailable();
-    List<Vehicle> findAllByType(String type);
-
 }

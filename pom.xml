@@ -40,6 +40,7 @@
         <module>ShopModule</module>
         <module>Repositories</module>
         <module>UserRest</module>
+        <module>RentVehicleRest</module>
 
     </modules>
 
@@ -128,6 +129,11 @@
             <dependency>
                 <groupId>pl.lodz.p.edu.zzpj</groupId>
                 <artifactId>ShopModule</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.lodz.p.edu.zzpj</groupId>
+                <artifactId>RentVehicleRest</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
         </dependencies>

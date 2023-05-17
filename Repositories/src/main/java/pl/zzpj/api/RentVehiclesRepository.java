@@ -9,5 +9,9 @@ import java.util.UUID;
 
 @Repository
 public interface RentVehiclesRepository extends JpaRepository<VehicleEnt, UUID> {
+    List<VehicleEnt> findByMake(String name);
+    List<VehicleEnt> findByisAvailableTrue();
+
+
 
 }
