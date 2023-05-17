@@ -3,6 +3,7 @@ package pl.zzpj.rest.dto.shopEquipment.Input;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -34,10 +35,11 @@ public class ShopTireInputDto extends ShopEquipmentInputDto {
     @NotNull
     private RestTireType type;
 
+    @Builder
     public ShopTireInputDto(String name,
-                            String description, Double cost, String size,
+                            String description, Double cost, String size, Boolean archive,
                             Long maximumSpeed, Long maximumWeight, LocalDateTime productionDate, RestTireType type) {
-        super(name, description, cost);
+        super(name, description, cost, archive);
         this.size = size;
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;

@@ -27,9 +27,9 @@ public class ShopTire {
 
     @Builder(builderMethodName = "fromApiBuilder")
     public ShopTire(String name, String description,
-                    Double cost, String size, Long maximumSpeed,
+                    Double cost, Boolean archive, String size, Long maximumSpeed,
                     Long maximumWeight, LocalDateTime productionDate, TireType type) {
-        this.equipment = new ShopEquipment(name, description, cost);
+        this.equipment = new ShopEquipment(name, description, cost, archive);
         this.size = size;
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;
@@ -38,10 +38,10 @@ public class ShopTire {
     }
 
     @Builder(builderMethodName = "fromDataBuilder")
-    public ShopTire(UUID uuid, long version, String name, String description,
+    public ShopTire(UUID uuid, long version, String name, boolean archive, String description,
                     Double cost, String size, Long maximumSpeed,
                     Long maximumWeight, LocalDateTime productionDate, TireType type) {
-        this.equipment = new ShopEquipment(uuid, version, name, description, cost);
+        this.equipment = new ShopEquipment(uuid, version, name, description, cost, archive);
         this.size = size;
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;

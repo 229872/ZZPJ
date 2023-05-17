@@ -17,6 +17,7 @@ public class ShopEquipmentFromDomainToDataMapper {
                 .name(tire.getEquipment().getName())
                 .description(tire.getEquipment().getDescription())
                 .cost(tire.getEquipment().getCost())
+                .archive(tire.getEquipment().getArchive())
                 .size(tire.getSize())
                 .maximumSpeed(tire.getMaximumSpeed())
                 .maximumWeight(tire.getMaximumWeight())

@@ -13,6 +13,7 @@ public class ShopTireFromInputDtoToDomainMapper {
                 .name(inputDto.getName())
                 .description(inputDto.getDescription())
                 .cost(inputDto.getCost()) //Cost as another entity?
+                .archive(inputDto.getArchive())
                 .size(inputDto.getSize())
                 .maximumSpeed(inputDto.getMaximumSpeed())
                 .maximumWeight(inputDto.getMaximumWeight())

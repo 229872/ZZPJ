@@ -23,18 +23,20 @@ public class ShopEquipment {
 
     private SuperDataModel superModel;
 
-    public ShopEquipment(UUID uuid, long version, String name, String description, Double cost) {
+    public ShopEquipment(UUID uuid, long version, String name, String description, Double cost, boolean archive) {
         this.superModel = new SuperDataModel(uuid, version);
         this.name = name;
         this.description = description;
         this.cost = cost;
+        this.archive = archive;
     }
 
-    public ShopEquipment(String name, String description, Double cost) {
+    public ShopEquipment(String name, String description, Double cost, Boolean archive) {
         this.superModel = new SuperDataModel();
         this.name = name;
         this.description = description;
         this.cost = cost;
+        this.archive = archive;
     }
 
     public void merge(ShopEquipment equipment) {

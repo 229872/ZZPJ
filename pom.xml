@@ -61,7 +61,11 @@
                 <scope>test</scope>
                 <version>3.0.6</version>
             </dependency>
-
+            <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>rest-assured</artifactId>
+                <version>5.3.0</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.postgresql</groupId>

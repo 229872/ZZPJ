@@ -21,4 +21,7 @@ public class ShopEquipmentInputDto {
     @NotNull
     @Positive
     protected Double cost;
+
+    @NotNull
+    protected Boolean archive;
 }

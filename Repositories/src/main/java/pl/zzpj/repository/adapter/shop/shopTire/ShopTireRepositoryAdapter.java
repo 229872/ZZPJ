@@ -56,6 +56,7 @@ public class ShopTireRepositoryAdapter implements ShopTireCommandPort, ShopTireQ
 
     @Override
     public ShopTire getEquipmentById(UUID id) throws EquipmentNotFoundServiceException {
-        return (ShopTire) repository.findById(id).stream();
+        return fromDataMapper.convertDataToDomainModel(
+                (ShopTireEnt) repository.findById(id).orElseThrow(EquipmentNotFoundServiceException::new));
     }
 }
