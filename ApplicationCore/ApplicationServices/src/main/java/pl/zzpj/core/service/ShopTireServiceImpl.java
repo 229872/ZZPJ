@@ -27,7 +27,8 @@ public class ShopTireServiceImpl implements ShopTireCommandService, ShopTireQuer
 
     @Override
     public ShopTire addEquipment(ShopTire tire) {
-        return commandPort.add(tire);
+        ShopTire returnTire = commandPort.add(tire);
+        return returnTire;
     }
 
     @Override

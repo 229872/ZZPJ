@@ -11,19 +11,11 @@ import pl.zzpj.repository.data.shop.ShopTireEnt;
 public class ShopEquipmentFromDataToDomainMapper {
 
     public ShopTire convertDataToDomainModel(ShopTireEnt tireEnt) {
-        ShopTire returnTire = ShopTire.fromDataBuilder()
-                .uuid(tireEnt.getId())
-                .version(tireEnt.getVersion())
-                .name(tireEnt.getName())
-                .description(tireEnt.getDescription())
-                .archive(tireEnt.isArchive())
-                .cost(tireEnt.getCost()) //Cost as another entity?
-                .size(tireEnt.getSize())
-                .maximumSpeed(tireEnt.getMaximumSpeed())
-                .maximumWeight(tireEnt.getMaximumWeight())
-                .productionDate(tireEnt.getProductionDate())
-                .type(TireType.valueOf(tireEnt.getTypeEnt().name()))
-                .build();
+
+        ShopTire returnTire = new ShopTire(tireEnt.getId(), tireEnt.getVersion(),
+                tireEnt.getName(), tireEnt.isArchive(), tireEnt.getDescription(), tireEnt.getCost(), tireEnt.getSize(),
+                tireEnt.getMaximumSpeed(), tireEnt.getMaximumWeight(), tireEnt.getProductionDate(),
+                TireType.valueOf(tireEnt.getTypeEnt().name()));
         return returnTire;
     }
 }

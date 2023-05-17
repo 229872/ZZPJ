@@ -33,8 +33,9 @@ public class ShopTireRepositoryAdapter implements ShopTireCommandPort, ShopTireQ
 
     @Override
     public ShopTire add(ShopTire tire) {
-        return fromDataMapper.convertDataToDomainModel((ShopTireEnt) repository
-                .save(fromDomainMapper.convertDomainModelToDataRepository(tire)));
+        ShopTireEnt returnEnt = (ShopTireEnt) repository.save(fromDomainMapper.convertDomainModelToDataRepository(tire));
+        ShopTire returnDomainTire = fromDataMapper.convertDataToDomainModel(returnEnt);
+        return returnDomainTire;
     }
 
     @Override
