@@ -2,11 +2,9 @@ package pl.zzpj.repository.data.rent;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jdk.jfr.Timestamp;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-import pl.zzpj.core.domain.model.rentModel.RentStatus;
-import pl.zzpj.core.domain.model.userModel.User;
+import pl.zzpj.repository.core.domain.model.rentModel.RentStatus;
 import pl.zzpj.repository.data.user.Account;
 
 import java.math.BigDecimal;
