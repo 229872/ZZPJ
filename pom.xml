@@ -37,6 +37,7 @@
         <module>Repositories</module>
         <module>UserRest</module>
 
+        <module>RentRest</module>
     </modules>
 
     <properties>
@@ -118,6 +119,11 @@
             <dependency>
                 <groupId>pl.lodz.p.edu.zzpj</groupId>
                 <artifactId>StartApplication</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.lodz.p.edu.zzpj</groupId>
+                <artifactId>RentRest</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
