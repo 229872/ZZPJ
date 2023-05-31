@@ -2,7 +2,9 @@ package pl.zzpj.repository.rest.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.zzpj.repository.rest.api.UserService;
@@ -15,17 +17,24 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/users")
 @AllArgsConstructor
 public class UserController {
   private final UserService userService;
 
-  @GetMapping("/users")
+  @GetMapping(produces = {
+          MediaType.APPLICATION_JSON_VALUE,
+          MediaType.APPLICATION_XML_VALUE
+  })
   public List<UserOutputDTO> getAll() {
     return userService.getAllUsers();
   }
 
-  @GetMapping("/users/id/{id}")
-  public ResponseEntity getById(@PathVariable UUID id) {
+  @GetMapping(value = "/id/{id}", produces = {
+          MediaType.APPLICATION_JSON_VALUE,
+          MediaType.APPLICATION_XML_VALUE
+  })
+  public ResponseEntity<?> getById(@PathVariable UUID id) {
     try {
       UserOutputDTO foundUser = userService.getUserById(id).orElseThrow();
       return ResponseEntity.status(HttpStatus.OK).body(foundUser);
@@ -35,8 +44,11 @@ public class UserController {
     }
   }
 
-  @GetMapping("/users/login/{login}")
-  public ResponseEntity getByLogin(@PathVariable String login) {
+  @GetMapping(value = "/login/{login}", produces = {
+          MediaType.APPLICATION_JSON_VALUE,
+          MediaType.APPLICATION_XML_VALUE
+  })
+  public ResponseEntity<?> getByLogin(@PathVariable String login) {
     try {
       UserOutputDTO foundUser = userService.getUserByLogin(login).orElseThrow();
       return ResponseEntity.status(HttpStatus.OK).body(foundUser);
@@ -46,8 +58,11 @@ public class UserController {
     }
   }
 
-  @GetMapping("/users/email/{email}")
-  public ResponseEntity getByEmail(@PathVariable String email) {
+  @GetMapping(value = "/email/{email}", produces = {
+          MediaType.APPLICATION_JSON_VALUE,
+          MediaType.APPLICATION_XML_VALUE
+  })
+  public ResponseEntity<?> getByEmail(@PathVariable String email) {
     try {
       UserOutputDTO foundUser = userService.getUserByEmail(email).orElseThrow();
       return ResponseEntity.status(HttpStatus.OK).body(foundUser);
@@ -57,8 +72,8 @@ public class UserController {
     }
   }
 
-  @PostMapping("/users")
-  public ResponseEntity create(@RequestBody @Valid UserInputDTO user) {
+  @PostMapping
+  public ResponseEntity<?> create(@RequestBody @Valid UserInputDTO user) {
     try {
       UserOutputDTO newUser = userService.createUser(user);
       return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
