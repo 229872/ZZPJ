@@ -31,9 +31,9 @@ public class UserMapper {
   }
 
   public User mapToDomainModelUser(UserInputDTO user) {
-    Person person = personMapper.mapToModelDomainPerson(user.getPerson());
+    Person person = personMapper.mapToModelDomainPerson(user.person());
 
-    return User.builder(user.getLogin(), cryptUtils.hashPassword(user.getPassword()), user.getEmail(), person)
+    return User.builder(user.login(), cryptUtils.hashPassword(user.password()), user.email(), person)
             .build();
   }
 

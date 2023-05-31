@@ -19,12 +19,12 @@ public class AddressRestMapper {
 
   public Address mapToDomainModelAddress(AddressInputDTO address) {
     return Address.builder()
-            .country(address.getCountry())
-            .countryCode(address.getCountryCode())
-            .city(address.getCity())
-            .streetName(address.getStreetName())
-            .streetAddress(address.getStreetAddress())
-            .zipCode(address.getZipCode())
+            .country(address.country())
+            .countryCode(address.countryCode())
+            .city(address.city())
+            .streetName(address.streetName())
+            .streetAddress(address.streetAddress())
+            .zipCode(address.zipCode())
             .build();
   }
 }

@@ -1,23 +1,10 @@
 package pl.zzpj.repository.rest.dto.output;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.UUID;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 @Builder
-public class UserOutputDTO {
-  private UUID clientId;
-  private String login;
-  private String email;
-  private String phoneNumber;
-  private String socialInsuranceNumber;
-  private String creditCard;
-  private Double score;
-  private PersonOutputDTO person;
+public record UserOutputDTO(UUID clientId, String login, String email, String phoneNumber,
+                            String socialInsuranceNumber, String creditCard, Double score,
+                            PersonOutputDTO person) {
 }

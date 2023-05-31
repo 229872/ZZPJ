@@ -26,10 +26,10 @@ public class PersonRestMapper {
   }
 
   public Person mapToModelDomainPerson(PersonInputDTO person) {
-    Address address = addressMapper.mapToDomainModelAddress(person.getAddress());
-    LocalDate dateOfBirth = LocalDate.parse(person.getDateOfBirth());
+    Address address = addressMapper.mapToDomainModelAddress(person.address());
+    LocalDate dateOfBirth = LocalDate.parse(person.dateOfBirth());
 
-    return Person.builder(person.getName(), person.getLastName(), person.getGender(),
+    return Person.builder(person.name(), person.lastName(), person.gender(),
             dateOfBirth, address).build();
   }
 }
