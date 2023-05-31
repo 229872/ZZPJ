@@ -30,35 +30,24 @@ public class UserController {
 
   @GetMapping("/id/{id}")
   public ResponseEntity<?> getById(@PathVariable UUID id) {
-    try {
-      UserOutputDTO foundUser = userService.getUserById(id).orElseThrow();
-      return ResponseEntity.status(HttpStatus.OK).body(foundUser);
+    return userService.getUserById(id)
+            .map(ResponseEntity::ok)
+            .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 
-    } catch (NoSuchElementException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
   }
 
   @GetMapping("/login/{login}")
   public ResponseEntity<?> getByLogin(@PathVariable String login) {
-    try {
-      UserOutputDTO foundUser = userService.getUserByLogin(login).orElseThrow();
-      return ResponseEntity.status(HttpStatus.OK).body(foundUser);
-
-    } catch (NoSuchElementException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
+    return userService.getUserByLogin(login)
+            .map(ResponseEntity::ok)
+            .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
 
   @GetMapping("/email/{email}")
   public ResponseEntity<?> getByEmail(@PathVariable String email) {
-    try {
-      UserOutputDTO foundUser = userService.getUserByEmail(email).orElseThrow();
-      return ResponseEntity.status(HttpStatus.OK).body(foundUser);
-
-    } catch (NoSuchElementException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
+    return userService.getUserByEmail(email)
+            .map(ResponseEntity::ok)
+            .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
