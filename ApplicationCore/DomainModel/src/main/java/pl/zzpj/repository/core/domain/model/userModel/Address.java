@@ -8,6 +8,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class Address {
+  private Long version;
   private String country;
   private String city;
   private String streetName;

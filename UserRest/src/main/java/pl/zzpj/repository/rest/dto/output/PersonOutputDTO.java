@@ -6,7 +6,13 @@ import java.time.LocalDate;
 
 
 @Builder
-public record PersonOutputDTO(String firstName, String lastName, String gender, LocalDate dateOfBirth,
-                             AddressOutputDTO address) {
+public record PersonOutputDTO(
+        Long version,
+        String firstName,
+        String lastName,
+        String gender,
+        LocalDate dateOfBirth,
+        Integer age,
+        AddressOutputDTO address) {
 
 }

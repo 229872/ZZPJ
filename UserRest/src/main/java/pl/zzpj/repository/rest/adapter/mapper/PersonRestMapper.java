@@ -16,13 +16,15 @@ public class PersonRestMapper {
   public PersonOutputDTO mapToPersonOutputDTO(Person person) {
     var address = addressMapper.mapToAddressOutputDTO(person.getAddress());
 
-    return PersonOutputDTO.builder()
-            .firstName(person.getName())
-            .lastName(person.getLastName())
-            .address(address)
-            .dateOfBirth(person.getDateOfBirth())
-            .gender(person.getGender())
-            .build();
+    return new PersonOutputDTO(
+            person.getVersion(),
+            person.getName(),
+            person.getLastName(),
+            person.getGender(),
+            person.getDateOfBirth(),
+            person.getAge(),
+            address
+            );
   }
 
   public Person mapToModelDomainPerson(PersonInputDTO person) {

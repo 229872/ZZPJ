@@ -4,7 +4,14 @@ import lombok.Builder;
 import java.util.UUID;
 
 @Builder
-public record UserOutputDTO(UUID clientId, String login, String email, String phoneNumber,
-                            String socialInsuranceNumber, String creditCard, Double score,
-                            PersonOutputDTO person) {
+public record UserOutputDTO(
+        Long version,
+        UUID clientId,
+        String login,
+        String email,
+        String phoneNumber,
+        String socialInsuranceNumber,
+        String creditCard,
+        Double score,
+        PersonOutputDTO person) {
 }

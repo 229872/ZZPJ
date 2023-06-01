@@ -43,6 +43,7 @@ public class AddressMapper {
     );
 
     return builder
+            .version(address.getVersion())
             .secondaryAddress(address.getSecondaryAddress())
             .buildingNumber(address.getBuildingNumber())
             .mailBox(address.getMailBox())

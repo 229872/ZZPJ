@@ -19,6 +19,7 @@ public class UserMapper {
     PersonOutputDTO person = personMapper.mapToPersonOutputDTO(user.getPerson());
 
     return new UserOutputDTO(
+            user.getVersion(),
             user.getClientId(),
             user.getLogin(),
             user.getEmail(),

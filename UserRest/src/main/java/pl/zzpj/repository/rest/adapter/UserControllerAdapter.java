@@ -1,6 +1,6 @@
 package pl.zzpj.repository.rest.adapter;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceCreateException;
 import pl.zzpj.repository.core.domain.model.userModel.User;
@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserControllerAdapter implements UserService {
   private final UserQueryServicePort userQueryServicePort;
   private final UserCommandServicePort userCommandServicePort;

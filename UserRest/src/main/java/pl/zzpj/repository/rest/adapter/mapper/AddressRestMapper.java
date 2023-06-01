@@ -10,6 +10,7 @@ import pl.zzpj.repository.rest.dto.output.CoordinatesDto;
 public class AddressRestMapper {
   public AddressOutputDTO mapToAddressOutputDTO(Address address) {
     return new AddressOutputDTO(
+            address.getVersion(),
             address.getCountry(),
             address.getCity(),
             address.getStreetName(),
