@@ -11,8 +11,6 @@ public record AddressInputDto (
         String building_number,
         String mail_box,
         String community,
-        String zip_code,
-        String zip,
         String postcode,
         String time_zone,
         String street_suffix,

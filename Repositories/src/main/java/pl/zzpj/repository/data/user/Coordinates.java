@@ -14,5 +14,5 @@ public class Coordinates {
   @Column(name = "lat", table = "address_additional_data")
   private Double latitude;
   @Column(name = "lng", table = "address_additional_data")
-  private Double longtitude;
+  private Double longitude;
 }

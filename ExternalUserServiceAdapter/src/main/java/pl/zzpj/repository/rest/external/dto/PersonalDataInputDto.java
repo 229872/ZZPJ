@@ -11,6 +11,7 @@ public record PersonalDataInputDto(
         String password,
         String first_name,
         String last_name,
+        CreditCardInputDto credit_card,
         String username,
         String email,
         String gender,

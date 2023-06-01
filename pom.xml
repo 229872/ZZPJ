@@ -41,10 +41,8 @@
         <module>Repositories</module>
         <module>UserRest</module>
         <module>RentVehicleRest</module>
-
         <module>RentRest</module>
         <module>ExternalUserServiceAdapter</module>
-        <module>ApplicationCore/Utils</module>
     </modules>
 
     <properties>

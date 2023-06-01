@@ -17,30 +17,57 @@ public class UserRestClientMapper {
 
   public User mapToDomainModelUser(UserInputDto userInputDto) {
     PersonalDataInputDto user = userInputDto.user();
+    Address address = mapToDomainModelAddress(userInputDto.address());
+    Person person = mapToDomainModelPerson(user, address);
 
-    return User.builder(
+    User.UserBuilder userBuilder = User.builder(
             user.username(),
             cryptUtils.hashPassword(user.password()),
-            user.email(),
-            Person.builder(
-                    user.first_name(),
-                    user.last_name(),
-                    user.gender(),
-                    user.date_of_birth(),
-                    mapToDomainModelAddress(userInputDto.address())
-            ).build()
-    ).build();
+            user.email(), person);
+
+    return userBuilder
+            .creditCard(user.credit_card().cc_number())
+            .phoneNumber(user.phone_number())
+            .socialInsuranceNumber(user.social_insurance_number())
+            .build();
   }
 
   private Address mapToDomainModelAddress(AddressInputDto addressInputDto) {
-    //todo add all fields and change _ to camelcase
-    return Address.builder()
-            .country(addressInputDto.country())
+    //todo change _ to camelcase
+    Address.AddressBuilder builder = Address.builder(
+            addressInputDto.country(),
+            addressInputDto.city(),
+            addressInputDto.street_name(),
+            addressInputDto.street_address(),
+            addressInputDto.postcode()
+    );
+
+    return builder
+            .fullAddress(addressInputDto.full_address())
+            .secondaryAddress(addressInputDto.secondary_address())
+            .buildingNumber(Integer.parseInt(addressInputDto.building_number()))
+            .mailBox(addressInputDto.mail_box())
+            .timeZone(addressInputDto.time_zone())
+            .state(addressInputDto.state())
+            .longitude(addressInputDto.longitude())
+            .latitude(addressInputDto.latitude())
+            .community(addressInputDto.community())
             .countryCode(addressInputDto.country_code())
-            .city(addressInputDto.city())
-            .streetAddress(addressInputDto.street_address())
-            .streetName(addressInputDto.street_name())
-            .zipCode(addressInputDto.zip_code())
+            .streetSuffix(addressInputDto.street_suffix())
+            .cityPrefix(addressInputDto.city_prefix())
+            .citySuffix(addressInputDto.city_suffix())
+            .stateAbbr(addressInputDto.state_abbr())
             .build();
+  }
+
+  private Person mapToDomainModelPerson(PersonalDataInputDto user, Address address) {
+
+    return Person.builder(
+            user.first_name(),
+            user.last_name(),
+            user.gender(),
+            user.date_of_birth(),
+            address
+    ).build();
   }
 }

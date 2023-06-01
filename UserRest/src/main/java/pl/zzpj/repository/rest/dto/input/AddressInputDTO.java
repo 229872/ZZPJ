@@ -6,10 +6,19 @@ import lombok.Builder;
 @Builder
 public record AddressInputDTO (
         @NotBlank String country,
-        @NotBlank String countryCode,
         @NotBlank String city,
         @NotBlank String streetName,
-        @NotBlank String streetAddress,
-        @NotBlank String zipCode ) {
+        @NotBlank String streetNumber,
+        @NotBlank String postalCode,
+        String secondaryAddress,
+        Integer buildingNumber,
+        String mailBox,
+        String timeZone,
+        String state,
+        Double longitude,
+        Double latitude,
+        String community
+
+        ) {
 
 }
