@@ -1,28 +1,29 @@
 package pl.zzpj.repository.rest.external.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 
 @Builder
 public record AddressInputDto (
         String city,
-        String street_name,
-        String street_address,
-        String secondary_address,
-        String building_number,
-        String mail_box,
+        @JsonProperty("street_name") String streetName,
+        @JsonProperty("street_address") String streetAddress,
+        @JsonProperty("secondary_address") String secondaryAddress,
+        @JsonProperty("building_number") String buildingNumber,
+        @JsonProperty("mail_box") String mailBox,
         String community,
         String postcode,
-        String time_zone,
-        String street_suffix,
-        String city_suffix,
-        String city_prefix,
+        @JsonProperty("time_zone") String timeZone,
+        @JsonProperty("street_suffix") String streetSuffix,
+        @JsonProperty("city_suffix") String citySuffix,
+        @JsonProperty("city_prefix") String cityPrefix,
         String state,
-        String state_abbr,
+        @JsonProperty("state_abbr") String stateAbbr,
         String country,
-        String country_code,
+        @JsonProperty("country_code") String countryCode,
         Double latitude,
         Double longitude,
-        String full_address
+        @JsonProperty("full_address") String fullAddress
 
 ) {
 }

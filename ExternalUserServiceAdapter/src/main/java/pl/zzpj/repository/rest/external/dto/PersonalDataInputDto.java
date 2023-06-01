@@ -1,5 +1,6 @@
 package pl.zzpj.repository.rest.external.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 
 import java.time.LocalDate;
@@ -9,15 +10,15 @@ import java.util.UUID;
 public record PersonalDataInputDto(
         UUID uid,
         String password,
-        String first_name,
-        String last_name,
-        CreditCardInputDto credit_card,
+        @JsonProperty("first_name") String firstName,
+        @JsonProperty("last_name") String lastName,
+        @JsonProperty("credit_card") CreditCardInputDto creditCard,
         String username,
         String email,
         String gender,
-        String phone_number,
-        String social_insurance_number,
-        LocalDate date_of_birth
+        @JsonProperty("phone_number") String phoneNumber,
+        @JsonProperty("social_insurance_number") String socialInsuranceNumber,
+        @JsonProperty("date_of_birth") LocalDate dateOfBirth
 
 ) {
 }

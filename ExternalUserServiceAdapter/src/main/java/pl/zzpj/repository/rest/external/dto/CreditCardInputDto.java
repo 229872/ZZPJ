@@ -1,4 +1,6 @@
 package pl.zzpj.repository.rest.external.dto;
 
-public record CreditCardInputDto (String cc_number) {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record CreditCardInputDto (@JsonProperty("cc_number") String ccNumber) {
 }

@@ -37,4 +37,9 @@ public class Account extends AbstractEntity {
     return new AccountBuilder().login(login).password(password).email(email).person(person);
   }
 
+  @PrePersist
+  public void init() {
+    this.score = 0.0;
+  }
+
 }

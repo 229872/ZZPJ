@@ -26,47 +26,46 @@ public class UserRestClientMapper {
             user.email(), person);
 
     return userBuilder
-            .creditCard(user.credit_card().cc_number())
-            .phoneNumber(user.phone_number())
-            .socialInsuranceNumber(user.social_insurance_number())
+            .creditCard(user.creditCard().ccNumber())
+            .phoneNumber(user.phoneNumber())
+            .socialInsuranceNumber(user.socialInsuranceNumber())
             .build();
   }
 
   private Address mapToDomainModelAddress(AddressInputDto addressInputDto) {
-    //todo change _ to camelcase
     Address.AddressBuilder builder = Address.builder(
             addressInputDto.country(),
             addressInputDto.city(),
-            addressInputDto.street_name(),
-            addressInputDto.street_address(),
+            addressInputDto.streetName(),
+            addressInputDto.streetAddress(),
             addressInputDto.postcode()
     );
 
     return builder
-            .fullAddress(addressInputDto.full_address())
-            .secondaryAddress(addressInputDto.secondary_address())
-            .buildingNumber(Integer.parseInt(addressInputDto.building_number()))
-            .mailBox(addressInputDto.mail_box())
-            .timeZone(addressInputDto.time_zone())
+            .fullAddress(addressInputDto.fullAddress())
+            .secondaryAddress(addressInputDto.secondaryAddress())
+            .buildingNumber(Integer.parseInt(addressInputDto.buildingNumber()))
+            .mailBox(addressInputDto.mailBox())
+            .timeZone(addressInputDto.timeZone())
             .state(addressInputDto.state())
             .longitude(addressInputDto.longitude())
             .latitude(addressInputDto.latitude())
             .community(addressInputDto.community())
-            .countryCode(addressInputDto.country_code())
-            .streetSuffix(addressInputDto.street_suffix())
-            .cityPrefix(addressInputDto.city_prefix())
-            .citySuffix(addressInputDto.city_suffix())
-            .stateAbbr(addressInputDto.state_abbr())
+            .countryCode(addressInputDto.countryCode())
+            .streetSuffix(addressInputDto.streetSuffix())
+            .cityPrefix(addressInputDto.cityPrefix())
+            .citySuffix(addressInputDto.citySuffix())
+            .stateAbbr(addressInputDto.stateAbbr())
             .build();
   }
 
   private Person mapToDomainModelPerson(PersonalDataInputDto user, Address address) {
 
     return Person.builder(
-            user.first_name(),
-            user.last_name(),
+            user.firstName(),
+            user.lastName(),
             user.gender(),
-            user.date_of_birth(),
+            user.dateOfBirth(),
             address
     ).build();
   }
