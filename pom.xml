@@ -43,6 +43,7 @@
         <module>RentVehicleRest</module>
 
         <module>RentRest</module>
+        <module>ExternalUserServiceAdapter</module>
     </modules>
 
     <properties>
@@ -164,6 +165,11 @@
             <dependency>
                 <groupId>pl.lodz.p.edu.zzpj</groupId>
                 <artifactId>RentVehicleRest</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.lodz.p.edu.zzpj</groupId>
+                <artifactId>ExternalUserServiceAdapter</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
         </dependencies>
