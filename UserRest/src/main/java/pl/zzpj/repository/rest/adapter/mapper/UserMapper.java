@@ -2,12 +2,12 @@ package pl.zzpj.repository.rest.adapter.mapper;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import pl.zzpj.repository.utils.security.CryptUtils;
 import pl.zzpj.repository.core.domain.model.userModel.Person;
 import pl.zzpj.repository.core.domain.model.userModel.User;
 import pl.zzpj.repository.rest.dto.input.UserInputDTO;
 import pl.zzpj.repository.rest.dto.output.UserOutputDTO;
 import pl.zzpj.repository.rest.dto.output.PersonOutputDTO;
-import pl.zzpj.repository.rest.security.CryptUtils;
 
 @Component
 @AllArgsConstructor

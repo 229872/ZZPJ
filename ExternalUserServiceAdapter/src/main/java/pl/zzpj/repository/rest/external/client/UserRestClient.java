@@ -20,16 +20,14 @@ public class UserRestClient {
 
   @Value("${client.api.user.link:https://random-data-api.com/api/users/random_user}")
   private String userApi;
-
   @Value("${client.api.address.link:https://random-data-api.com/api/address/random_address}")
   private String addressApi;
 
-  private final WebClient.Builder webClientBuilder = WebClient.builder();
-
+  private final WebClient.Builder webClientBuilder;
   private final UserService userService;
 
 
-  @Scheduled(fixedRateString = "${schedule.time.ms:15000}")
+  @Scheduled(fixedRateString = "${schedule.time.ms:300000}")
   public void getNewClientFromExternalService() {
     Mono<AddressInputDto> addressMono = fetchClientAddressFromExternalService();
     Mono<PersonalDataInputDto> userMono = fetchUserDataFromExternalService();

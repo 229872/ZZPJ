@@ -4,25 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ApplicationCore</artifactId>
-    <packaging>pom</packaging>
-
     <parent>
         <groupId>pl.lodz.p.edu.zzpj</groupId>
-        <artifactId>ZZPJ</artifactId>
+        <artifactId>ApplicationCore</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <modules>
-        <module>DomainModel</module>
-        <module>ApplicationServices</module>
-        <module>Utils</module>
-    </modules>
+    <artifactId>Utils</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>at.favre.lib</groupId>
+            <artifactId>bcrypt</artifactId>
         </dependency>
     </dependencies>
 

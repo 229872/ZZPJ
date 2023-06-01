@@ -1,6 +1,8 @@
 package pl.zzpj.repository.rest.external.adapter.mapper;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import pl.zzpj.repository.utils.security.CryptUtils;
 import pl.zzpj.repository.core.domain.model.userModel.Address;
 import pl.zzpj.repository.core.domain.model.userModel.Person;
 import pl.zzpj.repository.core.domain.model.userModel.User;
@@ -9,13 +11,16 @@ import pl.zzpj.repository.rest.external.dto.PersonalDataInputDto;
 import pl.zzpj.repository.rest.external.dto.UserInputDto;
 
 @Component
+@RequiredArgsConstructor
 public class UserRestClientMapper {
+  private final CryptUtils cryptUtils;
+
   public User mapToDomainModelUser(UserInputDto userInputDto) {
     PersonalDataInputDto user = userInputDto.user();
 
     return User.builder(
             user.username(),
-            user.password(),
+            cryptUtils.hashPassword(user.password()),
             user.email(),
             Person.builder(
                     user.first_name(),

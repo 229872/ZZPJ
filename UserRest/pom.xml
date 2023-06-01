@@ -18,11 +18,6 @@
         </dependency>
 
         <dependency>
-            <groupId>at.favre.lib</groupId>
-            <artifactId>bcrypt</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
         </dependency>
@@ -30,6 +25,11 @@
         <dependency>
             <groupId>pl.lodz.p.edu.zzpj</groupId>
             <artifactId>DomainModel</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>Utils</artifactId>
         </dependency>
 
         <dependency>
