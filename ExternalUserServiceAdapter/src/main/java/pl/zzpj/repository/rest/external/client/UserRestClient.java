@@ -18,9 +18,9 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class UserRestClient {
 
-  @Value("${client.api.user.link:https://random-data-api.com/api/users/random_user}")
+  @Value("${client.api.user.link}")
   private String userApi;
-  @Value("${client.api.address.link:https://random-data-api.com/api/address/random_address}")
+  @Value("${client.api.address.link}")
   private String addressApi;
 
   private final WebClient.Builder webClientBuilder;
