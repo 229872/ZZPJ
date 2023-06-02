@@ -2,7 +2,8 @@ package pl.zzpj.repository.core.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentNotFoundServiceException;
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentDataIntegrityViolationException;
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentNotFoundException;
 import pl.zzpj.repository.core.domain.model.vehicleModel.VehicleTire;
 import pl.zzpj.repository.ports.command.vehicleEquipment.VehicleTireCommandPort;
 import pl.zzpj.repository.ports.command.vehicleEquipment.VehicleTireCommandService;
@@ -26,13 +27,13 @@ public class VehicleTireServiceImpl implements VehicleTireCommandService, Vehicl
     }
 
     @Override
-    public VehicleTire addEquipment(VehicleTire tire) {
+    public VehicleTire addEquipment(VehicleTire tire) throws EquipmentDataIntegrityViolationException {
         return commandPort.add(tire);
     }
 
     @Override
     public VehicleTire updateEquipment(UUID id, VehicleTire tire) throws
-            EquipmentNotFoundServiceException {
+            EquipmentNotFoundException, EquipmentDataIntegrityViolationException {
         VehicleTire existingTire = queryPort.getEquipmentById(id);
         existingTire.merge(tire);
         return commandPort.update(existingTire);
@@ -45,11 +46,11 @@ public class VehicleTireServiceImpl implements VehicleTireCommandService, Vehicl
 
     @Override
     public List<VehicleTire> getAllEquipment() {
-        return queryPort.getAllEquipment(); //FIXME do more types like get by equipment type or whatever
+        return queryPort.getAllEquipment();
     }
 
     @Override
-    public VehicleTire getEquipmentById(UUID id) throws EquipmentNotFoundServiceException {
+    public VehicleTire getEquipmentById(UUID id) throws EquipmentNotFoundException {
         return queryPort.getEquipmentById(id);
     }
 }

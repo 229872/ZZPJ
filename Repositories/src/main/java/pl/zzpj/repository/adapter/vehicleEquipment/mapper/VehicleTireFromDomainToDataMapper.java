@@ -11,17 +11,16 @@ import pl.zzpj.repository.data.vehicleEquipment.VehicleTireEnt;
 @NoArgsConstructor
 public class VehicleTireFromDomainToDataMapper {
     public VehicleEquipmentEnt convertDomainModelToDataRepository(VehicleTire tire) {
-        return VehicleTireEnt.toDataBuilder()
-                .id(tire.getEquipment().getSuperModel().getId())
-                .version(tire.getEquipment().getSuperModel().getVersion())
-                .name(tire.getEquipment().getName())
-                .description(tire.getEquipment().getDescription())
-                .cost(tire.getEquipment().getCost())
-                .archive(tire.getEquipment().getArchive())
-                .size(tire.getSize())
-                .maximumSpeed(tire.getMaximumSpeed())
-                .maximumWeight(tire.getMaximumWeight())
-                .typeEnt(TireTypeEnt.valueOf(tire.getType().name()))
-                .build();
+        return new VehicleTireEnt(
+                tire.getEquipment().getSuperModel().getId(),
+                tire.getEquipment().getSuperModel().getVersion(),
+                tire.getEquipment().getName(),
+                tire.getEquipment().getDescription(),
+                tire.getEquipment().getCost(),
+                tire.getEquipment().getArchive(),
+                tire.getSize(),
+                tire.getMaximumSpeed(),
+                tire.getMaximumWeight(),
+                TireTypeEnt.valueOf(tire.getType().name()));
     }
 }

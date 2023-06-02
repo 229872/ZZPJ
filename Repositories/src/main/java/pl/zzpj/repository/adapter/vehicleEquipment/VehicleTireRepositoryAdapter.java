@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.zzpj.repository.adapter.vehicleEquipment.mapper.VehicleTireFromDataToDomainMapper;
 import pl.zzpj.repository.adapter.vehicleEquipment.mapper.VehicleTireFromDomainToDataMapper;
 import pl.zzpj.repository.api.VehicleEquipmentRepository;
-import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentNotFoundServiceException;
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentNotFoundException;
 import pl.zzpj.repository.core.domain.model.vehicleModel.VehicleTire;
 import pl.zzpj.repository.data.vehicleEquipment.VehicleTireEnt;
 import pl.zzpj.repository.ports.command.vehicleEquipment.VehicleTireCommandPort;
@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
 @Service
 public class VehicleTireRepositoryAdapter implements VehicleTireCommandPort, VehicleTireQueryPort {
 
-    private VehicleEquipmentRepository repository;
-    private VehicleTireFromDataToDomainMapper fromDataMapper;
-    private VehicleTireFromDomainToDataMapper fromDomainMapper;
+    private final VehicleEquipmentRepository repository;
+    private final VehicleTireFromDataToDomainMapper fromDataMapper;
+    private final VehicleTireFromDomainToDataMapper fromDomainMapper;
 
     @Autowired
     public VehicleTireRepositoryAdapter(VehicleEquipmentRepository repository,
@@ -33,12 +33,13 @@ public class VehicleTireRepositoryAdapter implements VehicleTireCommandPort, Veh
 
     @Override
     public VehicleTire add(VehicleTire tire) {
-        VehicleTireEnt returnEnt = (VehicleTireEnt) repository.save(fromDomainMapper.convertDomainModelToDataRepository(tire));
+        VehicleTireEnt returnEnt = (VehicleTireEnt)
+                repository.save(fromDomainMapper.convertDomainModelToDataRepository(tire));
         return fromDataMapper.convertDataToDomainModel(returnEnt);
     }
 
     @Override
-    public VehicleTire update(VehicleTire tire) throws EquipmentNotFoundServiceException {
+    public VehicleTire update(VehicleTire tire) {
         return fromDataMapper.convertDataToDomainModel((VehicleTireEnt) repository
                 .save(fromDomainMapper.convertDomainModelToDataRepository(tire)));
     }
@@ -55,8 +56,8 @@ public class VehicleTireRepositoryAdapter implements VehicleTireCommandPort, Veh
     }
 
     @Override
-    public VehicleTire getEquipmentById(UUID id) throws EquipmentNotFoundServiceException {
+    public VehicleTire getEquipmentById(UUID id) throws EquipmentNotFoundException {
         return fromDataMapper.convertDataToDomainModel(
-                (VehicleTireEnt) repository.findById(id).orElseThrow(EquipmentNotFoundServiceException::new));
+                (VehicleTireEnt) repository.findById(id).orElseThrow(EquipmentNotFoundException::new));
     }
 }

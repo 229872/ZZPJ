@@ -1,6 +1,6 @@
 package pl.zzpj.repository.rest.query;
 
-import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentNotFoundServiceException;
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentNotFoundException;
 import pl.zzpj.repository.rest.dto.vehicleEquipment.Output.VehicleTireOutputDto;
 
 import java.util.List;
@@ -10,5 +10,5 @@ public interface VehicleTiresQueryRest {
 
     List<VehicleTireOutputDto> getAllEquipment();
 
-    VehicleTireOutputDto getEquipmentById(UUID id) throws EquipmentNotFoundServiceException;
+    VehicleTireOutputDto getEquipmentById(UUID id) throws EquipmentNotFoundException;
 }

@@ -4,13 +4,15 @@ package pl.zzpj.repository.rest.adapters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.zzpj.repository.core.domain.exception.BadEquipmentTypeException;
-import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentNotFoundServiceException;
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentDataIntegrityViolationException;
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentNotFoundException;
 import pl.zzpj.repository.ports.command.vehicleEquipment.VehicleTireCommandService;
 import pl.zzpj.repository.ports.query.vehicleEquipment.VehicleTireQueryService;
 import pl.zzpj.repository.rest.adapters.mappers.vehicleTire.VehicleTireFromDomainToDtoMapper;
 import pl.zzpj.repository.rest.adapters.mappers.vehicleTire.VehicleTireFromInputDtoToDomainMapper;
 import pl.zzpj.repository.rest.command.VehicleTiresCommandRest;
 import pl.zzpj.repository.rest.dto.vehicleEquipment.Input.VehicleTireInputCreateDto;
+import pl.zzpj.repository.rest.dto.vehicleEquipment.Input.VehicleTireInputUpdateDto;
 import pl.zzpj.repository.rest.dto.vehicleEquipment.Output.VehicleTireOutputDto;
 import pl.zzpj.repository.rest.dto.vehicleEquipment.RestTireType;
 import pl.zzpj.repository.rest.query.VehicleTiresQueryRest;
@@ -46,21 +48,21 @@ public class VehicleTiresRestAdapter implements VehicleTiresCommandRest, Vehicle
     }
 
     @Override
-    public VehicleTireOutputDto getEquipmentById(UUID uuid) throws EquipmentNotFoundServiceException {
+    public VehicleTireOutputDto getEquipmentById(UUID uuid) throws EquipmentNotFoundException {
         return fromDomainMapper.convertDomainModelToTireOutputDto(queryService.getEquipmentById(uuid));
     }
 
     @Override
-    public VehicleTireOutputDto addEquipment(VehicleTireInputCreateDto dto, RestTireType tireType) {
+    public VehicleTireOutputDto addEquipment(VehicleTireInputCreateDto dto, RestTireType tireType) throws EquipmentDataIntegrityViolationException {
         return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
                 addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, tireType)));
     }
 
     @Override
-    public VehicleTireOutputDto updateEquipment(UUID id, VehicleTireInputCreateDto dto)
-            throws EquipmentNotFoundServiceException, BadEquipmentTypeException {
+    public VehicleTireOutputDto updateEquipment(UUID id, VehicleTireInputUpdateDto dto)
+            throws EquipmentNotFoundException, BadEquipmentTypeException, EquipmentDataIntegrityViolationException {
         return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
-                updateEquipment(id, fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, RestTireType.WINTER)));
+                updateEquipment(id, fromInputDtoMapper.convertTireInputUpdateDtoToDomainModel(dto)));
     }
 
     @Override

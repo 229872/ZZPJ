@@ -19,10 +19,13 @@ public class VehicleEquipmentOutputDto {
 
     protected Double cost;
 
-    public VehicleEquipmentOutputDto(UUID uuid, String name, String description, Double cost) {
+    protected boolean archive;
+
+    public VehicleEquipmentOutputDto(UUID uuid, String name, String description, Double cost, boolean archive) {
         this.uuid = uuid;
         this.name = name;
         this.description = description;
         this.cost = cost;
+        this.archive = archive;
     }
 }

@@ -41,7 +41,7 @@ public class VehicleEquipment {
     public void merge(VehicleEquipment equipment) {
         if (!Objects.equals(equipment.getCost(), this.cost)) this.setCost(equipment.getCost());
         if (!Objects.equals(equipment.getName(), this.name)) this.setName(equipment.getName());
-        if (!Objects.equals(equipment.getDescription(), this.description)) this.setName(equipment.getDescription());
-        if (equipment.getArchive() != this.archive) this.setArchive(equipment.getArchive());
+        if (!Objects.equals(equipment.getDescription(), this.description))
+            this.setDescription(equipment.getDescription());
     }
 }

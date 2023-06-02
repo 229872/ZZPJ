@@ -1,13 +1,16 @@
 package pl.zzpj.repository.rest.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.zzpj.repository.core.domain.exception.BadEquipmentTypeException;
-import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentNotFoundServiceException;
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentDataIntegrityViolationException;
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentNotFoundException;
 import pl.zzpj.repository.rest.adapters.VehicleTiresRestAdapter;
 import pl.zzpj.repository.rest.dto.vehicleEquipment.Input.VehicleTireInputCreateDto;
+import pl.zzpj.repository.rest.dto.vehicleEquipment.Input.VehicleTireInputUpdateDto;
 import pl.zzpj.repository.rest.dto.vehicleEquipment.Output.VehicleTireOutputDto;
 import pl.zzpj.repository.rest.dto.vehicleEquipment.RestTireType;
 
@@ -33,38 +36,38 @@ public class VehicleTiresRestController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public VehicleTireOutputDto getEquipmentById(@PathVariable("id") UUID id)
-            throws EquipmentNotFoundServiceException {
+            throws EquipmentNotFoundException {
         return tiresRestAdapter.getEquipmentById(id);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = "summer", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public VehicleTireOutputDto createEquipmentSummer(@RequestBody VehicleTireInputCreateDto dto) {
+    public VehicleTireOutputDto createEquipmentSummer(@RequestBody VehicleTireInputCreateDto dto) throws EquipmentDataIntegrityViolationException {
         return tiresRestAdapter.addEquipment(dto, RestTireType.SUMMER);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = "winter", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public VehicleTireOutputDto createEquipmentWinter(@RequestBody VehicleTireInputCreateDto dto) {
+    public VehicleTireOutputDto createEquipmentWinter(@RequestBody VehicleTireInputCreateDto dto) throws EquipmentDataIntegrityViolationException {
         return tiresRestAdapter.addEquipment(dto, RestTireType.WINTER);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = "special", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public VehicleTireOutputDto createEquipmentSpecial(@RequestBody VehicleTireInputCreateDto dto) {
+    public VehicleTireOutputDto createEquipmentSpecial(@RequestBody VehicleTireInputCreateDto dto) throws EquipmentDataIntegrityViolationException {
         return tiresRestAdapter.addEquipment(dto, RestTireType.SPECIAL);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = "all", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public VehicleTireOutputDto createEquipmentAll(@RequestBody VehicleTireInputCreateDto dto) {
+    public VehicleTireOutputDto createEquipmentAll(@RequestBody @Valid VehicleTireInputCreateDto dto) throws EquipmentDataIntegrityViolationException {
         return tiresRestAdapter.addEquipment(dto, RestTireType.ALL_SEASON);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public VehicleTireOutputDto updateEquipment(@PathVariable UUID id, @RequestBody VehicleTireInputCreateDto dto)
-            throws BadEquipmentTypeException, EquipmentNotFoundServiceException {
+    public VehicleTireOutputDto updateEquipment(@PathVariable UUID id, @RequestBody VehicleTireInputUpdateDto dto)
+            throws BadEquipmentTypeException, EquipmentNotFoundException, EquipmentDataIntegrityViolationException {
         return tiresRestAdapter.updateEquipment(id, dto);
     }
 }

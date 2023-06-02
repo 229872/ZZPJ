@@ -22,9 +22,9 @@ public class VehicleTireOutputDto extends VehicleEquipmentOutputDto {
 
     @Builder(builderMethodName = "fromDomainBuilder")
     public VehicleTireOutputDto(UUID uuid, String name,
-                                String description, Double cost, String size,
+                                String description, Double cost, boolean archive, String size,
                                 Double maximumSpeed, Double maximumWeight, RestTireType type) {
-        super(uuid, name, description, cost);
+        super(uuid, name, description, cost, archive);
         this.size = size;
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;

@@ -13,7 +13,8 @@ public class VehicleTireFromDomainToDtoMapper {
                 .uuid(vehicleTire.getEquipment().getSuperModel().getId())
                 .name(vehicleTire.getEquipment().getName())
                 .description(vehicleTire.getEquipment().getDescription())
-                .cost(vehicleTire.getEquipment().getCost()) //Cost as another entity?
+                .cost(vehicleTire.getEquipment().getCost())
+                .archive(vehicleTire.getEquipment().getArchive())
                 .size(vehicleTire.getSize())
                 .maximumSpeed(vehicleTire.getMaximumSpeed())
                 .maximumWeight(vehicleTire.getMaximumWeight())

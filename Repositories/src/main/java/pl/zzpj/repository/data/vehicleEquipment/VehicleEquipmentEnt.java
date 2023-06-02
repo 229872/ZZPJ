@@ -19,19 +19,19 @@ import java.util.UUID;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class VehicleEquipmentEnt extends AbstractEntity { //TODO
 
-    @Column
+    @Column(nullable = false)
     @NotBlank
     protected String name;
 
-    @Column
+    @Column(nullable = false)
     @NotBlank
     protected String description;
 
-    @Column
+    @Column(nullable = false)
     @Positive
     protected double cost;
 
-    @Column
+    @Column(nullable = false)
     protected boolean archive;
 
     public VehicleEquipmentEnt(UUID id, long version, String name,

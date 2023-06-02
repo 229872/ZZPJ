@@ -47,9 +47,7 @@ public class VehicleTire {
 
     public void merge(VehicleTire tire) {
         this.equipment.merge(tire.getEquipment());
-        if (!Objects.equals(tire.size, this.size)) this.size = tire.getSize();
         if (!Objects.equals(tire.maximumSpeed, this.maximumSpeed)) this.maximumSpeed = tire.getMaximumSpeed();
         if (!Objects.equals(tire.maximumWeight, this.maximumWeight)) this.maximumWeight = tire.getMaximumWeight();
-        if (tire.type != this.type) this.type = tire.getType();
     }
 }
