@@ -49,7 +49,6 @@ public class UserRestClientMapper {
             .secondaryAddress(addressInputDto.secondaryAddress())
             .buildingNumber(Integer.parseInt(addressInputDto.buildingNumber()))
             .mailBox(addressInputDto.mailBox())
-            .timeZone(addressInputDto.timeZone())
             .state(addressInputDto.state())
             .longitude(addressInputDto.longitude())
             .latitude(addressInputDto.latitude())

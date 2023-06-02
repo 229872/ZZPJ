@@ -22,7 +22,6 @@ public class Address {
   private String secondaryAddress;
   private Integer buildingNumber;
   private String mailBox;
-  private String timeZone;
   private String state;
 
   private Double longitude;

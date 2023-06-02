@@ -17,7 +17,6 @@ public record UserOutputDTO(
         String role,
         String state,
         String timeZone,
-        String locale,
-        Boolean archive
+        String locale
         ) {
 }

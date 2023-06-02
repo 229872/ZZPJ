@@ -37,7 +37,7 @@ public class UserRestClient {
             .doOnSuccess(tuple -> {
               PersonalDataInputDto personalData = tuple.getT1();
               AddressInputDto address = tuple.getT2();
-              UserInputDto user = new UserInputDto(personalData, address);
+              UserInputDto user = new UserInputDto(personalData, address, address.timeZone());
               userService.add(user);
               log.info("Successfully saved user into database");
             })

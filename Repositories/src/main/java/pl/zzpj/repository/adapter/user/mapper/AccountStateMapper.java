@@ -12,6 +12,7 @@ public class AccountStateMapper {
       case ACTIVE -> AccountState.ACTIVE;
       case BLOCKED -> AccountState.BLOCKED;
       case NOT_VERIFIED -> AccountState.NOT_VERIFIED;
+      case ARCHIVAL -> AccountState.ARCHIVAL;
     };
   }
 
@@ -20,6 +21,7 @@ public class AccountStateMapper {
       case ACTIVE -> UserState.ACTIVE;
       case BLOCKED -> UserState.BLOCKED;
       case NOT_VERIFIED -> UserState.NOT_VERIFIED;
+      case ARCHIVAL -> UserState.ARCHIVAL;
     };
   }
 }

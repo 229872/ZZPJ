@@ -19,7 +19,6 @@ public class AddressRestMapper {
             address.getSecondaryAddress(),
             address.getBuildingNumber(),
             address.getMailBox(),
-            address.getTimeZone(),
             address.getState(),
             new CoordinatesDto(address.getLongitude(), address.getLatitude()),
             address.getCommunity(),
@@ -44,7 +43,6 @@ public class AddressRestMapper {
             .secondaryAddress(address.secondaryAddress())
             .buildingNumber(address.buildingNumber())
             .mailBox(address.mailBox())
-            .timeZone(address.timeZone())
             .state(address.state())
             .longitude(address.longitude())
             .latitude(address.latitude())

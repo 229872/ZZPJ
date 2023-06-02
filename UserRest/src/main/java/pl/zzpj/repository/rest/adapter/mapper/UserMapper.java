@@ -36,8 +36,7 @@ public class UserMapper {
             roleMapper.mapRoleToString(user.getUserRole()),
             userStateMapper.mapUserStateToString(user.getUserState()),
             timeZoneMapper.mapTimeZoneToString(user.getUserTimeZone()),
-            user.getLocale(),
-            user.isArchive()
+            user.getLocale()
     );
   }
 

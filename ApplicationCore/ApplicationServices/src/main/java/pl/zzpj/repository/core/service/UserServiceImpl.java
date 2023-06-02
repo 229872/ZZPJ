@@ -51,16 +51,26 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
   public User update(UUID id, User user) throws UserServiceNotFoundException, UserServiceUpdateException {
     User foundUser = userQueryRepositoryPort.getUserById(id)
             .orElseThrow(() -> new UserServiceNotFoundException("User not found"));
-    foundUser.update(user);
-    return userCommandRepositoryPort.update(foundUser);
+
+    if (!isUserArchivalOrNotVerified(foundUser)) {
+      foundUser.update(user);
+      return userCommandRepositoryPort.update(foundUser);
+    } else {
+      throw new UserServiceUpdateException("Can't update archival or not verified user");
+    }
+
   }
 
   @Override
   public User archive(UUID id) throws UserServiceNotFoundException, UserServiceUpdateException {
     User user = userQueryRepositoryPort.getUserById(id)
             .orElseThrow(() -> new UserServiceNotFoundException("User not found"));
-    user.setArchive(true);
-    return userCommandRepositoryPort.update(user);
+    if (!user.getUserState().equals(UserState.NOT_VERIFIED)) {
+      user.setUserState(UserState.ARCHIVAL);
+      return userCommandRepositoryPort.update(user);
+    } else {
+      throw new UserServiceUpdateException("Can't archive not verified user");
+    }
   }
 
   @Override
@@ -94,12 +104,24 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
     User user = userQueryRepositoryPort.getUserById(id)
             .orElseThrow(() -> new UserServiceNotFoundException("User not found"));
 
-    if (!(newRole.equals(user.getUserRole()) || newRole.equals(UserRole.GUEST))) {
+    if (canChangeRole(user, newRole)) {
       user.setUserRole(newRole);
       return userCommandRepositoryPort.update(user);
     } else {
-      throw new UserServiceUpdateException("User role can't be change for same of for the guest");
+      throw new UserServiceUpdateException("User is not active or you are trying to change role for guest or" +
+              " role is already assigned");
     }
+  }
+
+  private boolean canChangeRole(User user, UserRole newRole) {
+    return user.getUserState().equals(UserState.ACTIVE) &&
+            !(newRole.equals(user.getUserRole()) || newRole.equals(UserRole.GUEST));
+
+  }
+
+  private boolean isUserArchivalOrNotVerified(User user) {
+    return user.getUserState().equals(UserState.NOT_VERIFIED)
+            || user.getUserState().equals(UserState.ARCHIVAL);
   }
 
 }

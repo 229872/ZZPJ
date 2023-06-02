@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import pl.zzpj.repository.data.AbstractEntity;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -47,8 +48,6 @@ public class Account extends AbstractEntity {
   private AccountState accountState;
   @Column(nullable = false)
   private String locale;
-  @Column(nullable = false)
-  private Boolean archive;
 
 
   public static AccountBuilder<?,?> builder(String login, String password, String email, Person person,
@@ -61,7 +60,6 @@ public class Account extends AbstractEntity {
   @PrePersist
   public void init() {
     this.score = score == null ? 0.0 : score;
-    this.archive = archive != null && archive;
     this.locale = locale == null ? "en" : locale;
   }
 

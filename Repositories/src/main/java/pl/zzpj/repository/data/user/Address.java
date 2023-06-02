@@ -39,8 +39,6 @@ public class Address extends AbstractEntity {
   private Integer buildingNumber;
   @Column(name = "mail_box")
   private String mailBox;
-  @Column(name = "time_zone", table = "address_additional_data")
-  private String timeZone;
   @Column(table = "address_additional_data")
   private String state;
 

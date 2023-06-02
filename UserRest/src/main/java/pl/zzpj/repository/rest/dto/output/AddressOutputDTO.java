@@ -15,7 +15,6 @@ public record AddressOutputDTO(
         String secondaryAddress,
         Integer buildingNumber,
         String mailBox,
-        String timeZone,
         String state,
         CoordinatesDto coordinates,
         String community,

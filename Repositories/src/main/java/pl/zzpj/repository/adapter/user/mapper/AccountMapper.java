@@ -26,7 +26,6 @@ public class AccountMapper {
             person,
             roleMapper.mapToDomainModelUserRole(account.getRole()),
             accountStateMapper.mapToDomainModelUserState(account.getAccountState()),
-            account.getArchive(),
             account.getScore()
     );
 
@@ -56,7 +55,6 @@ public class AccountMapper {
     return accountBuilder
             .id(user.getClientId())
             .version(user.getVersion())
-            .archive(user.isArchive())
             .locale(user.getLocale())
             .timeZone(timeZoneMapper.mapToDatabaseTimeZone(user.getUserTimeZone()))
             .phoneNumber(user.getPhoneNumber())

@@ -13,7 +13,6 @@ public record AddressInputDTO (
         String secondaryAddress,
         Integer buildingNumber,
         String mailBox,
-        String timeZone,
         String state,
         Double longitude,
         Double latitude,
