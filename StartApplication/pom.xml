@@ -50,7 +50,7 @@
 
         <dependency>
             <groupId>pl.lodz.p.edu.zzpj</groupId>
-            <artifactId>ShopModule</artifactId>
+            <artifactId>VehicleEquipment</artifactId>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>

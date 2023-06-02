@@ -37,7 +37,7 @@
         <module>ApplicationCore</module>
         <module>ApplicationPorts</module>
         <module>StartApplication</module>
-        <module>ShopModule</module>
+        <module>VehicleEquipment</module>
         <module>Repositories</module>
         <module>UserRest</module>
         <module>RentVehicleRest</module>
@@ -148,7 +148,7 @@
             </dependency>
             <dependency>
                 <groupId>pl.lodz.p.edu.zzpj</groupId>
-                <artifactId>ShopModule</artifactId>
+                <artifactId>VehicleEquipment</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
