@@ -15,9 +15,9 @@ import java.util.UUID;
 @Service
 public class VehicleTireServiceImpl implements VehicleTireCommandService, VehicleTireQueryService {
 
-    private VehicleTireCommandPort commandPort;
+    private final VehicleTireCommandPort commandPort;
 
-    private VehicleTireQueryPort queryPort;
+    private final VehicleTireQueryPort queryPort;
 
     @Autowired
     public VehicleTireServiceImpl(VehicleTireCommandPort commandPort, VehicleTireQueryPort queryPort) {
@@ -27,8 +27,7 @@ public class VehicleTireServiceImpl implements VehicleTireCommandService, Vehicl
 
     @Override
     public VehicleTire addEquipment(VehicleTire tire) {
-        VehicleTire returnTire = commandPort.add(tire);
-        return returnTire;
+        return commandPort.add(tire);
     }
 
     @Override

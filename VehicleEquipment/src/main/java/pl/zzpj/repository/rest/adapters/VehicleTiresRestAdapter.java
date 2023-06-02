@@ -9,9 +9,10 @@ import pl.zzpj.repository.ports.command.vehicleEquipment.VehicleTireCommandServi
 import pl.zzpj.repository.ports.query.vehicleEquipment.VehicleTireQueryService;
 import pl.zzpj.repository.rest.adapters.mappers.vehicleTire.VehicleTireFromDomainToDtoMapper;
 import pl.zzpj.repository.rest.adapters.mappers.vehicleTire.VehicleTireFromInputDtoToDomainMapper;
-import pl.zzpj.repository.rest.dto.vehicleEquipment.Input.VehicleTireInputDto;
-import pl.zzpj.repository.rest.dto.vehicleEquipment.Output.VehicleTireOutputDto;
 import pl.zzpj.repository.rest.command.VehicleTiresCommandRest;
+import pl.zzpj.repository.rest.dto.vehicleEquipment.Input.VehicleTireInputCreateDto;
+import pl.zzpj.repository.rest.dto.vehicleEquipment.Output.VehicleTireOutputDto;
+import pl.zzpj.repository.rest.dto.vehicleEquipment.RestTireType;
 import pl.zzpj.repository.rest.query.VehicleTiresQueryRest;
 
 import java.util.List;
@@ -50,16 +51,16 @@ public class VehicleTiresRestAdapter implements VehicleTiresCommandRest, Vehicle
     }
 
     @Override
-    public VehicleTireOutputDto addEquipment(VehicleTireInputDto dto) {
+    public VehicleTireOutputDto addEquipment(VehicleTireInputCreateDto dto, RestTireType tireType) {
         return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
-                addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto)));
+                addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, tireType)));
     }
 
     @Override
-    public VehicleTireOutputDto updateEquipment(UUID id, VehicleTireInputDto dto)
+    public VehicleTireOutputDto updateEquipment(UUID id, VehicleTireInputCreateDto dto)
             throws EquipmentNotFoundServiceException, BadEquipmentTypeException {
         return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
-                updateEquipment(id, fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto)));
+                updateEquipment(id, fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, RestTireType.WINTER)));
     }
 
     @Override

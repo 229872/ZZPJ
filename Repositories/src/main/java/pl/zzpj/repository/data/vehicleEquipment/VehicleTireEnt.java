@@ -8,9 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -29,16 +27,12 @@ public class VehicleTireEnt extends VehicleEquipmentEnt {
 
     @Column
     @Positive
-    private Long maximumSpeed;
+    private Double maximumSpeed;
 
     @Column
     @Positive
-    private Long maximumWeight;
+    private Double maximumWeight;
 
-    @Column
-    @DateTimeFormat
-    @NotNull
-    private LocalDateTime productionDate;
 
     @Column
     @NotNull
@@ -46,13 +40,12 @@ public class VehicleTireEnt extends VehicleEquipmentEnt {
 
     @Builder(builderMethodName = "toDataBuilder")
     public VehicleTireEnt(UUID id, Long version, @NotBlank String name, @NotBlank String description,
-                          @Positive double cost, boolean archive, String size,
-                          Long maximumSpeed, Long maximumWeight, LocalDateTime productionDate, TireTypeEnt typeEnt) {
+                          @Positive Double cost, boolean archive, String size,
+                          Double maximumSpeed, Double maximumWeight, TireTypeEnt typeEnt) {
         super(id, version, name, description, cost, archive);
         this.size = size;
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;
-        this.productionDate = productionDate;
         this.typeEnt = typeEnt;
     }
 }

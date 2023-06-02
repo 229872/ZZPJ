@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.zzpj.repository.adapter.vehicleEquipment.mapper.VehicleTireFromDataToDomainMapper;
 import pl.zzpj.repository.adapter.vehicleEquipment.mapper.VehicleTireFromDomainToDataMapper;
+import pl.zzpj.repository.api.VehicleEquipmentRepository;
 import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentNotFoundServiceException;
 import pl.zzpj.repository.core.domain.model.vehicleModel.VehicleTire;
+import pl.zzpj.repository.data.vehicleEquipment.VehicleTireEnt;
 import pl.zzpj.repository.ports.command.vehicleEquipment.VehicleTireCommandPort;
 import pl.zzpj.repository.ports.query.vehicleEquipment.VehicleTireQueryPort;
-import pl.zzpj.repository.api.VehicleEquipmentRepository;
-import pl.zzpj.repository.data.vehicleEquipment.VehicleTireEnt;
 
 import java.util.List;
 import java.util.UUID;
@@ -34,8 +34,7 @@ public class VehicleTireRepositoryAdapter implements VehicleTireCommandPort, Veh
     @Override
     public VehicleTire add(VehicleTire tire) {
         VehicleTireEnt returnEnt = (VehicleTireEnt) repository.save(fromDomainMapper.convertDomainModelToDataRepository(tire));
-        VehicleTire returnDomainTire = fromDataMapper.convertDataToDomainModel(returnEnt);
-        return returnDomainTire;
+        return fromDataMapper.convertDataToDomainModel(returnEnt);
     }
 
     @Override

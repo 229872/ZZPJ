@@ -2,7 +2,6 @@ package pl.zzpj.repository.core.domain.model.vehicleModel;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -14,11 +13,9 @@ public class VehicleTire {
 
     private String size;
 
-    private Long maximumSpeed;
+    private Double maximumSpeed;
 
-    private Long maximumWeight;
-
-    private LocalDateTime productionDate;
+    private Double maximumWeight;
 
     private VehicleEquipment equipment;
 
@@ -27,26 +24,24 @@ public class VehicleTire {
 
     @Builder(builderMethodName = "fromApiBuilder")
     public VehicleTire(String name, String description,
-                       Double cost, Boolean archive, String size, Long maximumSpeed,
-                       Long maximumWeight, LocalDateTime productionDate, TireType type) {
-        this.equipment = new VehicleEquipment(name, description, cost, archive);
+                       Double cost, String size, Double maximumSpeed,
+                       Double maximumWeight, TireType type) {
+        this.equipment = new VehicleEquipment(name, description, cost);
         this.size = size;
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;
-        this.productionDate = productionDate;
         this.type = type;
     }
 
     @Builder(builderMethodName = "fromDataBuilder")
     public VehicleTire(UUID uuid, long version, String name, boolean archive, String description,
-                       Double cost, String size, Long maximumSpeed,
-                       Long maximumWeight, LocalDateTime productionDate, TireType type) {
+                       Double cost, String size, Double maximumSpeed,
+                       Double maximumWeight, TireType type) {
         this.equipment = VehicleEquipment.builder().uuid(uuid).version(version)
                 .name(name).description(description).cost(cost).archive(archive).build();
         this.size = size;
         this.maximumSpeed = maximumSpeed;
         this.maximumWeight = maximumWeight;
-        this.productionDate = productionDate;
         this.type = type;
     }
 
@@ -55,7 +50,6 @@ public class VehicleTire {
         if (!Objects.equals(tire.size, this.size)) this.size = tire.getSize();
         if (!Objects.equals(tire.maximumSpeed, this.maximumSpeed)) this.maximumSpeed = tire.getMaximumSpeed();
         if (!Objects.equals(tire.maximumWeight, this.maximumWeight)) this.maximumWeight = tire.getMaximumWeight();
-        this.productionDate = tire.getProductionDate();
         if (tire.type != this.type) this.type = tire.getType();
     }
 }

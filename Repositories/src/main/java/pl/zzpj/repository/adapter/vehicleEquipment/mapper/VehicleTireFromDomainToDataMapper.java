@@ -3,9 +3,9 @@ package pl.zzpj.repository.adapter.vehicleEquipment.mapper;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.zzpj.repository.core.domain.model.vehicleModel.VehicleTire;
+import pl.zzpj.repository.data.vehicleEquipment.TireTypeEnt;
 import pl.zzpj.repository.data.vehicleEquipment.VehicleEquipmentEnt;
 import pl.zzpj.repository.data.vehicleEquipment.VehicleTireEnt;
-import pl.zzpj.repository.data.vehicleEquipment.TireTypeEnt;
 
 @Component
 @NoArgsConstructor
@@ -21,7 +21,6 @@ public class VehicleTireFromDomainToDataMapper {
                 .size(tire.getSize())
                 .maximumSpeed(tire.getMaximumSpeed())
                 .maximumWeight(tire.getMaximumWeight())
-                .productionDate(tire.getProductionDate())
                 .typeEnt(TireTypeEnt.valueOf(tire.getType().name()))
                 .build();
     }

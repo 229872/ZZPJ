@@ -17,7 +17,6 @@ public class VehicleTireFromDomainToDtoMapper {
                 .size(vehicleTire.getSize())
                 .maximumSpeed(vehicleTire.getMaximumSpeed())
                 .maximumWeight(vehicleTire.getMaximumWeight())
-                .productionDate(vehicleTire.getProductionDate())
                 .type(RestTireType.valueOf(vehicleTire.getType().name())).build();
     }
 }

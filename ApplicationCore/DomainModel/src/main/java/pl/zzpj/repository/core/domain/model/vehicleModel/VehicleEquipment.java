@@ -29,12 +29,13 @@ public class VehicleEquipment {
         this.archive = archive;
     }
 
-    public VehicleEquipment(String name, String description, Double cost, Boolean archive) {
+    // Create new vehicle, builder was not working?
+    public VehicleEquipment(String name, String description, Double cost) {
         this.superModel = new SuperDataModel();
         this.name = name;
         this.description = description;
         this.cost = cost;
-        this.archive = archive;
+        this.archive = false;
     }
 
     public void merge(VehicleEquipment equipment) {
