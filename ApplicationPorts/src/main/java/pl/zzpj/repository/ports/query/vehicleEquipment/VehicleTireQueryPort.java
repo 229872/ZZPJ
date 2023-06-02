@@ -1,6 +1,6 @@
 package pl.zzpj.repository.ports.query.vehicleEquipment;
 
-import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentNotFoundException;
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.VehicleEquipmentServiceNotFoundException;
 import pl.zzpj.repository.core.domain.model.vehicleModel.VehicleTire;
 
 import java.util.List;
@@ -11,7 +11,7 @@ public interface VehicleTireQueryPort {
 
     public List<VehicleTire> getAllEquipment();
 
-    public VehicleTire getEquipmentById(UUID id) throws EquipmentNotFoundException;
+    public VehicleTire getEquipmentById(UUID id) throws VehicleEquipmentServiceNotFoundException;
 
     //todo some more?
 }

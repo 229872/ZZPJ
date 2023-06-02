@@ -2,8 +2,9 @@ package pl.zzpj.repository.core.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentDataIntegrityViolationException;
-import pl.zzpj.repository.core.domain.exception.vehicleEquipment.EquipmentNotFoundException;
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.VehicleEquipmentServiceCreateException;
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.VehicleEquipmentServiceNotFoundException;
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.VehicleEquipmentServiceUpdateException;
 import pl.zzpj.repository.core.domain.model.vehicleModel.VehicleTire;
 import pl.zzpj.repository.ports.command.vehicleEquipment.VehicleTireCommandPort;
 import pl.zzpj.repository.ports.command.vehicleEquipment.VehicleTireCommandService;
@@ -27,13 +28,13 @@ public class VehicleTireServiceImpl implements VehicleTireCommandService, Vehicl
     }
 
     @Override
-    public VehicleTire addEquipment(VehicleTire tire) throws EquipmentDataIntegrityViolationException {
+    public VehicleTire addEquipment(VehicleTire tire) throws VehicleEquipmentServiceCreateException {
         return commandPort.add(tire);
     }
 
     @Override
     public VehicleTire updateEquipment(UUID id, VehicleTire tire) throws
-            EquipmentNotFoundException, EquipmentDataIntegrityViolationException {
+            VehicleEquipmentServiceNotFoundException, VehicleEquipmentServiceUpdateException {
         VehicleTire existingTire = queryPort.getEquipmentById(id);
         existingTire.merge(tire);
         return commandPort.update(existingTire);
@@ -45,12 +46,20 @@ public class VehicleTireServiceImpl implements VehicleTireCommandService, Vehicl
     }
 
     @Override
+    public VehicleTire setArchiveStatus(UUID id, boolean status)
+            throws VehicleEquipmentServiceNotFoundException, VehicleEquipmentServiceUpdateException {
+        VehicleTire existingTire = queryPort.getEquipmentById(id);
+        existingTire.getEquipment().setArchive(status);
+        return commandPort.update(existingTire);
+    }
+
+    @Override
     public List<VehicleTire> getAllEquipment() {
         return queryPort.getAllEquipment();
     }
 
     @Override
-    public VehicleTire getEquipmentById(UUID id) throws EquipmentNotFoundException {
+    public VehicleTire getEquipmentById(UUID id) throws VehicleEquipmentServiceNotFoundException {
         return queryPort.getEquipmentById(id);
     }
 }
