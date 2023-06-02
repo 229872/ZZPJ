@@ -11,6 +11,7 @@ import pl.zzpj.repository.ports.query.user.UserQueryServicePort;
 import pl.zzpj.repository.rest.adapter.mapper.RestRoleMapper;
 import pl.zzpj.repository.rest.adapter.mapper.UserMapper;
 import pl.zzpj.repository.rest.dto.input.UserInputDTO;
+import pl.zzpj.repository.rest.dto.input.UserUpdateDTO;
 import pl.zzpj.repository.rest.dto.output.UserOutputDTO;
 import pl.zzpj.repository.rest.exception.UserCreationException;
 import pl.zzpj.repository.rest.api.UserService;
@@ -54,7 +55,7 @@ public class UserControllerAdapter implements UserService {
   @Override
   public UserOutputDTO createUser(UserInputDTO user) throws UserCreationException {
     try {
-      User newUser = userCommandServicePort.add(userMapper.mapToDomainModelUser(user));
+      User newUser = userCommandServicePort.add(userMapper.mapUserInputDtoToDomainModelUser(user));
       return userMapper.mapToUserOutputDTO(newUser);
 
     } catch (UserServiceCreateException e) {
@@ -63,14 +64,12 @@ public class UserControllerAdapter implements UserService {
   }
 
   @Override
-  public UserOutputDTO updateUser(UUID id, UserInputDTO user) throws UserCreationException,
-          UserUpdateException, UserNotFoundException {
+  public UserOutputDTO updateUser(UUID id, UserUpdateDTO user) throws UserUpdateException,
+          UserNotFoundException {
     try {
-      User updated = userCommandServicePort.update(id,userMapper.mapToDomainModelUser(user));
+      User updated = userCommandServicePort.update(id,userMapper.mapToDomainModelUpdateData(user));
       return userMapper.mapToUserOutputDTO(updated);
 
-    } catch (UserCreationException e) {
-      throw new UserCreationException(e.getMessage(), e);
     } catch (UserServiceUpdateException e) {
       throw new UserUpdateException(e.getMessage(), e);
     } catch (UserServiceNotFoundException e) {

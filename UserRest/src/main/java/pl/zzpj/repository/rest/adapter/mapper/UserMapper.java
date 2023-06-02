@@ -2,6 +2,9 @@ package pl.zzpj.repository.rest.adapter.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import pl.zzpj.repository.core.domain.model.userModel.Address;
+import pl.zzpj.repository.core.domain.model.userModel.UserUpdateData;
+import pl.zzpj.repository.rest.dto.input.UserUpdateDTO;
 import pl.zzpj.repository.rest.exception.UserCreationException;
 import pl.zzpj.repository.utils.security.CryptUtils;
 import pl.zzpj.repository.core.domain.model.userModel.Person;
@@ -40,7 +43,7 @@ public class UserMapper {
     );
   }
 
-  public User mapToDomainModelUser(UserInputDTO user) throws UserCreationException {
+  public User mapUserInputDtoToDomainModelUser(UserInputDTO user) throws UserCreationException {
     Person person = personMapper.mapToModelDomainPerson(user.person());
 
 
@@ -59,6 +62,25 @@ public class UserMapper {
             .phoneNumber(user.phoneNumber())
             .socialInsuranceNumber(user.socialInsuranceNumber())
             .creditCard(user.creditCard())
+            .build();
+  }
+
+  public UserUpdateData mapToDomainModelUpdateData(UserUpdateDTO user) {
+    return UserUpdateData.builder()
+            .country(user.country())
+            .buildingNumber(user.buildingNumber())
+            .mailBox(user.mailBox())
+            .city(user.city())
+            .lastName(user.lastName())
+            .name(user.name())
+            .secondaryAddress(user.secondaryAddress())
+            .state(user.state())
+            .streetName(user.streetName())
+            .socialInsuranceNumber(user.socialInsuranceNumber())
+            .postalCode(user.postalCode())
+            .phoneNumber(user.phoneNumber())
+            .creditCard(user.creditCard())
+            .locale(user.locale())
             .build();
   }
 

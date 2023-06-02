@@ -1,9 +1,9 @@
-package pl.zzpj.repository.rest.dto.input;
+package pl.zzpj.repository.core.domain.model.userModel;
 
 import lombok.Builder;
 
 @Builder
-public record UserUpdateDTO(
+public record UserUpdateData (
         String phoneNumber,
         String socialInsuranceNumber,
         String creditCard,
@@ -20,4 +20,5 @@ public record UserUpdateDTO(
         String mailBox,
         String state
 ) {
+
 }

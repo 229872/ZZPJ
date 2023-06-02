@@ -31,11 +31,12 @@ public class User {
     return this.getVersion() + this.getPerson().getVersion() + this.getPerson().getAddress().getVersion();
   }
 
-  public void update(User user) {
-    this.phoneNumber = user.phoneNumber != null ? user.phoneNumber : phoneNumber;
-    this.socialInsuranceNumber = user.socialInsuranceNumber != null ? user.socialInsuranceNumber : socialInsuranceNumber;
-    this.creditCard = user.creditCard != null ? user.creditCard : creditCard;
-    //todo
+  public void update(UserUpdateData user) {
+    this.phoneNumber = user.phoneNumber() != null ? user.phoneNumber() : phoneNumber;
+    this.socialInsuranceNumber = user.socialInsuranceNumber() != null ? user.socialInsuranceNumber() : socialInsuranceNumber;
+    this.creditCard = user.creditCard() != null ? user.creditCard() : creditCard;
+    this.locale = user.locale() != null ? user.locale() : locale;
+    this.person.update(user);
   }
 
   static UserBuilder builder(String login, String password, String email, Person person,

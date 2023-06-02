@@ -17,7 +17,7 @@ public interface UserService {
   Optional<UserOutputDTO> getUserByLogin(String login);
   Optional<UserOutputDTO> getUserByEmail(String email);
   UserOutputDTO createUser(UserInputDTO user) throws UserCreationException;
-  UserOutputDTO updateUser(UUID id, UserInputDTO user) throws UserCreationException, UserUpdateException, UserNotFoundException;
+  UserOutputDTO updateUser(UUID id, UserUpdateDTO user) throws UserUpdateException, UserNotFoundException;
   UserOutputDTO archiveUser(UUID id) throws UserUpdateException, UserNotFoundException;
   UserOutputDTO blockUser(UUID id) throws UserUpdateException, UserNotFoundException;
   UserOutputDTO unblockUser(UUID id) throws UserUpdateException, UserNotFoundException;

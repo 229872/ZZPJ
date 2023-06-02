@@ -8,6 +8,7 @@ import pl.zzpj.repository.core.domain.exception.user.UserServiceUpdateException;
 import pl.zzpj.repository.core.domain.model.userModel.User;
 import pl.zzpj.repository.core.domain.model.userModel.UserRole;
 import pl.zzpj.repository.core.domain.model.userModel.UserState;
+import pl.zzpj.repository.core.domain.model.userModel.UserUpdateData;
 import pl.zzpj.repository.ports.command.user.UserCommandRepositoryPort;
 import pl.zzpj.repository.ports.command.user.UserCommandServicePort;
 import pl.zzpj.repository.ports.query.user.UserQueryRepositoryPort;
@@ -48,7 +49,7 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
   }
 
   @Override
-  public User update(UUID id, User user) throws UserServiceNotFoundException, UserServiceUpdateException {
+  public User update(UUID id, UserUpdateData user) throws UserServiceNotFoundException, UserServiceUpdateException {
     User foundUser = userQueryRepositoryPort.getUserById(id)
             .orElseThrow(() -> new UserServiceNotFoundException("User not found"));
 

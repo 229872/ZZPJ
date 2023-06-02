@@ -27,6 +27,13 @@ public class Person {
     return period.getYears();
   }
 
+  public void update(UserUpdateData person) {
+    if (person == null) return;
+    this.name = person.name() != null ? person.name() : name;
+    this.lastName = person.lastName() != null ? person.lastName() : lastName;
+    this.address.update(person);
+  }
+
   public static PersonBuilder builder(String name, String lastName, String gender,
                                       LocalDate dateOfBirth, Address address) {
     return new PersonBuilder().name(name).lastName(lastName).gender(gender)

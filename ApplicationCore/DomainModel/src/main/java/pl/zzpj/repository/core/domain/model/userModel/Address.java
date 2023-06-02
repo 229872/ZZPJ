@@ -44,6 +44,19 @@ public class Address {
     return fullAddress != null ? fullAddress : buildFullAddress();
   }
 
+  public void update(UserUpdateData address) {
+    if (address == null) return;
+    this.country = address.country() != null ? address.country() : country;
+    this.city = address.city() != null ? address.city() : city;
+    this.streetName = address.streetName() != null ? address.streetName() : streetName;
+    this.streetNumber = address.streetNumber() != null ? address.streetNumber() : streetNumber;
+    this.postalCode = address.postalCode() != null ? address.postalCode() : postalCode;
+    this.secondaryAddress = address.secondaryAddress() != null ? address.secondaryAddress() : secondaryAddress;
+    this.buildingNumber = address.buildingNumber() != null ? address.buildingNumber() : buildingNumber;
+    this.mailBox = address.mailBox() != null ? address.mailBox() : mailBox;
+    this.state = address.state() != null ? address.state() : state;
+  }
+
   private String buildFullAddress() {
     StringBuilder stringBuilder = new StringBuilder();
     if (secondaryAddress != null) {

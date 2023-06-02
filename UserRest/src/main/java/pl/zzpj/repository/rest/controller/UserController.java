@@ -66,17 +66,16 @@ public class UserController {
     }
   }
 
-  //todo
   @PutMapping(path = "/id/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> updateUser(@PathVariable UUID id,
                                       @RequestBody @NotNull @Valid UserUpdateDTO user) {
     try {
-      UserOutputDTO updatedUser = userService.updateUser(id, null);
+      UserOutputDTO updatedUser = userService.updateUser(id, user);
       return ResponseEntity.ok(updatedUser);
 
     } catch (UserNotFoundException e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    } catch (UserCreationException | UserUpdateException e) {
+    } catch (UserUpdateException e) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
   }
