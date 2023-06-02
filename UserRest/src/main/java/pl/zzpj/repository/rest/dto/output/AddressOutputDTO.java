@@ -6,7 +6,6 @@ import lombok.Builder;
 
 @Builder
 public record AddressOutputDTO(
-        Long version,
         String country,
         String city,
         String streetName,

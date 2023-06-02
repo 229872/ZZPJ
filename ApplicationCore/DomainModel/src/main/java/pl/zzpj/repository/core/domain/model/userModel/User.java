@@ -1,5 +1,6 @@
 package pl.zzpj.repository.core.domain.model.userModel;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @Builder
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
   private UUID clientId;
   private Long version;
@@ -32,9 +33,30 @@ public class User {
   }
 
   //todo create factory methods in service with default values
-  public static UserBuilder builder(String login, String password, String email, Person person,
+  static UserBuilder builder(String login, String password, String email, Person person,
                                     UserRole role, UserState state, Boolean archive, Double score) {
     return new UserBuilder().login(login).password(password).email(email).person(person)
             .userRole(role).userState(state).archive(archive).score(score);
   }
+
+  public static UserBuilder userBuilderWithDefaultsForRestClientAdapter(String login, String password,
+                                                                  String email, Person person) {
+
+    return builder(login, password, email, person, UserRole.CLIENT, UserState.ACTIVE, false, 0.0);
+  }
+
+  public static UserBuilder userBuilderWithDefaultsForRestAdapter(String login, String password,
+                                                                  String email, Person person,
+                                                                  UserRole userRole) {
+
+    return builder(login, password, email, person, userRole, UserState.ACTIVE, false, 0.0);
+  }
+
+  public static UserBuilder userBuilderWithDefaultsForRepositoryAdapter(String login, String password,
+                                                                        String email, Person person,
+                                                                        UserRole userRole, UserState userState,
+                                                                        Boolean archive, Double score) {
+    return builder(login, password, email, person, userRole, userState, archive, score);
+  }
+
 }

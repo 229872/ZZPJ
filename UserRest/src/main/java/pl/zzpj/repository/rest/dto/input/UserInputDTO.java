@@ -19,6 +19,10 @@ public record UserInputDTO (
         String phoneNumber,
         String socialInsuranceNumber,
         String creditCard,
-        Double score ) {
+        @NotBlank
+        String role,
+        String timeZone,
+        String locale
+        ) {
 
 }

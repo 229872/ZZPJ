@@ -1,6 +1,7 @@
 package pl.zzpj.repository.rest.adapter.mapper;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.zzpj.repository.core.domain.model.userModel.Address;
 import pl.zzpj.repository.core.domain.model.userModel.Person;
@@ -10,14 +11,13 @@ import pl.zzpj.repository.rest.dto.output.PersonOutputDTO;
 import java.time.LocalDate;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PersonRestMapper {
   private final AddressRestMapper addressMapper;
   public PersonOutputDTO mapToPersonOutputDTO(Person person) {
     var address = addressMapper.mapToAddressOutputDTO(person.getAddress());
 
     return new PersonOutputDTO(
-            person.getVersion(),
             person.getName(),
             person.getLastName(),
             person.getGender(),

@@ -17,7 +17,7 @@ public class AccountMapper {
   public User mapToUser(Account account) {
     var person = personMapper.mapToDomainModelPerson(account.getPerson());
 
-    User.UserBuilder userBuilder = User.builder(
+    User.UserBuilder userBuilder = User.userBuilderWithDefaultsForRepositoryAdapter(
             account.getLogin(),
             account.getPassword(),
             account.getEmail(),

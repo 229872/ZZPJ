@@ -20,10 +20,13 @@ public class UserRestClientMapper {
     Address address = mapToDomainModelAddress(userInputDto.address());
     Person person = mapToDomainModelPerson(user, address);
 
-    User.UserBuilder userBuilder = User.builder(
+    User.UserBuilder userBuilder = User.userBuilderWithDefaultsForRestClientAdapter(
             user.username(),
             cryptUtils.hashPassword(user.password()),
-            user.email(), person);
+            user.email(),
+            person
+    );
+
 
     return userBuilder
             .creditCard(user.creditCard().ccNumber())

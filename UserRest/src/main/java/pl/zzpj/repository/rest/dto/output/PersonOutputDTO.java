@@ -7,7 +7,6 @@ import java.time.LocalDate;
 
 @Builder
 public record PersonOutputDTO(
-        Long version,
         String firstName,
         String lastName,
         String gender,

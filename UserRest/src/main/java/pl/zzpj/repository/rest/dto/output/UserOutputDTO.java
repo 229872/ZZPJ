@@ -13,5 +13,11 @@ public record UserOutputDTO(
         String socialInsuranceNumber,
         String creditCard,
         Double score,
-        PersonOutputDTO person) {
+        PersonOutputDTO person,
+        String role,
+        String state,
+        String timeZone,
+        String locale,
+        Boolean archive
+        ) {
 }
