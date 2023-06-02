@@ -17,6 +17,7 @@ public class UserMapper {
   private final PersonRestMapper personMapper;
   private final RestRoleMapper roleMapper;
   private final RestTimeZoneMapper timeZoneMapper;
+  private final RestUserStateMapper userStateMapper;
   private final CryptUtils cryptUtils;
 
   public UserOutputDTO mapToUserOutputDTO(User user) {
@@ -32,9 +33,9 @@ public class UserMapper {
             user.getCreditCard(),
             user.getScore(),
             person,
-            user.getUserRole().toString(),
-            user.getUserState().toString(),
-            user.getUserTimeZone().toString(),
+            roleMapper.mapRoleToString(user.getUserRole()),
+            userStateMapper.mapUserStateToString(user.getUserState()),
+            timeZoneMapper.mapTimeZoneToString(user.getUserTimeZone()),
             user.getLocale(),
             user.isArchive()
     );

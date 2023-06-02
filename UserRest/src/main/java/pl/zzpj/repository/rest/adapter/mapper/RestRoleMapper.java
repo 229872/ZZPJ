@@ -15,8 +15,15 @@ public class RestRoleMapper {
       }
       return userRole;
 
-    } catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException | NullPointerException e) {
       throw new UserCreationException("Can't create user with wrong role name", e);
     }
+  }
+
+  public String mapRoleToString(UserRole role) {
+    if (role == null) {
+      return null;
+    }
+    return role.toString();
   }
 }

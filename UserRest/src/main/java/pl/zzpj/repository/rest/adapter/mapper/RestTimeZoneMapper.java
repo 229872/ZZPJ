@@ -9,9 +9,19 @@ public class RestTimeZoneMapper {
 
   public UserTimeZone mapToUserTimeZone(String timeZone) throws UserCreationException {
     try {
+      if (timeZone == null) {
+        return null;
+      }
       return UserTimeZone.valueOf(timeZone);
     } catch (IllegalArgumentException e) {
       throw new UserCreationException("Wrong time zone", e);
     }
+  }
+
+  public String mapTimeZoneToString(UserTimeZone timeZone) {
+    if (timeZone == null) {
+      return null;
+    }
+    return timeZone.getDisplayName();
   }
 }
