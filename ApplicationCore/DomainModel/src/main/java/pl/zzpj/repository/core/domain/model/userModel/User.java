@@ -32,7 +32,10 @@ public class User {
     return this.getVersion() + this.getPerson().getVersion() + this.getPerson().getAddress().getVersion();
   }
 
-  //todo create factory methods in service with default values
+  public User update(User user) {
+    throw new IllegalArgumentException();
+  }
+
   static UserBuilder builder(String login, String password, String email, Person person,
                                     UserRole role, UserState state, Boolean archive, Double score) {
     return new UserBuilder().login(login).password(password).email(email).person(person)
@@ -52,11 +55,10 @@ public class User {
     return builder(login, password, email, person, userRole, UserState.ACTIVE, false, 0.0);
   }
 
-  public static UserBuilder userBuilderWithDefaultsForRepositoryAdapter(String login, String password,
-                                                                        String email, Person person,
+  public static UserBuilder userBuilderWithDefaultsForRepositoryAdapter(UUID id, Long version, String login,
+                                                                        String password, String email, Person person,
                                                                         UserRole userRole, UserState userState,
                                                                         Boolean archive, Double score) {
-    return builder(login, password, email, person, userRole, userState, archive, score);
+    return builder(login, password, email, person, userRole, userState, archive, score).clientId(id).version(version);
   }
-
 }

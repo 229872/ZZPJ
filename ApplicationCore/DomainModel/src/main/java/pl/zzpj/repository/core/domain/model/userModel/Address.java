@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @Builder
 public class Address {
+  private UUID addressId;
   private Long version;
   private String country;
   private String city;

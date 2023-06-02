@@ -2,14 +2,17 @@ package pl.zzpj.repository.data.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import pl.zzpj.repository.data.AbstractEntity;
+
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Builder
 @Entity
 @Table(indexes = {
         @Index(name = "score_index", columnList = "score")
@@ -48,10 +51,10 @@ public class Account extends AbstractEntity {
   private Boolean archive;
 
 
-  public static AccountBuilder builder(String login, String password, String email, Person person,
-                                       Role role, AccountState state) {
+  public static AccountBuilder<?,?> builder(String login, String password, String email, Person person,
+                                            Role role, AccountState state) {
 
-    return new AccountBuilder().login(login).password(password).email(email).person(person)
+    return new AccountBuilderImpl().login(login).password(password).email(email).person(person)
             .role(role).accountState(state);
   }
 

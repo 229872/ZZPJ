@@ -1,15 +1,18 @@
 package pl.zzpj.repository.data;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.UUID;
 
 @Data
 @MappedSuperclass
 @NoArgsConstructor
+@SuperBuilder
 public abstract class AbstractEntity {
     @Id
     @Column
@@ -19,9 +22,9 @@ public abstract class AbstractEntity {
 
     @Version
     @Getter
-    private long version;
+    private Long version;
 
-    protected AbstractEntity(UUID id, long version) {
+    protected AbstractEntity(UUID id, Long version) {
         this.id = id;
         this.version = version;
     }

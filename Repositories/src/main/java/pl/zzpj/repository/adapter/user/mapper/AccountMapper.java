@@ -18,6 +18,8 @@ public class AccountMapper {
     var person = personMapper.mapToDomainModelPerson(account.getPerson());
 
     User.UserBuilder userBuilder = User.userBuilderWithDefaultsForRepositoryAdapter(
+            account.getId(),
+            account.getVersion(),
             account.getLogin(),
             account.getPassword(),
             account.getEmail(),
@@ -31,8 +33,6 @@ public class AccountMapper {
     return userBuilder
             .locale(account.getLocale())
             .userTimeZone(timeZoneMapper.mapToDomainModelTimeZone(account.getTimeZone()))
-            .clientId(account.getId())
-            .version(account.getVersion())
             .phoneNumber(account.getPhoneNumber())
             .socialInsuranceNumber(account.getSocialInsuranceNumber())
             .creditCard(account.getCreditCard())
@@ -43,7 +43,7 @@ public class AccountMapper {
   public Account mapToAccount(User user) {
     Person person = personMapper.mapToDatabasePerson(user.getPerson());
 
-    Account.AccountBuilder accountBuilder = Account.builder(
+    Account.AccountBuilder<?,?> accountBuilder = Account.builder(
             user.getLogin(),
             user.getPassword(),
             user.getEmail(),
@@ -54,12 +54,15 @@ public class AccountMapper {
 
 
     return accountBuilder
+            .id(user.getClientId())
+            .version(user.getVersion())
             .archive(user.isArchive())
             .locale(user.getLocale())
             .timeZone(timeZoneMapper.mapToDatabaseTimeZone(user.getUserTimeZone()))
             .phoneNumber(user.getPhoneNumber())
             .socialInsuranceNumber(user.getSocialInsuranceNumber())
             .creditCard(user.getCreditCard())
+            .score(user.getScore())
             .build();
   }
 }

@@ -7,7 +7,7 @@ import pl.zzpj.repository.data.user.Coordinates;
 @Component
 public class AddressMapper {
   public Address mapToDatabaseAddress(pl.zzpj.repository.core.domain.model.userModel.Address address) {
-    Address.AddressBuilder builder = Address.builder(
+    Address.AddressBuilder<?,?> builder = Address.builder(
             address.getCountry(),
             address.getCity(),
             address.getStreetName(),
@@ -17,6 +17,8 @@ public class AddressMapper {
     );
 
     return builder
+            .id(address.getAddressId())
+            .version(address.getVersion())
             .secondaryAddress(address.getSecondaryAddress())
             .buildingNumber(address.getBuildingNumber())
             .mailBox(address.getMailBox())
@@ -43,6 +45,7 @@ public class AddressMapper {
     );
 
     return builder
+            .addressId(address.getId())
             .version(address.getVersion())
             .secondaryAddress(address.getSecondaryAddress())
             .buildingNumber(address.getBuildingNumber())

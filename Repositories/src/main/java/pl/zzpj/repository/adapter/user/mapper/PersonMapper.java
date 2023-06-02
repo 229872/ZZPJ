@@ -13,14 +13,17 @@ public class PersonMapper {
     public Person mapToDatabasePerson(pl.zzpj.repository.core.domain.model.userModel.Person person) {
         Address address = addressMapper.mapToDatabaseAddress(person.getAddress());
 
-        Person.PersonBuilder builder = Person.builder(
+        Person.PersonBuilder<?,?> builder = Person.builder(
                 person.getName(),
                 person.getLastName(),
                 person.getGender(),
                 person.getDateOfBirth(),
                 address);
 
-        return builder.build();
+        return builder
+                .id(person.getPersonId())
+                .version(person.getVersion())
+                .build();
     }
 
     public pl.zzpj.repository.core.domain.model.userModel.Person mapToDomainModelPerson(Person person) {
@@ -34,6 +37,7 @@ public class PersonMapper {
                 address);
 
         return builder
+                .personId(person.getId())
                 .version(person.getVersion())
                 .build();
     }

@@ -7,12 +7,14 @@ import lombok.extern.java.Log;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @Builder
 @Log
 public class Person {
+  private UUID personId;
   private Long version;
   private String name;
   private String lastName;

@@ -2,17 +2,19 @@ package pl.zzpj.repository.data.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import pl.zzpj.repository.data.AbstractEntity;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@SuperBuilder
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Builder
 @SecondaryTable(
         name = "address_additional_data",
         pkJoinColumns = @PrimaryKeyJoinColumn(name = "address_id")
@@ -59,12 +61,11 @@ public class Address extends AbstractEntity {
   private String stateAbbr;
 
 
-  public static AddressBuilder builder(String country, String city, String streetName, String streetNumber,
-                                String postalCode, String fullAddress) {
+  public static AddressBuilder<?,?> builder(String country, String city, String streetName,
+                                            String streetNumber, String postalCode, String fullAddress) {
 
-    return new AddressBuilder()
-            .country(country).city(city).streetName(streetName).streetNumber(streetNumber)
-            .postalCode(postalCode).fullAddress(fullAddress);
+    return new AddressBuilderImpl().country(country).city(city).streetName(streetName)
+            .streetNumber(streetNumber).postalCode(postalCode).fullAddress(fullAddress);
   }
 
   public Optional<Coordinates> getCoordinates() {
