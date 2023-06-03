@@ -59,7 +59,8 @@ public class VehicleTiresRestController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(path = "all", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "all_season", produces = MediaType.APPLICATION_JSON_VALUE, consumes =
+        MediaType.APPLICATION_JSON_VALUE)
     public VehicleTireOutputDto createEquipmentAll(@RequestBody @Valid VehicleTireInputCreateDto dto) throws VehicleEquipmentServiceCreateException {
         return tiresRestAdapter.addEquipment(dto, RestTireType.ALL_SEASON);
     }
