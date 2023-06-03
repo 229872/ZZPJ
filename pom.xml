@@ -47,6 +47,13 @@
 
     <properties>
         <java.version>17</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <junit.version>5.9.1</junit.version>
+        <plugin.checkstyle.version>3.3.0</plugin.checkstyle.version>
+        <checkstyle.version>10.9.3</checkstyle.version>
+        <plugin.site.version>3.12.1</plugin.site.version>
     </properties>
 
     <dependencyManagement>
@@ -181,9 +188,38 @@
                         <skip>true</skip>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${plugin.checkstyle.version}</version>
+                    <executions>
+                        <execution>
+                            <id>Checkstyle</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${checkstyle.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <configLocation>checkstyleZZPJ.xml</configLocation>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
-
-
+    <reporting><plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <version>${plugin.checkstyle.version}</version>
+        </plugin>
+    </plugins></reporting>
 </project>
