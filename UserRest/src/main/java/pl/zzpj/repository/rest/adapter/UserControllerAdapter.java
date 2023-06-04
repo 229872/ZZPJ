@@ -5,14 +5,17 @@ import org.springframework.stereotype.Component;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceCreateException;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceNotFoundException;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceUpdateException;
+import pl.zzpj.repository.core.domain.exception.user.auth.AuthenticationException;
 import pl.zzpj.repository.core.domain.model.userModel.User;
 import pl.zzpj.repository.ports.command.user.UserCommandServicePort;
 import pl.zzpj.repository.ports.query.user.UserQueryServicePort;
 import pl.zzpj.repository.rest.adapter.mapper.RestRoleMapper;
 import pl.zzpj.repository.rest.adapter.mapper.UserMapper;
+import pl.zzpj.repository.rest.dto.input.CredentialsDto;
 import pl.zzpj.repository.rest.dto.input.UserInputDTO;
 import pl.zzpj.repository.rest.dto.input.UserUpdateDTO;
 import pl.zzpj.repository.rest.dto.output.UserOutputDTO;
+import pl.zzpj.repository.rest.exception.UserAuthenticationException;
 import pl.zzpj.repository.rest.exception.UserCreationException;
 import pl.zzpj.repository.rest.api.UserService;
 import pl.zzpj.repository.rest.exception.UserNotFoundException;
@@ -127,6 +130,16 @@ public class UserControllerAdapter implements UserService {
       throw new UserUpdateException(e.getMessage(), e);
     } catch (UserServiceNotFoundException e) {
       throw new UserNotFoundException(e.getMessage(), e);
+    }
+  }
+
+  @Override
+  public String authenticate(CredentialsDto credentials) throws UserAuthenticationException {
+    try {
+      return userCommandServicePort.authenticate(credentials.login(), credentials.password());
+
+    } catch (AuthenticationException e) {
+      throw new UserAuthenticationException(e.getMessage(), e);
     }
   }
 }

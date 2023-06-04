@@ -3,6 +3,7 @@ package pl.zzpj.repository.ports.command.user;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceCreateException;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceNotFoundException;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceUpdateException;
+import pl.zzpj.repository.core.domain.exception.user.auth.AuthenticationException;
 import pl.zzpj.repository.core.domain.model.userModel.User;
 import pl.zzpj.repository.core.domain.model.userModel.UserRole;
 import pl.zzpj.repository.core.domain.model.userModel.UserUpdateData;
@@ -16,5 +17,6 @@ public interface UserCommandServicePort {
   User block(UUID id) throws UserServiceNotFoundException, UserServiceUpdateException;
   User unblock(UUID id) throws UserServiceNotFoundException, UserServiceUpdateException;
   User changeRole(UUID id, UserRole newRole) throws UserServiceNotFoundException, UserServiceUpdateException;
+  String authenticate(String login, String password) throws AuthenticationException;
 
 }

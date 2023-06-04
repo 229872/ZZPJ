@@ -1,8 +1,10 @@
 package pl.zzpj.repository.rest.controller;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,21 +21,25 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+import static pl.zzpj.repository.utils.security.RoleName.ADMIN;
+
 @RestController
 @RequestMapping(value = "/users", produces = {
         MediaType.APPLICATION_JSON_VALUE,
         MediaType.APPLICATION_XML_VALUE
 })
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserController {
   private final UserService userService;
 
   @GetMapping
+  @RolesAllowed({ADMIN})
   public List<UserOutputDTO> getAll() {
     return userService.getAllUsers();
   }
 
   @GetMapping("/id/{id}")
+  @RolesAllowed({ADMIN})
   public ResponseEntity<?> getById(@PathVariable UUID id) {
     return userService.getUserById(id)
             .map(ResponseEntity::ok)
@@ -42,6 +48,7 @@ public class UserController {
   }
 
   @GetMapping("/login/{login}")
+  @RolesAllowed({ADMIN})
   public ResponseEntity<?> getByLogin(@PathVariable String login) {
     return userService.getUserByLogin(login)
             .map(ResponseEntity::ok)
@@ -49,6 +56,7 @@ public class UserController {
   }
 
   @GetMapping("/email/{email}")
+  @RolesAllowed({ADMIN})
   public ResponseEntity<?> getByEmail(@PathVariable String email) {
     return userService.getUserByEmail(email)
             .map(ResponseEntity::ok)
@@ -56,6 +64,7 @@ public class UserController {
   }
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+  @RolesAllowed({ADMIN})
   public ResponseEntity<?> create(@RequestBody @NotNull @Valid UserInputDTO user) {
     try {
       UserOutputDTO newUser = userService.createUser(user);
@@ -67,6 +76,7 @@ public class UserController {
   }
 
   @PutMapping(path = "/id/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @RolesAllowed({ADMIN})
   public ResponseEntity<?> updateUser(@PathVariable UUID id,
                                       @RequestBody @NotNull @Valid UserUpdateDTO user) {
     try {
@@ -81,6 +91,7 @@ public class UserController {
   }
 
   @PutMapping(path = "/id/{id}/archive")
+  @RolesAllowed({ADMIN})
   public ResponseEntity<?> archiveUser(@PathVariable UUID id) {
     try {
       UserOutputDTO updatedUser = userService.archiveUser(id);
@@ -94,6 +105,7 @@ public class UserController {
   }
 
   @PutMapping(path = "/id/{id}/block")
+  @RolesAllowed({ADMIN})
   public ResponseEntity<?> blockUser(@PathVariable UUID id) {
     try {
       UserOutputDTO updatedUser = userService.blockUser(id);
@@ -107,6 +119,7 @@ public class UserController {
   }
 
   @PutMapping(path = "/id/{id}/unblock")
+  @RolesAllowed({ADMIN})
   public ResponseEntity<?> unblockUser(@PathVariable UUID id) {
     try {
       UserOutputDTO updatedUser = userService.unblockUser(id);
@@ -120,6 +133,7 @@ public class UserController {
   }
 
   @PutMapping(path = "/id/{id}/role/{role}")
+  @RolesAllowed({ADMIN})
   public ResponseEntity<?> changeRole(@PathVariable UUID id, @PathVariable String role) {
     try {
       UserOutputDTO updatedUser = userService.changeRole(id, role);

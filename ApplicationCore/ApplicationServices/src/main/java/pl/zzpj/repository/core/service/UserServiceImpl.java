@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceCreateException;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceNotFoundException;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceUpdateException;
+import pl.zzpj.repository.core.domain.exception.user.auth.AuthenticationException;
 import pl.zzpj.repository.core.domain.model.userModel.User;
 import pl.zzpj.repository.core.domain.model.userModel.UserRole;
 import pl.zzpj.repository.core.domain.model.userModel.UserState;
@@ -13,6 +14,8 @@ import pl.zzpj.repository.ports.command.user.UserCommandRepositoryPort;
 import pl.zzpj.repository.ports.command.user.UserCommandServicePort;
 import pl.zzpj.repository.ports.query.user.UserQueryRepositoryPort;
 import pl.zzpj.repository.ports.query.user.UserQueryServicePort;
+import pl.zzpj.repository.utils.security.CryptUtils;
+import pl.zzpj.repository.utils.security.JtwUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +26,8 @@ import java.util.UUID;
 public class UserServiceImpl implements UserQueryServicePort, UserCommandServicePort {
   private final UserQueryRepositoryPort userQueryRepositoryPort;
   private final UserCommandRepositoryPort userCommandRepositoryPort;
+  private final JtwUtils jtwUtils;
+  private final CryptUtils cryptUtils;
   @Override
   public List<User> getAllUsers() {
     return userQueryRepositoryPort.getAllUsers();
@@ -114,6 +119,23 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
     }
   }
 
+  @Override
+  public String authenticate(String login, String password) throws AuthenticationException {
+    try {
+      User user = userQueryRepositoryPort.getUserByLogin(login)
+              .orElseThrow(() -> new UserServiceNotFoundException("User not found"));
+
+      validateCredentials(user, password);
+      checkIfCanAuthenticate(user);
+      // increment block counter if wrong password
+      // send mail if admin
+      return jtwUtils.generateToken(login, user.getUserRole().name());
+
+    } catch (UserServiceNotFoundException e) {
+      throw new AuthenticationException("Wrong credentials");
+    }
+  }
+
   private boolean canChangeRole(User user, UserRole newRole) {
     return user.getUserState().equals(UserState.ACTIVE) &&
             !(newRole.equals(user.getUserRole()) || newRole.equals(UserRole.GUEST));
@@ -123,6 +145,18 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
   private boolean isUserArchivalOrNotVerified(User user) {
     return user.getUserState().equals(UserState.NOT_VERIFIED)
             || user.getUserState().equals(UserState.ARCHIVAL);
+  }
+
+  private void validateCredentials(User user, String password) throws AuthenticationException {
+    if (!cryptUtils.verifyPassword(password, user.getPassword())) {
+      throw new AuthenticationException("Wrong credentials");
+    }
+  }
+
+  private void checkIfCanAuthenticate(User user) throws AuthenticationException {
+    if (!user.getUserState().equals(UserState.ACTIVE)) {
+      throw new AuthenticationException("Account is not active");
+    }
   }
 
 }

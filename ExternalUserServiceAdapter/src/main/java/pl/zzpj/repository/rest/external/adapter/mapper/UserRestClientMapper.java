@@ -47,7 +47,7 @@ public class UserRestClientMapper {
     return builder
             .fullAddress(addressInputDto.fullAddress())
             .secondaryAddress(addressInputDto.secondaryAddress())
-            .buildingNumber(Integer.parseInt(addressInputDto.buildingNumber()))
+            .buildingNumber(parseBuildingNumber(addressInputDto.buildingNumber()))
             .mailBox(addressInputDto.mailBox())
             .state(addressInputDto.state())
             .longitude(addressInputDto.longitude())
@@ -70,5 +70,10 @@ public class UserRestClientMapper {
             user.dateOfBirth(),
             address
     ).build();
+  }
+
+  private Integer parseBuildingNumber(String number) {
+    if (number == null) return null;
+    return Integer.valueOf(number);
   }
 }
