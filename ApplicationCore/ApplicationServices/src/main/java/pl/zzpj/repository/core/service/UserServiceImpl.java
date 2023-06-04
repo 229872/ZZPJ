@@ -1,15 +1,16 @@
 package pl.zzpj.repository.core.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceCreateException;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceNotFoundException;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceUpdateException;
 import pl.zzpj.repository.core.domain.exception.user.auth.AuthenticationException;
-import pl.zzpj.repository.core.domain.model.userModel.User;
-import pl.zzpj.repository.core.domain.model.userModel.UserRole;
-import pl.zzpj.repository.core.domain.model.userModel.UserState;
-import pl.zzpj.repository.core.domain.model.userModel.UserUpdateData;
+import pl.zzpj.repository.core.domain.model.userModel.*;
 import pl.zzpj.repository.ports.command.user.UserCommandRepositoryPort;
 import pl.zzpj.repository.ports.command.user.UserCommandServicePort;
 import pl.zzpj.repository.ports.query.user.UserQueryRepositoryPort;
@@ -17,17 +18,27 @@ import pl.zzpj.repository.ports.query.user.UserQueryServicePort;
 import pl.zzpj.repository.utils.security.CryptUtils;
 import pl.zzpj.repository.utils.security.JtwUtils;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Log
 public class UserServiceImpl implements UserQueryServicePort, UserCommandServicePort {
+
+  @Value("${authentication.failure.tolerance.tries:2}")
+  private Integer authenticationFailAttempts;
+  @Value("${account.blockade.time.seconds:180}")
+  private Integer accountBlockadeTimeInSeconds;
+
   private final UserQueryRepositoryPort userQueryRepositoryPort;
   private final UserCommandRepositoryPort userCommandRepositoryPort;
   private final JtwUtils jtwUtils;
   private final CryptUtils cryptUtils;
+  private final HttpServletRequest request;
+
   @Override
   public List<User> getAllUsers() {
     return userQueryRepositoryPort.getAllUsers();
@@ -125,11 +136,12 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
       User user = userQueryRepositoryPort.getUserByLogin(login)
               .orElseThrow(() -> new UserServiceNotFoundException("User not found"));
 
-      validateCredentials(user, password);
-      checkIfCanAuthenticate(user);
-      // increment block counter if wrong password
+      validateIfCanAuthenticate(user, password);
+
       // send mail if admin
-      return jtwUtils.generateToken(login, user.getUserRole().name());
+      String token = jtwUtils.generateToken(login, user.getUserRole().name());
+      updateUserAuthenticationInformationIfAuthenticationCorrect(user);
+      return token;
 
     } catch (UserServiceNotFoundException e) {
       throw new AuthenticationException("Wrong credentials");
@@ -147,6 +159,17 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
             || user.getUserState().equals(UserState.ARCHIVAL);
   }
 
+  private void validateIfCanAuthenticate(User user, String password) throws AuthenticationException {
+    try {
+      checkIfCanAuthenticate(user);
+      validateCredentials(user, password);
+    } catch (AuthenticationException e) {
+      log.info("Authentication exception: " + e.getMessage());
+      updateUserAuthenticationInformationIfAuthenticationFailed(user);
+      throw e;
+    }
+  }
+
   private void validateCredentials(User user, String password) throws AuthenticationException {
     if (!cryptUtils.verifyPassword(password, user.getPassword())) {
       throw new AuthenticationException("Wrong credentials");
@@ -156,6 +179,66 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
   private void checkIfCanAuthenticate(User user) throws AuthenticationException {
     if (!user.getUserState().equals(UserState.ACTIVE)) {
       throw new AuthenticationException("Account is not active");
+    }
+  }
+
+  private void updateUserAuthenticationInformationIfAuthenticationFailed(User user) {
+    try {
+      User userWithSessionData = setUserAuthenticationInformationIfFailed(user);
+      userCommandRepositoryPort.update(userWithSessionData);
+
+    } catch (UserServiceUpdateException e) {
+      log.warning("Sth went wrong with saving account metadata");
+    }
+  }
+
+  private User setUserAuthenticationInformationIfFailed(User user) {
+    UserAccountInformations data = user.getUserAccountInformations();
+
+    data.setLastFailedAuthenticationTime(LocalDateTime.now());
+    data.setLastFailedLoginIpAddress(request.getRemoteAddr());
+
+    tryBlockAccount(user);
+    return user;
+  }
+
+  private User setUserAuthenticationInformationIfCorrect(User user) {
+    String remoteAddress = request.getRemoteAddr();
+    UserAccountInformations data = UserAccountInformations.builder()
+            .failedLoginCounter(0)
+            .lastCorrectAuthenticationTime(LocalDateTime.now())
+            .lastLoginIpAddress(remoteAddress)
+            .build();
+
+    user.setUserAccountInformations(data);
+    return user;
+  }
+
+  private void updateUserAuthenticationInformationIfAuthenticationCorrect(User user) {
+    try {
+      User userWithSessionData = setUserAuthenticationInformationIfCorrect(user);
+      userCommandRepositoryPort.update(userWithSessionData);
+
+    } catch (UserServiceUpdateException e) {
+      log.warning("Sth went wrong with saving account metadata");
+    }
+  }
+
+  private void tryBlockAccount(User user) {
+    UserAccountInformations userAccountInformations = user.getUserAccountInformations();
+
+    if (user.getUserState().equals(UserState.ACTIVE)
+            && userAccountInformations.getFailedLoginCounter().equals(authenticationFailAttempts)) {
+
+      userAccountInformations.setFailedLoginCounter(0);
+
+      LocalDateTime blockadeStart = LocalDateTime.now();
+      userAccountInformations.setBlockadeStart(blockadeStart);
+      userAccountInformations.setBlockadeEnd(blockadeStart.plusSeconds(accountBlockadeTimeInSeconds));
+      user.setUserState(UserState.BLOCKED);
+      // set timer
+    } else if (user.getUserState().equals(UserState.ACTIVE)) {
+      userAccountInformations.setFailedLoginCounter(userAccountInformations.getFailedLoginCounter() + 1);
     }
   }
 

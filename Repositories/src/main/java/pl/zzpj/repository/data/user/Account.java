@@ -6,7 +6,6 @@ import lombok.experimental.SuperBuilder;
 import pl.zzpj.repository.data.AbstractEntity;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -48,6 +47,20 @@ public class Account extends AbstractEntity {
   private AccountState accountState;
   @Column(nullable = false)
   private String locale;
+  @Column(name = "last_correct_authentication_ip")
+  private String lastIpLogin;
+  @Column(name = "last_failed_authentication_ip")
+  private String lastIpWrongLogin;
+  @Column(name = "failed_login_counter")
+  private Integer failedLoginCounter;
+  @Column(name = "last_correct_authentication_time")
+  private LocalDateTime lastCorrectAuthenticationTime;
+  @Column(name = "last_failed_authentication_time")
+  private LocalDateTime lastFailedAuthenticationTime;
+  @Column(name = "blockade_begin")
+  private LocalDateTime blockadeBegin;
+  @Column(name = "blockade_end")
+  private LocalDateTime blockadeEnd;
 
 
   public static AccountBuilder<?,?> builder(String login, String password, String email, Person person,
@@ -61,6 +74,7 @@ public class Account extends AbstractEntity {
   public void init() {
     this.score = score == null ? 0.0 : score;
     this.locale = locale == null ? "en" : locale;
+    this.failedLoginCounter = 0;
   }
 
 }
