@@ -1,5 +1,6 @@
 package pl.zzpj.repository.ports.command.vehicleEquipment;
 
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.BadEquipmentTireTypeException;
 import pl.zzpj.repository.core.domain.exception.vehicleEquipment.VehicleEquipmentServiceCreateException;
 import pl.zzpj.repository.core.domain.exception.vehicleEquipment.VehicleEquipmentServiceNotFoundException;
 import pl.zzpj.repository.core.domain.exception.vehicleEquipment.VehicleEquipmentServiceUpdateException;
@@ -11,6 +12,8 @@ import java.util.UUID;
 public interface VehicleTireCommandService {
 
     VehicleTire addEquipment(VehicleTire tire) throws VehicleEquipmentServiceCreateException;
+
+    VehicleTire addEquipmentNoType(VehicleTire tire, int typeNumber) throws VehicleEquipmentServiceCreateException, BadEquipmentTireTypeException;
 
     VehicleTire updateEquipment(UUID id, VehicleTire tire) throws VehicleEquipmentServiceNotFoundException, VehicleEquipmentServiceUpdateException;
 

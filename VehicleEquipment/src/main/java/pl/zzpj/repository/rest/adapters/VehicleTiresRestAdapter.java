@@ -53,9 +53,27 @@ public class VehicleTiresRestAdapter implements VehicleTiresCommandRest, Vehicle
     }
 
     @Override
-    public VehicleTireOutputDto addEquipment(VehicleTireInputCreateDto dto, RestTireType tireType) throws VehicleEquipmentServiceCreateException {
+    public VehicleTireOutputDto addEquipmentSummer(VehicleTireInputCreateDto dto) throws VehicleEquipmentServiceCreateException {
         return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
-                addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, tireType)));
+                addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, RestTireType.SUMMER)));
+    }
+
+    @Override
+    public VehicleTireOutputDto addEquipmentWinter(VehicleTireInputCreateDto dto) throws VehicleEquipmentServiceCreateException {
+        return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
+                addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, RestTireType.WINTER)));
+    }
+
+    @Override
+    public VehicleTireOutputDto addEquipmentAllSeason(VehicleTireInputCreateDto dto) throws VehicleEquipmentServiceCreateException {
+        return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
+                addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, RestTireType.ALL_SEASON)));
+    }
+
+    @Override
+    public VehicleTireOutputDto addEquipmentSpecial(VehicleTireInputCreateDto dto) throws VehicleEquipmentServiceCreateException {
+        return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
+                addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, RestTireType.SPECIAL)));
     }
 
     @Override

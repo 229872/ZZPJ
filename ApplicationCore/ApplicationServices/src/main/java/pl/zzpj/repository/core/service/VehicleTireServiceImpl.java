@@ -2,9 +2,11 @@ package pl.zzpj.repository.core.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.BadEquipmentTireTypeException;
 import pl.zzpj.repository.core.domain.exception.vehicleEquipment.VehicleEquipmentServiceCreateException;
 import pl.zzpj.repository.core.domain.exception.vehicleEquipment.VehicleEquipmentServiceNotFoundException;
 import pl.zzpj.repository.core.domain.exception.vehicleEquipment.VehicleEquipmentServiceUpdateException;
+import pl.zzpj.repository.core.domain.model.vehicleModel.TireType;
 import pl.zzpj.repository.core.domain.model.vehicleModel.VehicleTire;
 import pl.zzpj.repository.ports.command.vehicleEquipment.VehicleTireCommandPort;
 import pl.zzpj.repository.ports.command.vehicleEquipment.VehicleTireCommandService;
@@ -61,5 +63,16 @@ public class VehicleTireServiceImpl implements VehicleTireCommandService, Vehicl
     @Override
     public VehicleTire getEquipmentById(UUID id) throws VehicleEquipmentServiceNotFoundException {
         return queryPort.getEquipmentById(id);
+    }
+
+    @Override
+    public VehicleTire addEquipmentNoType(VehicleTire tire, int tireType)
+            throws VehicleEquipmentServiceCreateException, BadEquipmentTireTypeException {
+        try {
+            tire.setType(TireType.values()[tireType]);
+            return commandPort.add(tire);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new BadEquipmentTireTypeException(e.getMessage(), e.getCause());
+        }
     }
 }

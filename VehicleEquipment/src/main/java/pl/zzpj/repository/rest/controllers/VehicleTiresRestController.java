@@ -43,26 +43,26 @@ public class VehicleTiresRestController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = "summer", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public VehicleTireOutputDto createEquipmentSummer(@RequestBody VehicleTireInputCreateDto dto) throws VehicleEquipmentServiceCreateException {
-        return tiresRestAdapter.addEquipment(dto, RestTireType.SUMMER);
+        return tiresRestAdapter.addEquipmentSummer(dto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = "winter", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public VehicleTireOutputDto createEquipmentWinter(@RequestBody VehicleTireInputCreateDto dto) throws VehicleEquipmentServiceCreateException {
-        return tiresRestAdapter.addEquipment(dto, RestTireType.WINTER);
+        return tiresRestAdapter.addEquipmentWinter(dto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = "special", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public VehicleTireOutputDto createEquipmentSpecial(@RequestBody VehicleTireInputCreateDto dto) throws VehicleEquipmentServiceCreateException {
-        return tiresRestAdapter.addEquipment(dto, RestTireType.SPECIAL);
+        return tiresRestAdapter.addEquipmentSpecial(dto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = "all_season", produces = MediaType.APPLICATION_JSON_VALUE, consumes =
         MediaType.APPLICATION_JSON_VALUE)
     public VehicleTireOutputDto createEquipmentAll(@RequestBody @Valid VehicleTireInputCreateDto dto) throws VehicleEquipmentServiceCreateException {
-        return tiresRestAdapter.addEquipment(dto, RestTireType.ALL_SEASON);
+        return tiresRestAdapter.addEquipmentAllSeason(dto);
     }
 
     @ResponseStatus(HttpStatus.OK)
