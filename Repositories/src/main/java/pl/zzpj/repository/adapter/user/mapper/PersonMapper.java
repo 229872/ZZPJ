@@ -13,16 +13,32 @@ public class PersonMapper {
     public Person mapToDatabasePerson(pl.zzpj.repository.core.domain.model.userModel.Person person) {
         Address address = addressMapper.mapToDatabaseAddress(person.getAddress());
 
-        return Person.builder(person.getName(), person.getLastName(), person.getGender(),
-                        person.getDateOfBirth(), address)
+        Person.PersonBuilder<?,?> builder = Person.builder(
+                person.getName(),
+                person.getLastName(),
+                person.getGender(),
+                person.getDateOfBirth(),
+                address);
+
+        return builder
+                .id(person.getPersonId())
+                .version(person.getVersion())
                 .build();
     }
 
     public pl.zzpj.repository.core.domain.model.userModel.Person mapToDomainModelPerson(Person person) {
         var address = addressMapper.mapToDomainModelAddress(person.getAddress());
 
-        return pl.zzpj.repository.core.domain.model.userModel.Person.builder(person.getFirstName(),
-                        person.getLastName(), person.getGender(), person.getDateOfBirth(), address)
+        var builder = pl.zzpj.repository.core.domain.model.userModel.Person.builder(
+                person.getFirstName(),
+                person.getLastName(),
+                person.getGender(),
+                person.getDateOfBirth(),
+                address);
+
+        return builder
+                .personId(person.getId())
+                .version(person.getVersion())
                 .build();
     }
 

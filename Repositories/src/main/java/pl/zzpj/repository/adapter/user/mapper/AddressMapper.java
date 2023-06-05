@@ -2,28 +2,62 @@ package pl.zzpj.repository.adapter.user.mapper;
 
 import org.springframework.stereotype.Component;
 import pl.zzpj.repository.data.user.Address;
+import pl.zzpj.repository.data.user.Coordinates;
 
 @Component
 public class AddressMapper {
   public Address mapToDatabaseAddress(pl.zzpj.repository.core.domain.model.userModel.Address address) {
-    return Address.builder()
-            .country(address.getCountry())
+    Address.AddressBuilder<?,?> builder = Address.builder(
+            address.getCountry(),
+            address.getCity(),
+            address.getStreetName(),
+            address.getStreetNumber(),
+            address.getPostalCode(),
+            address.getFullAddress()
+    );
+
+    return builder
+            .id(address.getAddressId())
+            .version(address.getVersion())
+            .secondaryAddress(address.getSecondaryAddress())
+            .buildingNumber(address.getBuildingNumber())
+            .mailBox(address.getMailBox())
+            .state(address.getState())
+            .coordinates(new Coordinates(address.getLatitude(), address.getLongitude()))
+            .community(address.getCommunity())
             .countryCode(address.getCountryCode())
-            .city(address.getCity())
-            .streetName(address.getStreetName())
-            .streetAddress(address.getStreetAddress())
-            .zipCode(address.getZipCode())
+            .streetSuffix(address.getStreetSuffix())
+            .cityPrefix(address.getCityPrefix())
+            .citySuffix(address.getCitySuffix())
+            .stateAbbr(address.getStateAbbr())
             .build();
+
   }
 
   public pl.zzpj.repository.core.domain.model.userModel.Address mapToDomainModelAddress(Address address) {
-    return pl.zzpj.repository.core.domain.model.userModel.Address.builder()
-            .country(address.getCountry())
+    var builder = pl.zzpj.repository.core.domain.model.userModel.Address.builder(
+            address.getCountry(),
+            address.getCity(),
+            address.getStreetName(),
+            address.getStreetNumber(),
+            address.getPostalCode()
+    );
+
+    return builder
+            .addressId(address.getId())
+            .version(address.getVersion())
+            .secondaryAddress(address.getSecondaryAddress())
+            .buildingNumber(address.getBuildingNumber())
+            .mailBox(address.getMailBox())
+            .state(address.getState())
+            .longitude(address.getCoordinates().map(Coordinates::getLongitude).orElse(null))
+            .latitude(address.getCoordinates().map(Coordinates::getLatitude).orElse(null))
+            .community(address.getCommunity())
             .countryCode(address.getCountryCode())
-            .city(address.getCity())
-            .streetName(address.getStreetName())
-            .streetAddress(address.getStreetAddress())
-            .zipCode(address.getZipCode())
+            .streetSuffix(address.getStreetSuffix())
+            .cityPrefix(address.getCityPrefix())
+            .citySuffix(address.getCitySuffix())
+            .stateAbbr(address.getStateAbbr())
             .build();
   }
 }

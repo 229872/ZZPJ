@@ -40,6 +40,11 @@
 
         <dependency>
             <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>ExternalUserServiceAdapter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
             <artifactId>RentVehicleRest</artifactId>
         </dependency>
 

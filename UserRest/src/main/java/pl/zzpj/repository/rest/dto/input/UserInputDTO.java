@@ -10,25 +10,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 @Builder
-public class UserInputDTO {
-  @NotBlank(message = "login can't be empty")
-  private String login;
-  @NotBlank
-  @Size(min = 8)
-  private String password;
-  @Email
-  @NotBlank
-  private String email;
-  @NotNull
-  @Valid
-  private PersonInputDTO person;
-  private String phoneNumber;
-  private String socialInsuranceNumber;
-  private String creditCard;
-  private Double score;
+public record UserInputDTO (
+        @NotBlank(message = "login can't be empty") String login,
+        @NotBlank @Size(min = 8) String password,
+        @Email @NotBlank String email,
+        @NotNull @Valid PersonInputDTO person,
+        String phoneNumber,
+        String socialInsuranceNumber,
+        String creditCard,
+        @NotBlank
+        String role,
+        String timeZone,
+        String locale
+        ) {
 
 }
