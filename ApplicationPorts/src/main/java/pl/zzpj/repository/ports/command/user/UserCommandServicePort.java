@@ -18,5 +18,7 @@ public interface UserCommandServicePort {
   User unblock(UUID id) throws UserServiceNotFoundException, UserServiceUpdateException;
   User changeRole(UUID id, UserRole newRole) throws UserServiceNotFoundException, UserServiceUpdateException;
   String authenticate(String login, String password) throws AuthenticationException;
+  User register(User user) throws UserServiceCreateException;
+  void confirmUser(String token) throws UserServiceNotFoundException;
 
 }

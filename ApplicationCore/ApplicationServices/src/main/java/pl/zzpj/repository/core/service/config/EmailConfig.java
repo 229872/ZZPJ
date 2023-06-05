@@ -1,4 +1,4 @@
-package pl.zzpj.repository.utils.email;
+package pl.zzpj.repository.core.service.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
