@@ -1,8 +1,14 @@
 package pl.zzpj.repository.rest.api;
 
+import pl.zzpj.repository.core.domain.exception.user.auth.AuthenticationException;
+import pl.zzpj.repository.rest.dto.input.CredentialsDto;
 import pl.zzpj.repository.rest.dto.input.UserInputDTO;
+import pl.zzpj.repository.rest.dto.input.UserUpdateDTO;
 import pl.zzpj.repository.rest.dto.output.UserOutputDTO;
+import pl.zzpj.repository.rest.exception.UserAuthenticationException;
 import pl.zzpj.repository.rest.exception.UserCreationException;
+import pl.zzpj.repository.rest.exception.UserNotFoundException;
+import pl.zzpj.repository.rest.exception.UserUpdateException;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,4 +20,10 @@ public interface UserService {
   Optional<UserOutputDTO> getUserByLogin(String login);
   Optional<UserOutputDTO> getUserByEmail(String email);
   UserOutputDTO createUser(UserInputDTO user) throws UserCreationException;
+  UserOutputDTO updateUser(UUID id, UserUpdateDTO user) throws UserUpdateException, UserNotFoundException;
+  UserOutputDTO archiveUser(UUID id) throws UserUpdateException, UserNotFoundException;
+  UserOutputDTO blockUser(UUID id) throws UserUpdateException, UserNotFoundException;
+  UserOutputDTO unblockUser(UUID id) throws UserUpdateException, UserNotFoundException;
+  UserOutputDTO changeRole(UUID id, String newRole) throws UserUpdateException, UserCreationException, UserNotFoundException;
+  String authenticate(CredentialsDto credentials) throws UserAuthenticationException;
 }

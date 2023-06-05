@@ -16,6 +16,7 @@
     <modules>
         <module>DomainModel</module>
         <module>ApplicationServices</module>
+        <module>Utils</module>
     </modules>
 
     <dependencies>

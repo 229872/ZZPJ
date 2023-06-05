@@ -1,11 +1,14 @@
-package pl.zzpj.repository.rest.security;
+package pl.zzpj.repository.utils.security;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CryptUtils {
-  private final int BCRYPT_COST_FACTOR = 12;
+
+  @Value("${cost.factor:12}")
+  private int BCRYPT_COST_FACTOR;
 
   public String hashPassword(String password) {
     return BCrypt.withDefaults().hashToString(BCRYPT_COST_FACTOR, password.toCharArray());

@@ -1,20 +1,17 @@
 package pl.zzpj.repository.rest.dto.output;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import lombok.Builder;
 import java.time.LocalDate;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
+
 @Builder
-public class PersonOutputDTO {
-  private String firstName;
-  private String lastName;
-  private String gender;
-  private LocalDate dateOfBirth;
-  private AddressOutputDTO address;
+public record PersonOutputDTO(
+        String firstName,
+        String lastName,
+        String gender,
+        LocalDate dateOfBirth,
+        Integer age,
+        AddressOutputDTO address) {
+
 }

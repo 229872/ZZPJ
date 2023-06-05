@@ -1,18 +1,28 @@
 package pl.zzpj.repository.rest.dto.output;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
+
+
 @Builder
-public class AddressOutputDTO {
-  private String country;
-  private String countryCode;
-  private String city;
-  private String streetName;
-  private String streetAddress;
+public record AddressOutputDTO(
+        String country,
+        String city,
+        String streetName,
+        String streetNumber,
+        String postalCode,
+        String fullAddress,
+        String secondaryAddress,
+        Integer buildingNumber,
+        String mailBox,
+        String state,
+        CoordinatesDto coordinates,
+        String community,
+        String countryCode,
+        String streetSuffix,
+        String cityPrefix,
+        String citySuffix,
+        String stateAbbr
+) {
+
 }
