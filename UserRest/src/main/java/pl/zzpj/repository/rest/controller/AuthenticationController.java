@@ -10,6 +10,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import pl.zzpj.repository.rest.api.UserService;
 import pl.zzpj.repository.rest.dto.input.*;
+import pl.zzpj.repository.rest.dto.output.ConfirmStatus;
 import pl.zzpj.repository.rest.dto.output.UserOutputDTO;
 import pl.zzpj.repository.rest.exception.UserAuthenticationException;
 import pl.zzpj.repository.rest.exception.UserCreationException;
@@ -60,9 +61,9 @@ public class AuthenticationController {
   public ResponseEntity<?> confirmAccount(@RequestParam String token) {
     try {
       userService.confirmAccount(token);
-      return ResponseEntity.ok().build();
+      return ResponseEntity.ok(new ConfirmStatus("Account successfully verified"));
     } catch (UserNotFoundException e) {
-      return ResponseEntity.status(HttpStatus.GONE).body(e.getMessage());
+      return ResponseEntity.status(HttpStatus.GONE).body(new ConfirmStatus(e.getMessage()));
     }
   }
 

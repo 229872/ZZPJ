@@ -33,7 +33,7 @@ public class Account extends AbstractEntity {
   private String creditCard;
   @Column(nullable = false)
   private Double score;
-  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
   @JoinColumn(nullable = false, unique = true)
   private Person person;
   @Enumerated(value = EnumType.STRING)

@@ -29,7 +29,7 @@ public class Person extends AbstractEntity {
   private String gender;
   @Column(name = "date_of_birth", nullable = false)
   private LocalDate dateOfBirth;
-  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
   @JoinColumn(unique = true, nullable = false)
   private Address address;
 

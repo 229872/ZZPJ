@@ -7,6 +7,7 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceCreateException;
+import pl.zzpj.repository.core.domain.exception.user.UserServiceDeleteException;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceNotFoundException;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceUpdateException;
 import pl.zzpj.repository.core.domain.exception.user.auth.AuthenticationException;
@@ -32,6 +33,8 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
   private Integer authenticationFailAttempts;
   @Value("${account.blockade.time.seconds:180}")
   private Integer accountBlockadeTimeInSeconds;
+  @Value("${account.token.time.ms}")
+  private long accountConfirmTime;
 
   private final UserQueryRepositoryPort userQueryRepositoryPort;
   private final UserCommandRepositoryPort userCommandRepositoryPort;
@@ -164,9 +167,11 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
     String token = jwtUtils.generateConfirmationToken(added.getLogin());
     emailCommandPort.sendEmailWithAccountConfirmationLink(added.getEmail(),
             added.getLocale(), token, added.getLogin());
+    deleteUserAfterConfirmationTimeout(added);
 
     return added;
   }
+
 
   @Override
   public void confirmUser(String token) throws UserServiceNotFoundException {
@@ -175,6 +180,10 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
       String login = claims.getSubject();
       User user = userQueryRepositoryPort.getUserByLogin(login)
               .orElseThrow();
+      if (!user.getUserState().equals(UserState.NOT_VERIFIED)) {
+        throw new Exception();
+      }
+
       user.setUserState(UserState.ACTIVE);
       userCommandRepositoryPort.update(user);
     } catch (Exception e) {
@@ -316,5 +325,27 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
         timer.cancel();
       }
     }, accountBlockadeTimeInSeconds * 1000);
+  }
+
+  private void deleteUserAfterConfirmationTimeout(User user) {
+    Timer timer = new Timer();
+    timer.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        try {
+          User userAfterTimeout = userQueryRepositoryPort.getUserByLogin(user.getLogin())
+                  .orElseThrow(() -> new UserServiceNotFoundException("User not found"));
+          if (userAfterTimeout.getUserState().equals(UserState.NOT_VERIFIED)) {
+            userCommandRepositoryPort.delete(userAfterTimeout);
+            log.info("Not verified user removed from db");
+          }
+          log.info("User is verified");
+
+        } catch (UserServiceDeleteException | UserServiceNotFoundException e) {
+          log.severe("User can't be removed, administrator needs to delete him from database");
+        }
+        timer.cancel();
+      }
+    }, accountConfirmTime);
   }
 }
