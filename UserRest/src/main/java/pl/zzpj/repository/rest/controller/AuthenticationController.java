@@ -7,20 +7,15 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.zzpj.repository.rest.api.UserService;
-import pl.zzpj.repository.rest.dto.input.AddressInputDTO;
-import pl.zzpj.repository.rest.dto.input.CredentialsDto;
-import pl.zzpj.repository.rest.dto.input.PersonInputDTO;
-import pl.zzpj.repository.rest.dto.input.UserInputDTO;
+import pl.zzpj.repository.rest.dto.input.*;
+import pl.zzpj.repository.rest.dto.output.ConfirmStatus;
+import pl.zzpj.repository.rest.dto.output.UserOutputDTO;
 import pl.zzpj.repository.rest.exception.UserAuthenticationException;
 import pl.zzpj.repository.rest.exception.UserCreationException;
+import pl.zzpj.repository.rest.exception.UserNotFoundException;
 
-import java.time.LocalDateTime;
-import java.time.Month;
 
 import static pl.zzpj.repository.utils.security.RoleName.ADMIN;
 import static pl.zzpj.repository.utils.security.RoleName.GUEST;
@@ -49,6 +44,28 @@ public class AuthenticationController {
   }
 
 
+  @PostMapping(path = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @RolesAllowed(GUEST)
+  public ResponseEntity<?> register(@RequestBody @NotNull @Valid UserRegisterDTO userRegister) {
+    try {
+      UserOutputDTO user = userService.registerUser(userRegister);
+      return ResponseEntity.status(HttpStatus.CREATED).body(user);
+
+    } catch (UserCreationException e) {
+      return ResponseEntity.badRequest().build();
+    }
+  }
+
+  @GetMapping("/confirm")
+  @RolesAllowed(GUEST)
+  public ResponseEntity<?> confirmAccount(@RequestParam String token) {
+    try {
+      userService.confirmAccount(token);
+      return ResponseEntity.ok(new ConfirmStatus("Account successfully verified"));
+    } catch (UserNotFoundException e) {
+      return ResponseEntity.status(HttpStatus.GONE).body(new ConfirmStatus(e.getMessage()));
+    }
+  }
 
 
 
@@ -79,7 +96,7 @@ public class AuthenticationController {
       userService.createUser(new UserInputDTO(
               "admin",
               "Kochamzzpj!",
-              "example123@example123.example",
+              "soroj32379@onlcool.com",
               person, "997", "555", "374927342", ADMIN, null, "pl"
       ));
 

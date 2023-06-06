@@ -14,6 +14,9 @@ public class JtwUtils {
 
   @Value("${security.token.time.ms}")
   private long tokenTime;
+  @Value("${account.token.time.ms}")
+  private long accountConfirmTime;
+
   @Value("${jwt.key}")
   private String key;
 
@@ -25,6 +28,18 @@ public class JtwUtils {
             .setIssuedAt(new Date(currentTime))
             .setExpiration(new Date(currentTime + tokenTime))
             .claim("role", role.toUpperCase())
+            .signWith(SignatureAlgorithm.HS512, key)
+            .compact();
+  }
+
+
+  public String generateConfirmationToken(String login) {
+    long currentTime = System.currentTimeMillis();
+
+    return Jwts.builder()
+            .setSubject(login)
+            .setIssuedAt(new Date(currentTime))
+            .setExpiration(new Date(currentTime + accountConfirmTime))
             .signWith(SignatureAlgorithm.HS512, key)
             .compact();
   }
