@@ -13,6 +13,7 @@ import pl.zzpj.repository.rest.adapter.mapper.RestRoleMapper;
 import pl.zzpj.repository.rest.adapter.mapper.UserMapper;
 import pl.zzpj.repository.rest.dto.input.CredentialsDto;
 import pl.zzpj.repository.rest.dto.input.UserInputDTO;
+import pl.zzpj.repository.rest.dto.input.UserRegisterDTO;
 import pl.zzpj.repository.rest.dto.input.UserUpdateDTO;
 import pl.zzpj.repository.rest.dto.output.UserOutputDTO;
 import pl.zzpj.repository.rest.exception.UserAuthenticationException;
@@ -140,6 +141,26 @@ public class UserControllerAdapter implements UserService {
 
     } catch (AuthenticationException e) {
       throw new UserAuthenticationException(e.getMessage(), e);
+    }
+  }
+
+  @Override
+  public UserOutputDTO registerUser(UserRegisterDTO user) throws UserCreationException {
+    try {
+      User newUser = userCommandServicePort.register(userMapper.mapUserRegisterDtoToDomainModelUser(user));
+      return userMapper.mapToUserOutputDTO(newUser);
+
+    } catch (UserServiceCreateException e) {
+      throw new UserCreationException(e.getMessage(), e);
+    }
+  }
+
+  @Override
+  public void confirmAccount(String token) throws UserNotFoundException {
+    try {
+      userCommandServicePort.confirmUser(token);
+    } catch (UserServiceNotFoundException e) {
+      throw new UserNotFoundException(e.getMessage(), e);
     }
   }
 }

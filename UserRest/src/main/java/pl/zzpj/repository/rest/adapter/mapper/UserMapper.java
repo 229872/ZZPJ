@@ -2,13 +2,11 @@ package pl.zzpj.repository.rest.adapter.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.zzpj.repository.core.domain.model.userModel.Address;
-import pl.zzpj.repository.core.domain.model.userModel.UserUpdateData;
+import pl.zzpj.repository.core.domain.model.userModel.*;
+import pl.zzpj.repository.rest.dto.input.UserRegisterDTO;
 import pl.zzpj.repository.rest.dto.input.UserUpdateDTO;
 import pl.zzpj.repository.rest.exception.UserCreationException;
 import pl.zzpj.repository.utils.security.CryptUtils;
-import pl.zzpj.repository.core.domain.model.userModel.Person;
-import pl.zzpj.repository.core.domain.model.userModel.User;
 import pl.zzpj.repository.rest.dto.input.UserInputDTO;
 import pl.zzpj.repository.rest.dto.output.UserOutputDTO;
 import pl.zzpj.repository.rest.dto.output.PersonOutputDTO;
@@ -64,6 +62,30 @@ public class UserMapper {
             .creditCard(user.creditCard())
             .build();
   }
+
+  public User mapUserRegisterDtoToDomainModelUser(UserRegisterDTO user) throws UserCreationException {
+    Person person = personMapper.mapToModelDomainPerson(user.person());
+
+
+
+    User.UserBuilder userBuilder = User.userBuilderWithDefaultsForRestAdapter(
+            user.login(),
+            cryptUtils.hashPassword(user.password()),
+            user.email(),
+            person,
+            UserRole.CLIENT
+    );
+
+    return userBuilder
+            .userState(UserState.NOT_VERIFIED)
+            .locale(user.locale())
+            .userTimeZone(timeZoneMapper.mapToUserTimeZone(user.timeZone()))
+            .phoneNumber(user.phoneNumber())
+            .socialInsuranceNumber(user.socialInsuranceNumber())
+            .creditCard(user.creditCard())
+            .build();
+  }
+
 
   public UserUpdateData mapToDomainModelUpdateData(UserUpdateDTO user) {
     return UserUpdateData.builder()

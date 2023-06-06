@@ -3,6 +3,7 @@ package pl.zzpj.repository.rest.api;
 import pl.zzpj.repository.core.domain.exception.user.auth.AuthenticationException;
 import pl.zzpj.repository.rest.dto.input.CredentialsDto;
 import pl.zzpj.repository.rest.dto.input.UserInputDTO;
+import pl.zzpj.repository.rest.dto.input.UserRegisterDTO;
 import pl.zzpj.repository.rest.dto.input.UserUpdateDTO;
 import pl.zzpj.repository.rest.dto.output.UserOutputDTO;
 import pl.zzpj.repository.rest.exception.UserAuthenticationException;
@@ -26,4 +27,6 @@ public interface UserService {
   UserOutputDTO unblockUser(UUID id) throws UserUpdateException, UserNotFoundException;
   UserOutputDTO changeRole(UUID id, String newRole) throws UserUpdateException, UserCreationException, UserNotFoundException;
   String authenticate(CredentialsDto credentials) throws UserAuthenticationException;
+  UserOutputDTO registerUser(UserRegisterDTO user) throws UserCreationException;
+  void confirmAccount(String token) throws UserNotFoundException;
 }

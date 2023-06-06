@@ -1,41 +1,45 @@
 package pl.zzpj.repository.core.service;
 
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceCreateException;
+import pl.zzpj.repository.core.domain.exception.user.UserServiceDeleteException;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceNotFoundException;
 import pl.zzpj.repository.core.domain.exception.user.UserServiceUpdateException;
 import pl.zzpj.repository.core.domain.exception.user.auth.AuthenticationException;
 import pl.zzpj.repository.core.domain.model.userModel.*;
+import pl.zzpj.repository.ports.command.user.EmailCommandPort;
 import pl.zzpj.repository.ports.command.user.UserCommandRepositoryPort;
 import pl.zzpj.repository.ports.command.user.UserCommandServicePort;
+import pl.zzpj.repository.ports.command.user.UserDiscountCommandPort;
 import pl.zzpj.repository.ports.query.user.UserQueryRepositoryPort;
 import pl.zzpj.repository.ports.query.user.UserQueryServicePort;
 import pl.zzpj.repository.utils.security.CryptUtils;
 import pl.zzpj.repository.utils.security.JtwUtils;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 @Log
-public class UserServiceImpl implements UserQueryServicePort, UserCommandServicePort {
+public class UserServiceImpl implements UserQueryServicePort, UserCommandServicePort, UserDiscountCommandPort {
 
   @Value("${authentication.failure.tolerance.tries:2}")
   private Integer authenticationFailAttempts;
   @Value("${account.blockade.time.seconds:180}")
   private Integer accountBlockadeTimeInSeconds;
+  @Value("${account.token.time.ms}")
+  private long accountConfirmTime;
 
   private final UserQueryRepositoryPort userQueryRepositoryPort;
   private final UserCommandRepositoryPort userCommandRepositoryPort;
-  private final JtwUtils jtwUtils;
+  private final EmailCommandPort emailCommandPort;
+  private final JtwUtils jwtUtils;
   private final CryptUtils cryptUtils;
   private final HttpServletRequest request;
 
@@ -65,7 +69,9 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
   }
 
   @Override
-  public User update(UUID id, UserUpdateData user) throws UserServiceNotFoundException, UserServiceUpdateException {
+  public User update(UUID id, UserUpdateData user) throws UserServiceNotFoundException,
+          UserServiceUpdateException {
+
     User foundUser = userQueryRepositoryPort.getUserById(id)
             .orElseThrow(() -> new UserServiceNotFoundException("User not found"));
 
@@ -97,6 +103,7 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
 
     if (user.getUserState().equals(UserState.ACTIVE)) {
       user.setUserState(UserState.BLOCKED);
+      emailCommandPort.sendEmailWithInfoAboutBlockingAccount(user.getEmail(), user.getLocale());
       return userCommandRepositoryPort.update(user);
     } else {
       throw new UserServiceUpdateException("Not active user can't be blocked");
@@ -110,6 +117,7 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
 
     if (user.getUserState().equals(UserState.BLOCKED)) {
       user.setUserState(UserState.ACTIVE);
+      emailCommandPort.sendEmailWithInfoAboutActivatingAccount(user.getEmail(), user.getLocale());
       return userCommandRepositoryPort.update(user);
     } else {
       throw new UserServiceUpdateException("Not blocked user can't be activated");
@@ -137,14 +145,62 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
               .orElseThrow(() -> new UserServiceNotFoundException("User not found"));
 
       validateIfCanAuthenticate(user, password);
+      String token = jwtUtils.generateToken(login, user.getUserRole().name());
 
-      // send mail if admin
-      String token = jtwUtils.generateToken(login, user.getUserRole().name());
+      if (user.getUserRole().equals(UserRole.ADMIN)) {
+        emailCommandPort.sendEmailAboutAdminSession(user.getEmail(), user.getLocale(), request.getRemoteAddr());
+      }
+
       updateUserAuthenticationInformationIfAuthenticationCorrect(user);
       return token;
 
     } catch (UserServiceNotFoundException e) {
       throw new AuthenticationException("Wrong credentials");
+    }
+  }
+
+  @Override
+  public User register(User user) throws UserServiceCreateException {
+
+
+    User added = add(user);
+    String token = jwtUtils.generateConfirmationToken(added.getLogin());
+    emailCommandPort.sendEmailWithAccountConfirmationLink(added.getEmail(),
+            added.getLocale(), token, added.getLogin());
+    deleteUserAfterConfirmationTimeout(added);
+
+    return added;
+  }
+
+
+  @Override
+  public void confirmUser(String token) throws UserServiceNotFoundException {
+    try {
+      Claims claims = jwtUtils.parseJWT(token).getBody();
+      String login = claims.getSubject();
+      User user = userQueryRepositoryPort.getUserByLogin(login)
+              .orElseThrow();
+      if (!user.getUserState().equals(UserState.NOT_VERIFIED)) {
+        throw new Exception();
+      }
+
+      user.setUserState(UserState.ACTIVE);
+      userCommandRepositoryPort.update(user);
+    } catch (Exception e) {
+      throw new UserServiceNotFoundException("Token expired. Create new user");
+    }
+  }
+
+  @Override
+  public User updateScore(UUID id, Double score) throws UserServiceNotFoundException, UserServiceUpdateException {
+    User foundUser = userQueryRepositoryPort.getUserById(id)
+            .orElseThrow(() -> new UserServiceNotFoundException("User not found"));
+
+    if (!isUserArchivalOrNotVerified(foundUser)) {
+      foundUser.setScore(score);
+      return userCommandRepositoryPort.update(foundUser);
+    } else {
+      throw new UserServiceUpdateException("Can't update archival or not verified user");
     }
   }
 
@@ -204,6 +260,7 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
 
   private User setUserAuthenticationInformationIfCorrect(User user) {
     String remoteAddress = request.getRemoteAddr();
+
     UserAccountInformations data = UserAccountInformations.builder()
             .failedLoginCounter(0)
             .lastCorrectAuthenticationTime(LocalDateTime.now())
@@ -230,16 +287,65 @@ public class UserServiceImpl implements UserQueryServicePort, UserCommandService
     if (user.getUserState().equals(UserState.ACTIVE)
             && userAccountInformations.getFailedLoginCounter().equals(authenticationFailAttempts)) {
 
-      userAccountInformations.setFailedLoginCounter(0);
-
       LocalDateTime blockadeStart = LocalDateTime.now();
+      LocalDateTime blockadeEnd = blockadeStart.plusSeconds(accountBlockadeTimeInSeconds);
+
       userAccountInformations.setBlockadeStart(blockadeStart);
-      userAccountInformations.setBlockadeEnd(blockadeStart.plusSeconds(accountBlockadeTimeInSeconds));
+      userAccountInformations.setBlockadeEnd(blockadeEnd);
+      userAccountInformations.setFailedLoginCounter(0);
       user.setUserState(UserState.BLOCKED);
-      // set timer
+
+      emailCommandPort.sendEmailWithInfoAboutBlockingAccount(user.getEmail(), user.getLocale());
+      unblockUserAfterDelay(user);
+
     } else if (user.getUserState().equals(UserState.ACTIVE)) {
       userAccountInformations.setFailedLoginCounter(userAccountInformations.getFailedLoginCounter() + 1);
     }
   }
 
+  private void unblockUserAfterDelay(User user) {
+    Timer timer = new Timer();
+    timer.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        try {
+          User userAfterTimeout = userQueryRepositoryPort.getUserByLogin(user.getLogin())
+                  .orElseThrow(() -> new UserServiceNotFoundException("User not found"));
+
+          userAfterTimeout.getUserAccountInformations().setBlockadeStart(null);
+          userAfterTimeout.getUserAccountInformations().setBlockadeEnd(null);
+          userAfterTimeout.setUserState(UserState.ACTIVE);
+
+          userCommandRepositoryPort.update(userAfterTimeout);
+          emailCommandPort.sendEmailWithInfoAboutActivatingAccount(user.getEmail(), user.getLocale());
+
+        } catch (UserServiceUpdateException | UserServiceNotFoundException e) {
+          log.severe("User can't be updated, administrator must unlock account");
+        }
+        timer.cancel();
+      }
+    }, accountBlockadeTimeInSeconds * 1000);
+  }
+
+  private void deleteUserAfterConfirmationTimeout(User user) {
+    Timer timer = new Timer();
+    timer.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        try {
+          User userAfterTimeout = userQueryRepositoryPort.getUserByLogin(user.getLogin())
+                  .orElseThrow(() -> new UserServiceNotFoundException("User not found"));
+          if (userAfterTimeout.getUserState().equals(UserState.NOT_VERIFIED)) {
+            userCommandRepositoryPort.delete(userAfterTimeout);
+            log.info("Not verified user removed from db");
+          }
+          log.info("User is verified");
+
+        } catch (UserServiceDeleteException | UserServiceNotFoundException e) {
+          log.severe("User can't be removed, administrator needs to delete him from database");
+        }
+        timer.cancel();
+      }
+    }, accountConfirmTime);
+  }
 }
