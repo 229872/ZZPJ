@@ -9,7 +9,7 @@ import static pl.zzpj.repository.utils.security.RoleName.*;
 
 
 @SpringBootApplication
-@EnableScheduling
+//@EnableScheduling
 @DeclareRoles({GUEST, ADMIN, CLIENT})
 public class ZzpjApplication {
 

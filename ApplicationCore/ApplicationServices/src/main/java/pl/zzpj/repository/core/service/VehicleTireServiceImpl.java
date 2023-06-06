@@ -70,9 +70,9 @@ public class VehicleTireServiceImpl implements VehicleTireCommandService, Vehicl
             throws VehicleEquipmentServiceCreateException, BadEquipmentTireTypeException {
         try {
             tire.setType(TireType.values()[tireType]);
-            return commandPort.add(tire);
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new BadEquipmentTireTypeException(e.getMessage(), e.getCause());
         }
+        return commandPort.add(tire);
     }
 }
