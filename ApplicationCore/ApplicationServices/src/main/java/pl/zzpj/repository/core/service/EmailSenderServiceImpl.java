@@ -1,6 +1,7 @@
 package pl.zzpj.repository.core.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import pl.zzpj.repository.utils.MessageUtil;
 
 @Service
 @RequiredArgsConstructor
+@Log
 public class EmailSenderServiceImpl implements EmailCommandPort {
   private final JavaMailSender mailSender;
   private final String appUrl = "http://localhost:8080";
@@ -49,12 +51,16 @@ public class EmailSenderServiceImpl implements EmailCommandPort {
   }
 
   private void sendEmail(String toEmail, String subject, String body) {
-    SimpleMailMessage message = new SimpleMailMessage();
+    try {
+      SimpleMailMessage message = new SimpleMailMessage();
 
-    message.setTo(toEmail);
-    message.setText(body);
-    message.setSubject(subject);
+      message.setTo(toEmail);
+      message.setText(body);
+      message.setSubject(subject);
 
-    mailSender.send(message);
+      mailSender.send(message);
+    } catch (Exception e) {
+      log.warning("Problem with email connection");
+    }
   }
 }
