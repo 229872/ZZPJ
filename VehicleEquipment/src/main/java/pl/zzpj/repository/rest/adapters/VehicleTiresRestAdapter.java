@@ -15,6 +15,11 @@ import pl.zzpj.repository.rest.dto.vehicleEquipment.Input.VehicleTireInputCreate
 import pl.zzpj.repository.rest.dto.vehicleEquipment.Input.VehicleTireInputUpdateDto;
 import pl.zzpj.repository.rest.dto.vehicleEquipment.Output.VehicleTireOutputDto;
 import pl.zzpj.repository.rest.dto.vehicleEquipment.RestTireType;
+import pl.zzpj.repository.rest.exceptions.BadTireTypeException;
+import pl.zzpj.repository.rest.exceptions.VehicleEquipmentRestCreateException;
+import pl.zzpj.repository.rest.exceptions.VehicleEquipmentRestNotFoundException;
+import pl.zzpj.repository.rest.exceptions.VehicleEquipmentRestNotSpecifiedException;
+import pl.zzpj.repository.rest.exceptions.VehicleEquipmentRestUpdateException;
 import pl.zzpj.repository.rest.query.VehicleTiresQueryRest;
 
 import java.util.List;
@@ -44,54 +49,68 @@ public class VehicleTiresRestAdapter implements VehicleTiresCommandRest, Vehicle
     @Override
     public List<VehicleTireOutputDto> getAllEquipment() {
         return queryService.getAllEquipment().stream()
-                .map(fromDomainMapper::convertDomainModelToTireOutputDto).collect(Collectors.toList());
+            .map(fromDomainMapper::convertDomainModelToTireOutputDto).collect(Collectors.toList());
     }
 
     @Override
-    public VehicleTireOutputDto getEquipmentById(UUID uuid) throws VehicleEquipmentServiceNotFoundException {
-        return fromDomainMapper.convertDomainModelToTireOutputDto(queryService.getEquipmentById(uuid));
+    public VehicleTireOutputDto getEquipmentById(UUID uuid) throws VehicleEquipmentRestNotFoundException {
+        try {
+            return fromDomainMapper.convertDomainModelToTireOutputDto(queryService.getEquipmentById(uuid));
+        } catch (VehicleEquipmentServiceNotFoundException e) {
+            throw new VehicleEquipmentRestNotFoundException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
-    public VehicleTireOutputDto addEquipmentSummer(VehicleTireInputCreateDto dto) throws VehicleEquipmentServiceCreateException {
-        return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
-                addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, RestTireType.SUMMER)));
+    public VehicleTireOutputDto addEquipment(VehicleTireInputCreateDto dto, RestTireType type)
+        throws BadTireTypeException, VehicleEquipmentRestCreateException,
+        VehicleEquipmentRestNotSpecifiedException {
+        try {
+
+            return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
+                addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, type)));
+        } catch (VehicleEquipmentServiceCreateException e) {
+            throw new VehicleEquipmentRestCreateException(e.getMessage(), e.getCause());
+        } catch (IllegalArgumentException e) {
+            throw new BadTireTypeException(e.getMessage(), e.getCause());
+        } catch (Exception e) {
+            throw new VehicleEquipmentRestNotSpecifiedException(e.getMessage(), e.getCause());
+        }
     }
 
-    @Override
-    public VehicleTireOutputDto addEquipmentWinter(VehicleTireInputCreateDto dto) throws VehicleEquipmentServiceCreateException {
-        return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
-                addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, RestTireType.WINTER)));
-    }
-
-    @Override
-    public VehicleTireOutputDto addEquipmentAllSeason(VehicleTireInputCreateDto dto) throws VehicleEquipmentServiceCreateException {
-        return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
-                addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, RestTireType.ALL_SEASON)));
-    }
-
-    @Override
-    public VehicleTireOutputDto addEquipmentSpecial(VehicleTireInputCreateDto dto) throws VehicleEquipmentServiceCreateException {
-        return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
-                addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, RestTireType.SPECIAL)));
-    }
 
     @Override
     public VehicleTireOutputDto updateEquipment(UUID id, VehicleTireInputUpdateDto dto)
-            throws VehicleEquipmentServiceNotFoundException, VehicleEquipmentServiceUpdateException {
-        return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
+        throws VehicleEquipmentRestNotFoundException,
+        VehicleEquipmentRestUpdateException, VehicleEquipmentRestNotSpecifiedException {
+        try {
+            return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
                 updateEquipment(id, fromInputDtoMapper.convertTireInputUpdateDtoToDomainModel(dto)));
+        } catch (VehicleEquipmentServiceNotFoundException e) {
+            throw new VehicleEquipmentRestNotFoundException(e.getMessage(), e.getCause());
+        } catch (VehicleEquipmentServiceUpdateException e) {
+            throw new VehicleEquipmentRestUpdateException(e.getMessage(), e.getCause());
+        } catch (Exception e) {
+            throw new VehicleEquipmentRestNotSpecifiedException(e.getMessage(), e.getCause());
+        }
     }
 
-    public VehicleTireOutputDto setArchiveStatusEquipment(UUID id, boolean status) throws VehicleEquipmentServiceNotFoundException, VehicleEquipmentServiceUpdateException {
-        return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
+    public VehicleTireOutputDto setArchiveStatusEquipment(UUID id, boolean status) throws VehicleEquipmentRestNotFoundException, VehicleEquipmentRestUpdateException, VehicleEquipmentRestNotSpecifiedException {
+        try {
+
+            return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
                 setArchiveStatus(id, status));
+        } catch (VehicleEquipmentServiceNotFoundException e) {
+            throw new VehicleEquipmentRestNotFoundException(e.getMessage(), e.getCause());
+        } catch (VehicleEquipmentServiceUpdateException e) {
+            throw new VehicleEquipmentRestUpdateException(e.getMessage(), e.getCause());
+        } catch (Exception e) {
+            throw new VehicleEquipmentRestNotSpecifiedException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
     public void removeEquipment(UUID id) {
         commandService.removeEquipment(id);
     }
-
-
 }
