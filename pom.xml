@@ -228,6 +228,10 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <configuration>
+<!--                        <environmentVariables>-->
+<!--                            <MAIL_MAIL>${mail.mail2}</MAIL_MAIL>-->
+<!--                            <MAIL_PASSWORD>${mail.password2}</MAIL_PASSWORD>-->
+<!--                        </environmentVariables>-->
                         <excludes>
                             <exclude>
                                 <groupId>org.projectlombok</groupId>
