@@ -13,7 +13,7 @@ public interface VehicleTireCommandService {
 
     VehicleTire addEquipment(VehicleTire tire) throws VehicleEquipmentServiceCreateException;
 
-    VehicleTire addEquipmentNoType(VehicleTire tire, int typeNumber) throws VehicleEquipmentServiceCreateException, BadEquipmentTireTypeException;
+    VehicleTire addEquipmentNoType(VehicleTire tire) throws VehicleEquipmentServiceCreateException, BadEquipmentTireTypeException;
 
     VehicleTire updateEquipment(UUID id, VehicleTire tire) throws VehicleEquipmentServiceNotFoundException, VehicleEquipmentServiceUpdateException;
 

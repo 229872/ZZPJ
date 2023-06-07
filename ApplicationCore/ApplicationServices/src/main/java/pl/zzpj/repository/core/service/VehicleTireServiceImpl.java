@@ -14,6 +14,7 @@ import pl.zzpj.repository.ports.query.vehicleEquipment.VehicleTireQueryPort;
 import pl.zzpj.repository.ports.query.vehicleEquipment.VehicleTireQueryService;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -66,10 +67,11 @@ public class VehicleTireServiceImpl implements VehicleTireCommandService, Vehicl
     }
 
     @Override
-    public VehicleTire addEquipmentNoType(VehicleTire tire, int tireType)
+    public VehicleTire addEquipmentNoType(VehicleTire tire)
             throws VehicleEquipmentServiceCreateException, BadEquipmentTireTypeException {
         try {
-            tire.setType(TireType.values()[tireType]);
+            Random random = new Random();
+            tire.setType(TireType.values()[random.nextInt(TireType.values().length)]);
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new BadEquipmentTireTypeException(e.getMessage(), e.getCause());
         }

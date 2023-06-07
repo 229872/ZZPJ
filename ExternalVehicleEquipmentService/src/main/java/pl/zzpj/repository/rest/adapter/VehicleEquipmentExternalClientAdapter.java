@@ -1,27 +1,26 @@
-package pl.lodz.p.edu.zzpj.adapter;
+package pl.zzpj.repository.rest.adapter;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.lodz.p.edu.zzpj.adapter.mapper.ExternalVehicleTireMapper;
-import pl.lodz.p.edu.zzpj.api.RandomApi;
-import pl.lodz.p.edu.zzpj.dto.RandomDto;
-import pl.lodz.p.edu.zzpj.exception.CreateUserExternalClientException;
+import pl.zzpj.repository.rest.adapter.mapper.ExternalVehicleTireMapper;
+import pl.zzpj.repository.rest.api.RandomVehicleTireApi;
+import pl.zzpj.repository.rest.dto.RandomVehicleTireDto;
+import pl.zzpj.repository.rest.exception.CreateUserExternalClientException;
 import pl.zzpj.repository.core.domain.exception.vehicleEquipment.BadEquipmentTireTypeException;
 import pl.zzpj.repository.core.domain.exception.vehicleEquipment.VehicleEquipmentServiceCreateException;
 import pl.zzpj.repository.ports.command.vehicleEquipment.VehicleTireCommandService;
 
 @Component
 @AllArgsConstructor
-public class VehicleEquipmentExternalClientAdapter implements RandomApi {
+public class VehicleEquipmentExternalClientAdapter implements RandomVehicleTireApi {
 
     private final VehicleTireCommandService commandService;
     private final ExternalVehicleTireMapper mapper;
 
     @Override
-    public void addRandomVehicleTire(RandomDto dto, Integer type) {
+    public void addRandomVehicleTire(RandomVehicleTireDto dto, Integer type) {
         try {
-            commandService.addEquipmentNoType(mapper.convertTireInputCreateDtoToDomainModel(dto),
-                type != null ? type : 0);
+            commandService.addEquipmentNoType(mapper.convertTireInputCreateDtoToDomainModel(dto));
         } catch (VehicleEquipmentServiceCreateException | BadEquipmentTireTypeException exception) {
             throw new CreateUserExternalClientException(exception.getMessage(), exception.getCause());
         }

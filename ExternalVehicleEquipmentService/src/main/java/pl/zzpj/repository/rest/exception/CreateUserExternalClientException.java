@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.zzpj.exception;
+package pl.zzpj.repository.rest.exception;
 
 public class CreateUserExternalClientException extends RuntimeException {
     public CreateUserExternalClientException() {
