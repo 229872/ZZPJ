@@ -37,16 +37,25 @@
         <module>ApplicationCore</module>
         <module>ApplicationPorts</module>
         <module>StartApplication</module>
-        <module>ShopModule</module>
+        <module>VehicleEquipment</module>
         <module>Repositories</module>
         <module>UserRest</module>
         <module>RentVehicleRest</module>
         <module>RentRest</module>
         <module>ExternalUserServiceAdapter</module>
+        <module>ExternalVehicleEquipmentService</module>
     </modules>
 
     <properties>
         <java.version>17</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <junit.version>5.9.1</junit.version>
+        <plugin.checkstyle.version>3.3.0</plugin.checkstyle.version>
+        <checkstyle.version>10.9.3</checkstyle.version>
+        <plugin.site.version>3.12.1</plugin.site.version>
+        <spring-boot.version>3.0.6</spring-boot.version>
     </properties>
 
     <dependencyManagement>
@@ -54,17 +63,17 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-jpa</artifactId>
-                <version>3.0.6</version>
+                <version>${spring-boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
-                <version>3.0.6</version>
+                <version>${spring-boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-validation</artifactId>
-                <version>3.0.6</version>
+                <version>${spring-boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -85,7 +94,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
                 <scope>test</scope>
-                <version>3.0.6</version>
+                <version>${spring-boot.version}</version>
             </dependency>
 
             <dependency>
@@ -142,14 +151,15 @@
                 <version>1.18.26</version>
             </dependency>
             <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
                 <groupId>at.favre.lib</groupId>
                 <artifactId>bcrypt</artifactId>
                 <version>0.10.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>2.0.4</version>
             </dependency>
 
 
@@ -180,11 +190,6 @@
             </dependency>
             <dependency>
                 <groupId>pl.lodz.p.edu.zzpj</groupId>
-                <artifactId>PostgresRepository</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>pl.lodz.p.edu.zzpj</groupId>
                 <artifactId>Repositories</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
@@ -205,7 +210,7 @@
             </dependency>
             <dependency>
                 <groupId>pl.lodz.p.edu.zzpj</groupId>
-                <artifactId>ShopModule</artifactId>
+                <artifactId>VehicleEquipment</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -216,6 +221,11 @@
             <dependency>
                 <groupId>pl.lodz.p.edu.zzpj</groupId>
                 <artifactId>ExternalUserServiceAdapter</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.lodz.p.edu.zzpj</groupId>
+                <artifactId>ExternalVehicleEquipmentService</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
         </dependencies>
@@ -241,9 +251,38 @@
                         <skip>true</skip>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${plugin.checkstyle.version}</version>
+                    <executions>
+                        <execution>
+                            <id>Checkstyle</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${checkstyle.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <configLocation>checkstyleZZPJ.xml</configLocation>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
-
-
+    <reporting><plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <version>${plugin.checkstyle.version}</version>
+        </plugin>
+    </plugins></reporting>
 </project>

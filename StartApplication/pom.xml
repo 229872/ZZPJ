@@ -55,11 +55,22 @@
 
         <dependency>
             <groupId>pl.lodz.p.edu.zzpj</groupId>
-            <artifactId>ShopModule</artifactId>
+            <artifactId>VehicleEquipment</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>ExternalVehicleEquipmentService</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
     </dependencies>
 
