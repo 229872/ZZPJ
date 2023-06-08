@@ -36,6 +36,10 @@ public class VehicleTiresRestController {
 
     private final VehicleTiresRestAdapter tiresRestAdapter;
 
+    //TODO ROLES ALLOWED
+    //TODO SWAGGER DOCUMENTATION
+    //TODO TESTS BOTH REST AND SERVICE
+
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<VehicleTireOutputDto> getAll() {
         return tiresRestAdapter.getAllEquipment();

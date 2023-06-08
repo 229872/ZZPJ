@@ -28,7 +28,7 @@ public class ManualClientRest {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(path = "/random")
+    @PostMapping(path = "/random")
     public void createRandomTire() {
         externalClientRest.getNewTireFromExternalService();
     }

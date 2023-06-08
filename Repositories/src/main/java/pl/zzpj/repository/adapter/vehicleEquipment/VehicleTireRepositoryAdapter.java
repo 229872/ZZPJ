@@ -1,12 +1,16 @@
 package pl.zzpj.repository.adapter.vehicleEquipment;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ConstraintViolationException;
+import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Component;
 import pl.zzpj.repository.adapter.vehicleEquipment.mapper.VehicleTireFromDataToDomainMapper;
 import pl.zzpj.repository.adapter.vehicleEquipment.mapper.VehicleTireFromDomainToDataMapper;
 import pl.zzpj.repository.api.VehicleEquipmentRepository;
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.VehicleEquipmentServiceCreateException;
 import pl.zzpj.repository.core.domain.exception.vehicleEquipment.VehicleEquipmentServiceNotFoundException;
+import pl.zzpj.repository.core.domain.exception.vehicleEquipment.VehicleEquipmentServiceUpdateException;
 import pl.zzpj.repository.core.domain.model.vehicleModel.VehicleTire;
 import pl.zzpj.repository.data.vehicleEquipment.VehicleTireEnt;
 import pl.zzpj.repository.ports.command.vehicleEquipment.VehicleTireCommandPort;
@@ -16,34 +20,37 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Service
-@Transactional
+@Component
+@AllArgsConstructor
 public class VehicleTireRepositoryAdapter implements VehicleTireCommandPort, VehicleTireQueryPort {
 
     private final VehicleEquipmentRepository repository;
     private final VehicleTireFromDataToDomainMapper fromDataMapper;
     private final VehicleTireFromDomainToDataMapper fromDomainMapper;
 
-    @Autowired
-    public VehicleTireRepositoryAdapter(VehicleEquipmentRepository repository,
-                                        VehicleTireFromDataToDomainMapper fromDataMapper,
-                                        VehicleTireFromDomainToDataMapper fromDomainMapper) {
-        this.repository = repository;
-        this.fromDataMapper = fromDataMapper;
-        this.fromDomainMapper = fromDomainMapper;
+
+    @Override
+    public VehicleTire add(VehicleTire tire) throws VehicleEquipmentServiceCreateException {
+        try {
+            VehicleTireEnt returnEnt = (VehicleTireEnt)
+                repository.saveAndFlush(fromDomainMapper.convertDomainModelToDataRepository(tire));
+            return fromDataMapper.convertDataToDomainModel(returnEnt);
+        } catch (ConstraintViolationException | DataIntegrityViolationException | NullPointerException e) {
+            throw new VehicleEquipmentServiceCreateException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
-    public VehicleTire add(VehicleTire tire) {
-        VehicleTireEnt returnEnt = (VehicleTireEnt)
-                repository.save(fromDomainMapper.convertDomainModelToDataRepository(tire));
-        return fromDataMapper.convertDataToDomainModel(returnEnt);
-    }
-
-    @Override
-    public VehicleTire update(VehicleTire tire) {
-        return fromDataMapper.convertDataToDomainModel((VehicleTireEnt) repository
-                .save(fromDomainMapper.convertDomainModelToDataRepository(tire)));
+    public VehicleTire update(VehicleTire tire) throws VehicleEquipmentServiceUpdateException,
+        VehicleEquipmentServiceNotFoundException {
+        try {
+            return fromDataMapper.convertDataToDomainModel((VehicleTireEnt) repository
+                .saveAndFlush(fromDomainMapper.convertDomainModelToDataRepository(tire)));
+        } catch (EntityNotFoundException e) {
+            throw new VehicleEquipmentServiceNotFoundException(e.getMessage(), e.getCause());
+        } catch (ConstraintViolationException | DataIntegrityViolationException e) {
+            throw new VehicleEquipmentServiceUpdateException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
@@ -54,12 +61,12 @@ public class VehicleTireRepositoryAdapter implements VehicleTireCommandPort, Veh
     @Override
     public List<VehicleTire> getAllEquipment() {
         return repository.findAll().stream().map(x -> (VehicleTireEnt) x)
-                .map(fromDataMapper::convertDataToDomainModel).collect(Collectors.toList());
+            .map(fromDataMapper::convertDataToDomainModel).collect(Collectors.toList());
     }
 
     @Override
     public VehicleTire getEquipmentById(UUID id) throws VehicleEquipmentServiceNotFoundException {
         return fromDataMapper.convertDataToDomainModel((VehicleTireEnt)
-                repository.findById(id).orElseThrow(VehicleEquipmentServiceNotFoundException::new));
+            repository.findById(id).orElseThrow(VehicleEquipmentServiceNotFoundException::new));
     }
 }
