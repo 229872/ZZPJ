@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>zzpj.pl</groupId>
     <artifactId>WeatherApi</artifactId>
 
     <properties>
@@ -21,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
@@ -43,11 +42,6 @@
         <dependency>
             <groupId>pl.lodz.p.edu.zzpj</groupId>
             <artifactId>ApplicationPorts</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>pl.lodz.p.edu.zzpj</groupId>
-            <artifactId>Utils</artifactId>
         </dependency>
 
         <dependency>
