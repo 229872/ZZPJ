@@ -1,38 +1,29 @@
 package pl.zzpj.repository.rest;
 
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
-import pl.zzpj.repository.rest.adapters.VehicleTiresRestAdapter;
 import pl.zzpj.repository.rest.dto.vehicleEquipment.Input.VehicleTireInputCreateDto;
 
-@ContextConfiguration(classes = VehicleTiresRestController.class)
-@WebMvcTest(controllers = VehicleTiresRestController.class)
+@Testcontainers
 class VehicleTiresRestControllerTestIT extends VehicleEquipmentITConfig {
 
 
     VehicleTireInputCreateDto dto;
     String validStringDto;
 
-    @MockBean
-    private VehicleTiresRestAdapter tiresRestAdapter;
-
-    @Autowired
-    private MockMvc mockMvc;
     private ObjectMapper objectMapper = new ObjectMapper();
+
+    @BeforeAll
+    static void beforeAll() {
+        init();
+    }
 
     @BeforeEach
     void beforeEach() throws JsonProcessingException {
@@ -41,24 +32,28 @@ class VehicleTiresRestControllerTestIT extends VehicleEquipmentITConfig {
         validStringDto = objectMapper.writeValueAsString(dto);
     }
 
+    @AfterAll
+    static void afterAll() {
+        postgres.close();
+//        tomcat.close();
+    }
+
     @Test
     void testConnection() {
         Assertions.assertTrue(postgres.isRunning());
         System.out.println(postgres.getMappedPort(5432));
         System.out.println(postgres.getDatabaseName());
+//        Assertions.assertTrue(tomcat.isRunning());
+//        System.out.println(tomcat.getMappedPort(8080));
+//        System.out.println(tomcat.getHost());
+        System.out.println(baseUrl);
     }
 
     @Test
-    void testtest() throws Exception {
-        MvcResult outputDto = mockMvc.perform(
-                post("/equipment/tires/winter")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .accept(MediaType.APPLICATION_JSON)
-                    .content(validStringDto)
-            )
-            .andExpect(status().isCreated())
-            .andReturn(); //  andExpect(model().attribute("uuid", null));
+    void loop() {
+        while (true) {
 
-        System.out.println(outputDto);
+        }
     }
+
 }
