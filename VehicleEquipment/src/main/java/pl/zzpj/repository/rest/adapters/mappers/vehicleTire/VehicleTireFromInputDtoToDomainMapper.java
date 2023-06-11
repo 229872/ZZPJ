@@ -12,12 +12,12 @@ public class VehicleTireFromInputDtoToDomainMapper {
 
     public VehicleTire convertTireInputCreateDtoToDomainModel(VehicleTireInputCreateDto inputDto, RestTireType tireType) {
         return VehicleTire.fromApiBuilder()
-                .name(inputDto.name())
-                .description(inputDto.description())
-                .cost(inputDto.cost())
-                .size(inputDto.size())
-                .maximumSpeed(inputDto.maximumSpeed())
-                .maximumWeight(inputDto.maximumWeight())
+                .name(inputDto.getName())
+                .description(inputDto.getDescription())
+                .cost(inputDto.getCost())
+                .size(inputDto.getSize())
+                .maximumSpeed(inputDto.getMaximumSpeed())
+                .maximumWeight(inputDto.getMaximumWeight())
                 .type(TireType.valueOf(tireType.name())).build();
     }
 
