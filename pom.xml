@@ -44,6 +44,7 @@
         <module>RentRest</module>
         <module>ExternalUserServiceAdapter</module>
         <module>ExternalVehicleEquipmentService</module>
+        <module>WeatherApi</module>
     </modules>
 
     <properties>
@@ -88,6 +89,11 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.dataformat</groupId>
                 <artifactId>jackson-dataformat-xml</artifactId>
+                <version>2.14.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
                 <version>2.14.2</version>
             </dependency>
             <dependency>
