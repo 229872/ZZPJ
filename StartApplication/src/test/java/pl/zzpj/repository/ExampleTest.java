@@ -4,23 +4,15 @@ import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
 import io.restassured.RestAssured;
-import org.hamcrest.Matcher;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import pl.zzpj.repository.rest.dto.vehicleEquipment.Input.VehicleTireInputCreateDto;
@@ -28,26 +20,18 @@ import pl.zzpj.repository.rest.dto.vehicleEquipment.Input.VehicleTireInputCreate
 import java.util.UUID;
 
 
-@Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ExampleTest {
+public class ExampleTest extends AbstractConfigIT {
 
-    @Container
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
-        "postgres:14"
-    ).withDatabaseName("zzpjdbTest")
-        .withUsername("zzpj")
-        .withPassword("zzpjpassword");
-
-    @LocalServerPort
-    private static Integer port;
-    @Autowired
-    private ServletWebServerApplicationContext webServerAppCtxt;
 
     VehicleTireInputCreateDto dto;
     String validStringDto;
-
     private ObjectMapper objectMapper = new ObjectMapper();
+
+    @Autowired
+    public ExampleTest(ServletWebServerApplicationContext webServerAppCtxt) {
+        RestAssured.baseURI = String.format("http://localhost:%s/", webServerAppCtxt.getWebServer().getPort());
+    }
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
@@ -56,19 +40,8 @@ public class ExampleTest {
         registry.add("spring.datasource.password", postgres::getPassword);
     }
 
-    @BeforeAll
-    static void beforeAll() {
-        postgres.start();
-    }
-
-    @AfterAll
-    static void afterAll() {
-        postgres.stop();
-    }
-
     @BeforeEach
     void BeforeEach() throws JsonProcessingException {
-        RestAssured.baseURI = String.format("http://localhost:%s/", webServerAppCtxt.getWebServer().getPort());
         dto = new VehicleTireInputCreateDto("name", "desc",
             2.00, "as.sd/2", 200.00, 30.0);
         validStringDto = objectMapper.writeValueAsString(dto);
