@@ -25,7 +25,7 @@ public class ExternalClientRest {
                 service.addRandomVehicleTire(new RandomVehicleTireDto(x.id(), x.uid(),
                     x.color(), x.department(), x.material(), x.product_name(),
                     x.price(), x.price_string(), x.promo_code()), null); //fixme
-            }).doOnError(x -> log.warning("something")).subscribe();
+            }).doOnError(x -> log.warning("Something went wrong.")).subscribe();
     }
 
     private Mono<RandomVehicleTireDto> getDtoFromExternalService() {
