@@ -9,7 +9,7 @@ import lombok.*;
 @Data
 @Table(name = "Motorbike")
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor()
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @PrimaryKeyJoinColumn(name = "VehicleEntId")
