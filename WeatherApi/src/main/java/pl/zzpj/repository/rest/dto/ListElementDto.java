@@ -1,17 +1,16 @@
-package pl.zzpj.dto;
+package pl.zzpj.repository.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.tools.javac.Main;
 import lombok.Builder;
 
 import java.util.List;
 
 @Builder
-public record ListElement(
+public record ListElementDto(
     String dt, //Timestamp
-    Main main,
-    List<Weather> weather,
-    Wind wind,
+    MainValuesDto main,
+    List<DesciptionDto> weather,
+    WindDto wind,
     String visibility,
     @JsonProperty("dt_txt") String dtTxt
     ) {

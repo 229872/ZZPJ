@@ -1,11 +1,11 @@
-package pl.zzpj.dto;
+package pl.zzpj.repository.rest.dto;
 
 import lombok.Builder;
 
 @Builder
-public record City(
+public record CityDto(
     String name,
-    Coordinates coord,
+    CoordinatesDto coord,
     String country,
     String population,
     String timezone,

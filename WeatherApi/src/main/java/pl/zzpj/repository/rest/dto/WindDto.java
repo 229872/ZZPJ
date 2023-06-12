@@ -1,9 +1,9 @@
-package pl.zzpj.dto;
+package pl.zzpj.repository.rest.dto;
 
 import lombok.Builder;
 
 @Builder
-public record Wind(
+public record WindDto(
     String speed,
     String deg,
     String gust
