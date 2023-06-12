@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
@@ -13,9 +14,9 @@ public class DataElement {
     private String dt; //Timestamp
     private MainValues main;
     private List<Description> weather;
-    private String windSpeed;
-    private String windDeg;
-    private String windGust;
-    private String visibility;
+    private double windSpeed;
+    private double windDeg;
+    private double windGust;
+    private double visibility;
     private String dtTxt;
 }

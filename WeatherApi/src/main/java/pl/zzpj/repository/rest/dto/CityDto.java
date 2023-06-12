@@ -7,7 +7,7 @@ public record CityDto(
     String name,
     CoordinatesDto coord,
     String country,
-    String population,
+    int population,
     String timezone,
     String sunrise,
     String sunset

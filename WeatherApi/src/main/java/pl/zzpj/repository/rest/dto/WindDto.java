@@ -4,8 +4,8 @@ import lombok.Builder;
 
 @Builder
 public record WindDto(
-    String speed,
-    String deg,
-    String gust
+    double speed,
+    double deg,
+    double gust
 ) {
 }

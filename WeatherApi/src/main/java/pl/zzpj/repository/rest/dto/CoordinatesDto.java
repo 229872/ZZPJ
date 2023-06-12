@@ -4,7 +4,7 @@ import lombok.Builder;
 
 @Builder
 public record CoordinatesDto(
-    String lat,
-    String lon
+    double lat,
+    double lon
 ) {
 }

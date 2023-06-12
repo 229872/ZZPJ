@@ -11,7 +11,7 @@ public record ListElementDto(
     MainValuesDto main,
     List<DesciptionDto> weather,
     WindDto wind,
-    String visibility,
+    double visibility,
     @JsonProperty("dt_txt") String dtTxt
     ) {
 }

@@ -4,14 +4,14 @@ import lombok.Builder;
 
 @Builder
 public record MainValuesDto(
-    String temp,
-    @JsonProperty("feels_like") String feelsLike,
-    @JsonProperty("temp_min") String tempMin,
-    @JsonProperty("temp_max") String tempMax,
-    @JsonProperty("pressure") String pressure,
-    @JsonProperty("sea_level") String seaLevel,
-    @JsonProperty("grnd_level") String groundLevel,
-    @JsonProperty("humidity") String humidity,
-    @JsonProperty("temp_kf") String tempKf
+    double temp,
+    @JsonProperty("feels_like") double feelsLike,
+    @JsonProperty("temp_min") double tempMin,
+    @JsonProperty("temp_max") double tempMax,
+    @JsonProperty("pressure") int pressure,
+    @JsonProperty("sea_level") int seaLevel,
+    @JsonProperty("grnd_level") int groundLevel,
+    @JsonProperty("humidity") int humidity,
+    @JsonProperty("temp_kf") double tempKf
 ) {
 }

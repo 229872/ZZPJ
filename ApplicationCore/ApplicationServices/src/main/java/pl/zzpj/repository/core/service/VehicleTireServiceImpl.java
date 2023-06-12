@@ -27,7 +27,7 @@ public class VehicleTireServiceImpl implements VehicleTireCommandService, Vehicl
 
     private final VehicleTireQueryPort queryPort;
 
-//    private final WeatherCommandService weatherCommandService;
+    private final WeatherCommandService weatherCommandService;
 
     @Override
     public VehicleTire addEquipment(VehicleTire tire) throws VehicleEquipmentServiceCreateException {
@@ -57,7 +57,7 @@ public class VehicleTireServiceImpl implements VehicleTireCommandService, Vehicl
 
     @Override
     public List<VehicleTire> getAllEquipment() {
-//        System.out.println(weatherCommandService.getWeatherForecast(57.75, 19.45));
+        System.out.println(weatherCommandService.getWeatherForecast(57.75, 19.45));
 
         return queryPort.getAllEquipment();
     }

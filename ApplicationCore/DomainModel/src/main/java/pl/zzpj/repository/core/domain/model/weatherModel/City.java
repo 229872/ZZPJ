@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class City {
     private String name;
-    private String lattidute;
-    private String longitude;
+    private double latitude;
+    private double longitude;
     private String country;
-    private String population;
+    private int population;
     private String timezone;
     private String sunrise;
     private String sunset;

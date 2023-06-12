@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import pl.zzpj.repository.rest.dto.SuperDto;
 
 @RestController
 @RequestMapping(path = "")
@@ -18,7 +19,7 @@ public class ManualWeatherClient {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/weather", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void getWeatherForecast(@RequestParam(name = "lat") double lat, @RequestParam(name = "lon") double lon) {
-        externalWeatherClient.getWeatherForecastFromExternalService(lat, lon);
+    public SuperDto getWeatherForecast(@RequestParam(name = "lat") double lat, @RequestParam(name = "lon") double lon) {
+        return externalWeatherClient.getWeatherForecastFromExternalService(lat, lon);
     }
 }

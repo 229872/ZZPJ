@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MainValues {
 
-    private String temp;
-    private String feelsLike;
-    private String tempMin;
-    private String tempMap;
-    private String pressure;
-    private String seaLevel;
-    private String groundLevel;
-    private String humidity;
-    private String tempKf;
+    private double temp;
+    private double feelsLike;
+    private double tempMin;
+    private double tempMap;
+    private int pressure;
+    private int seaLevel;
+    private int groundLevel;
+    private int humidity;
+    private double tempKf;
 }
