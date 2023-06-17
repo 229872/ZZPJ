@@ -67,8 +67,8 @@ public class VehicleTiresRestAdapter implements VehicleTiresCommandRest, Vehicle
         VehicleEquipmentRestNotSpecifiedException {
         try {
 
-            return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
-                addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, type)));
+            return fromDomainMapper.convertDomainModelToTireOutputDto(commandService
+                .addEquipment(fromInputDtoMapper.convertTireInputCreateDtoToDomainModel(dto, type)));
         } catch (VehicleEquipmentServiceCreateException e) {
             throw new VehicleEquipmentRestCreateException(e.getMessage(), e.getCause());
         } catch (IllegalArgumentException e) {
@@ -84,8 +84,8 @@ public class VehicleTiresRestAdapter implements VehicleTiresCommandRest, Vehicle
         throws VehicleEquipmentRestNotFoundException,
         VehicleEquipmentRestUpdateException, VehicleEquipmentRestNotSpecifiedException {
         try {
-            return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
-                updateEquipment(id, fromInputDtoMapper.convertTireInputUpdateDtoToDomainModel(dto)));
+            return fromDomainMapper.convertDomainModelToTireOutputDto(commandService
+                .updateEquipment(id, fromInputDtoMapper.convertTireInputUpdateDtoToDomainModel(dto)));
         } catch (VehicleEquipmentServiceNotFoundException e) {
             throw new VehicleEquipmentRestNotFoundException(e.getMessage(), e.getCause());
         } catch (VehicleEquipmentServiceUpdateException e) {
@@ -95,11 +95,13 @@ public class VehicleTiresRestAdapter implements VehicleTiresCommandRest, Vehicle
         }
     }
 
-    public VehicleTireOutputDto setArchiveStatusEquipment(UUID id, boolean status) throws VehicleEquipmentRestNotFoundException, VehicleEquipmentRestUpdateException, VehicleEquipmentRestNotSpecifiedException {
+    public VehicleTireOutputDto setArchiveStatusEquipment(UUID id, boolean status)
+        throws VehicleEquipmentRestNotFoundException, VehicleEquipmentRestUpdateException,
+        VehicleEquipmentRestNotSpecifiedException {
         try {
 
-            return fromDomainMapper.convertDomainModelToTireOutputDto(commandService.
-                setArchiveStatus(id, status));
+            return fromDomainMapper.convertDomainModelToTireOutputDto(commandService
+                .setArchiveStatus(id, status));
         } catch (VehicleEquipmentServiceNotFoundException e) {
             throw new VehicleEquipmentRestNotFoundException(e.getMessage(), e.getCause());
         } catch (VehicleEquipmentServiceUpdateException e) {

@@ -11,5 +11,6 @@ public interface VehicleTiresQueryRest {
 
     List<VehicleTireOutputDto> getAllEquipment();
 
-    VehicleTireOutputDto getEquipmentById(UUID id) throws VehicleEquipmentServiceNotFoundException, VehicleEquipmentRestNotFoundException;
+    VehicleTireOutputDto getEquipmentById(UUID id) throws
+        VehicleEquipmentServiceNotFoundException, VehicleEquipmentRestNotFoundException;
 }

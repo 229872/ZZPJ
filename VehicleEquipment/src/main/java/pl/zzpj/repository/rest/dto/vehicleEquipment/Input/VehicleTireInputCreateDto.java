@@ -6,33 +6,31 @@ import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Builder
 @Data
 @AllArgsConstructor
 public class VehicleTireInputCreateDto {
 
-        @NotBlank
-        private String name;
+    @NotBlank
+    private String name;
 
-        @NotBlank
-        private String description;
+    @NotBlank
+    private String description;
 
-        @NotNull
-        @Positive
-        private Double cost;
+    @NotNull
+    @Positive
+    private Double cost;
 
-        @NotBlank
-        private String size;
+    @NotBlank
+    private String size;
 
-        @NotNull
-        @Positive
-        private Double maximumSpeed;
+    @NotNull
+    @Positive
+    private Double maximumSpeed;
 
-        @NotNull
-        @Positive
-        private Double maximumWeight;
+    @NotNull
+    @Positive
+    private Double maximumWeight;
 }
 

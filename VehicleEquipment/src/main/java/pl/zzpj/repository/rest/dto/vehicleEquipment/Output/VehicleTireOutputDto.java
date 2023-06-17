@@ -1,6 +1,10 @@
 package pl.zzpj.repository.rest.dto.vehicleEquipment.Output;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
 import pl.zzpj.repository.rest.dto.vehicleEquipment.RestTireType;
 
