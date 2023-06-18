@@ -13,21 +13,21 @@ public class VehicleTireFromInputDtoToDomainMapper {
     public VehicleTire convertTireInputCreateDtoToDomainModel(VehicleTireInputCreateDto inputDto,
                                                               RestTireType tireType) {
         return VehicleTire.fromApiBuilder()
-            .name(inputDto.getName())
-            .description(inputDto.getDescription())
-            .cost(inputDto.getCost())
-            .size(inputDto.getSize())
-            .maximumSpeed(inputDto.getMaximumSpeed())
-            .maximumWeight(inputDto.getMaximumWeight())
-            .type(TireType.valueOf(tireType.name())).build();
+                .name(inputDto.getName())
+                .description(inputDto.getDescription())
+                .cost(inputDto.getCost())
+                .size(inputDto.getSize())
+                .maximumSpeed(inputDto.getMaximumSpeed())
+                .maximumWeight(inputDto.getMaximumWeight())
+                .type(TireType.valueOf(tireType.name())).build();
     }
 
     public VehicleTire convertTireInputUpdateDtoToDomainModel(VehicleTireInputUpdateDto updateDto) {
         return VehicleTire.fromApiBuilder()
-            .name(updateDto.name())
-            .description(updateDto.description())
-            .cost(updateDto.cost())
-            .maximumSpeed(updateDto.maximumSpeed())
-            .maximumWeight(updateDto.maximumWeight()).build();
+                .name(updateDto.getName())
+                .description(updateDto.getDescription())
+                .cost(updateDto.getCost())
+                .maximumSpeed(updateDto.getMaximumSpeed())
+                .maximumWeight(updateDto.getMaximumWeight()).build();
     }
 }

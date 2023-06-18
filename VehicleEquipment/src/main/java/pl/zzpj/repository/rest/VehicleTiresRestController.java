@@ -39,7 +39,6 @@ public class VehicleTiresRestController {
 
     private final VehicleTiresRestAdapter tiresRestAdapter;
 
-    //TODO ROLES ALLOWED ?
     //TODO TESTS BOTH REST AND SERVICE
 
     //    @RolesAllowed({GUEST})
