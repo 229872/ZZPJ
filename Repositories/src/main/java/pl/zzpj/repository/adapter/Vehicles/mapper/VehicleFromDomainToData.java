@@ -5,7 +5,7 @@ import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Car;
 import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Van;
 import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Vehicle;
 import pl.zzpj.repository.data.vehicle.CarEnt;
-import pl.zzpj.repository.data.vehicle.MotorbikeEnt;
+import pl.zzpj.repository.data.vehicle.PickupEnt;
 import pl.zzpj.repository.data.vehicle.VanEnt;
 import pl.zzpj.repository.data.vehicle.VehicleEnt;
 
@@ -21,7 +21,7 @@ public class VehicleFromDomainToData {
         } else if (vehicle instanceof Van) {
             dto = new VanEnt();
         } else  {
-            dto = new MotorbikeEnt();
+            dto = new PickupEnt();
         }
 
         BeanUtils.copyProperties(vehicle, dto);

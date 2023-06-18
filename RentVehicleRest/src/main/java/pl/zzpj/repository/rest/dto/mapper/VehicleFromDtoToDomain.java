@@ -2,11 +2,10 @@ package pl.zzpj.repository.rest.dto.mapper;
 
 import org.springframework.beans.BeanUtils;
 import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Car;
-import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Motorbike;
+import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Pickup;
 import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Van;
 import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Vehicle;
 import pl.zzpj.repository.rest.dto.CarDto;
-import pl.zzpj.repository.rest.dto.MotorbikeDto;
 import pl.zzpj.repository.rest.dto.VanDto;
 import pl.zzpj.repository.rest.dto.VehicleDto;
 
@@ -21,7 +20,7 @@ public class VehicleFromDtoToDomain {
         } else if (vehicle instanceof VanDto) {
             dto = new Van();
         } else  {
-            dto = new Motorbike();
+            dto = new Pickup();
         }
 
         BeanUtils.copyProperties(vehicle, dto);

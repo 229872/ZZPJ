@@ -2,7 +2,7 @@ package pl.zzpj.repository.adapter.Vehicles.mapper;
 
 import org.springframework.beans.BeanUtils;
 import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Car;
-import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Motorbike;
+import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Pickup;
 import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Van;
 import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Vehicle;
 import pl.zzpj.repository.data.vehicle.CarEnt;
@@ -21,7 +21,7 @@ public class VehicleFromDataToDomain {
         } else if (vehicle instanceof VanEnt) {
             dto = new Van();
         } else  {
-            dto = new Motorbike();
+            dto = new Pickup();
         }
 
         BeanUtils.copyProperties(vehicle, dto);

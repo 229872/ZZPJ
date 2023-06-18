@@ -1,4 +1,4 @@
-package pl.zzpj.repository.rest.controllers;
+package pl.zzpj.repository.rest;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -52,28 +52,28 @@ public class VehicleTiresRestController {
         return tiresRestAdapter.getEquipmentById(id);
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "summer", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public VehicleTireOutputDto createEquipmentSummer(@RequestBody VehicleTireInputCreateDto dto)
         throws VehicleEquipmentRestCreateException, BadTireTypeException, VehicleEquipmentRestNotSpecifiedException {
         return tiresRestAdapter.addEquipment(dto, RestTireType.SUMMER);
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "winter", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public VehicleTireOutputDto createEquipmentWinter(@RequestBody VehicleTireInputCreateDto dto)
         throws VehicleEquipmentRestCreateException, BadTireTypeException, VehicleEquipmentRestNotSpecifiedException {
         return tiresRestAdapter.addEquipment(dto, RestTireType.WINTER);
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "special", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public VehicleTireOutputDto createEquipmentSpecial(@RequestBody VehicleTireInputCreateDto dto)
         throws VehicleEquipmentRestCreateException, BadTireTypeException, VehicleEquipmentRestNotSpecifiedException {
         return tiresRestAdapter.addEquipment(dto, RestTireType.SPECIAL);
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "all_season", produces = MediaType.APPLICATION_JSON_VALUE, consumes =
         MediaType.APPLICATION_JSON_VALUE)
     public VehicleTireOutputDto createEquipmentAll(@RequestBody @Valid VehicleTireInputCreateDto dto)
@@ -89,7 +89,7 @@ public class VehicleTiresRestController {
         return tiresRestAdapter.updateEquipment(id, dto);
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping(path = "/{id}/{status}", produces = MediaType.APPLICATION_JSON_VALUE)
     public VehicleTireOutputDto setArchiveStatusEquipment(@PathVariable UUID id, @PathVariable boolean status)
         throws VehicleEquipmentRestUpdateException, VehicleEquipmentRestNotSpecifiedException,
@@ -97,7 +97,7 @@ public class VehicleTiresRestController {
         return tiresRestAdapter.setArchiveStatusEquipment(id, status);
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/{id}")
     public void removeEquipment(@PathVariable UUID id) {
         tiresRestAdapter.removeEquipment(id); //fixme some serious logic in here?

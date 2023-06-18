@@ -3,30 +3,36 @@ package pl.zzpj.repository.rest.dto.vehicleEquipment.Input;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Builder
-public record VehicleTireInputCreateDto(
+@Data
+@AllArgsConstructor
+public class VehicleTireInputCreateDto {
 
         @NotBlank
-        String name,
+        private String name;
 
         @NotBlank
-        String description,
+        private String description;
 
         @NotNull
         @Positive
-        Double cost,
+        private Double cost;
 
         @NotBlank
-        String size,
+        private String size;
 
         @NotNull
         @Positive
-        Double maximumSpeed,
+        private Double maximumSpeed;
 
         @NotNull
         @Positive
-        Double maximumWeight
-) {
+        private Double maximumWeight;
 }
+

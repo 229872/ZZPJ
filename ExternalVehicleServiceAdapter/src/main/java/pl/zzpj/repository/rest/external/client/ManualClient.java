@@ -16,13 +16,13 @@ public class ManualClient {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = "/randomDto", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createTireFromRandomDto(@RequestBody VehicleInputDto dto) {
+    public void createVehicleFromRandomDto(@RequestBody VehicleInputDto dto) {
         externalRestApiAdapter.add(dto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = "/random")
-    public void createRandomTire() {
+    public void createRandomVehicle() {
         externalClientRest.getNewTireFromExternalService();
     }
 }

@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 @AllArgsConstructor
 @Log
 public class ExternalClient {
-    private final String api = "https://random-data-api.com/api/commerce/random_vehicle";
+    private final String api = "https://random-data-api.com/api/vehicle/random_vehicle";
     private final WebClient.Builder webClientBuilder;
     private final VehicleService service;
 

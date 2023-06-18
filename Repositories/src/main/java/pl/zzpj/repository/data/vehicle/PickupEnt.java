@@ -9,10 +9,8 @@ import lombok.*;
 @Data
 @Table(name = "Motorbike")
 @AllArgsConstructor
-@NoArgsConstructor()
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @PrimaryKeyJoinColumn(name = "VehicleEntId")
-public class MotorbikeEnt extends VehicleEnt{
-    String engineSize;
+public class PickupEnt extends VehicleEnt{
 }
