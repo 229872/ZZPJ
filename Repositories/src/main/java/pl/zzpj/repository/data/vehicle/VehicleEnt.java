@@ -2,6 +2,7 @@ package pl.zzpj.repository.data.vehicle;
 
 import jakarta.persistence.*;
 import lombok.*;
+import pl.zzpj.repository.core.domain.model.rentModel.vehicles.ConditionRating;
 import pl.zzpj.repository.data.AbstractEntity;
 
 import java.util.ArrayList;
@@ -31,6 +32,9 @@ public class VehicleEnt extends AbstractEntity {
 
     @Column
     private List<String> damage;
+
+    @Column
+    ConditionRating rating;
 
     @Column
     String color;

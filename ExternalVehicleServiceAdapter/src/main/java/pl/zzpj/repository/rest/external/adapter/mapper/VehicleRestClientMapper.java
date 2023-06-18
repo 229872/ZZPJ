@@ -20,7 +20,7 @@ public class VehicleRestClientMapper {
               .model(inputDto.car_type())
               .hourlyRate(80)
               .isAvailable(true)
-              .rating(ConditionRating.STORMY)
+              .rating(ConditionRating.ALLWEATHER)
               .damage(new ArrayList<>())
               .color(inputDto.color())
               .transmission(inputDto.transmission())
@@ -41,7 +41,7 @@ public class VehicleRestClientMapper {
               .model(inputDto.car_type())
               .hourlyRate(80)
               .isAvailable(true)
-              .rating(ConditionRating.STORMY)
+              .rating(ConditionRating.TOUGH)
               .damage(new ArrayList<>())
               .color(inputDto.color())
               .transmission(inputDto.transmission())
@@ -56,12 +56,18 @@ public class VehicleRestClientMapper {
               .build();
 
     } else {
+      ConditionRating rating = ConditionRating.ALLWEATHER;
+      if (type.contains("cabrio")) {
+        rating = ConditionRating.SUNNY;
+      } else if (type.contains("suv")) {
+        rating = ConditionRating.TOUGH;
+      }
       return Car.fromApiBuilder()
               .make("make")
               .model(inputDto.car_type())
               .hourlyRate(80)
               .isAvailable(true)
-              .rating(ConditionRating.STORMY)
+              .rating(rating)
               .damage(new ArrayList<>())
               .color(inputDto.color())
               .transmission(inputDto.transmission())
