@@ -3,6 +3,7 @@ package pl.zzpj.repository.rest.dto;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.*;
+import pl.zzpj.repository.core.domain.model.rentModel.vehicles.ConditionRating;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class VehicleDto {
     private long hourlyRate;
     private boolean isAvailable;
     List<String> damage;
-    String rating;
+    ConditionRating rating;
     String color;
     String transmission;
     String drive_type;

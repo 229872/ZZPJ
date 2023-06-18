@@ -28,16 +28,16 @@ public class VehicleFromDomainToDto {
         BeanUtils.copyProperties(vehicle, dto);
         switch (vehicle.getRating()) {
             case DRY:
-                dto.setRating(ConditionRating.DRY.name);
+                dto.setRating(ConditionRating.DRY);
                 break;
             case SUNNY:
-                dto.setRating(ConditionRating.SUNNY.name);
+                dto.setRating(ConditionRating.SUNNY);
                 break;
             case TOUGH:
-                dto.setRating(ConditionRating.TOUGH.name);
+                dto.setRating(ConditionRating.TOUGH);
                 break;
             default:
-                dto.setRating(ConditionRating.ALLWEATHER.name);
+                dto.setRating(ConditionRating.ALLWEATHER);
                 break;
         }
         return dto;

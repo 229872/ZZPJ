@@ -1,22 +1,27 @@
 package pl.zzpj.repository.adapter.rent.mapper;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+import pl.zzpj.repository.adapter.Vehicles.mapper.VehicleFromDataToDomain;
+import pl.zzpj.repository.adapter.Vehicles.mapper.VehicleFromDomainToData;
 import pl.zzpj.repository.adapter.user.mapper.AccountMapper;
 import pl.zzpj.repository.core.domain.model.rentModel.Rent;
 import pl.zzpj.repository.data.rent.RentEnt;
 
 @AllArgsConstructor
+@Component
 public class RentFromDomainToData {
 
-    private static AccountMapper mapper;
+    private AccountMapper mapper;
 
 
-    public static RentEnt map(Rent rent) {
+    public RentEnt map(Rent rent) {
         return RentEnt.builder()
                 .id(rent.getId())
+                .version(rent.getVersion())
                 .status(rent.getStatus())
                 .user(mapper.mapToAccount(rent.getUser()))
-                .vehicle(rent.getVehicle())
+                .vehicle(VehicleFromDomainToData.map(rent.getVehicle()))
                 .price(rent.getPrice())
                 .penalty(rent.getPenalty())
                 .declaredEndDate(rent.getDeclaredEndDate())

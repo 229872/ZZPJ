@@ -3,6 +3,7 @@ package pl.zzpj.repository.core.domain.model.rentModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Vehicle;
 import pl.zzpj.repository.core.domain.model.userModel.User;
 
 import java.math.BigDecimal;
@@ -14,9 +15,10 @@ import java.util.UUID;
 @Builder
 public class Rent {
     private UUID id;
+    private Long version;
     private RentStatus status;
     private User user;
-    private String vehicle; // todo
+    private Vehicle vehicle;
     private BigDecimal price;
     private BigDecimal penalty;
     private LocalDateTime declaredStartDate;
@@ -25,9 +27,10 @@ public class Rent {
     private LocalDateTime actualEndDate;
     private LocalDateTime createdAt;
 
-    @Builder(builderMethodName = "createRentBuilder")
-    public Rent(User user, String vehicle, BigDecimal price, LocalDateTime startDate, LocalDateTime endDate) {
+    @Builder(buildMethodName = "createBuild", builderMethodName = "createBuilder")
+    public Rent(User user, Vehicle vehicle, BigDecimal price, LocalDateTime startDate, LocalDateTime endDate) {
         this.id = null;
+        this.version = 0L;
         this.status = RentStatus.CREATED;
         this.user = user;
         this.vehicle = vehicle;

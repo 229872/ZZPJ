@@ -91,7 +91,7 @@ public class AuthenticationController {
 
 
       PersonInputDTO person = new PersonInputDTO("John", "Doe",
-              "Male", "1967-12-29", address);
+              "Bri'ish", "1967-12-29", address);
 
       userService.createUser(new UserInputDTO(
               "admin",
