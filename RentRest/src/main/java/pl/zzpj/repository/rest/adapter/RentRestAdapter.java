@@ -8,6 +8,7 @@ import pl.zzpj.repository.ports.query.rent.RentQueryService;
 import pl.zzpj.repository.rest.adapter.mapper.RentDomainToDtoMapper;
 import pl.zzpj.repository.rest.api.command.RentCommandRest;
 import pl.zzpj.repository.rest.api.query.RentQueryRest;
+import pl.zzpj.repository.rest.dto.PriceDto;
 import pl.zzpj.repository.rest.dto.RentDto;
 
 import java.math.BigDecimal;
@@ -83,15 +84,15 @@ public class RentRestAdapter implements RentQueryRest, RentCommandRest {
     }
 
     @Override
-    public List<RentDto> findRentsToIssue(Period timeToDeclared) {
-        return queryService.findRentsToIssue(timeToDeclared).stream()
+    public List<RentDto> findRentsToIssue(LocalDateTime endTime) {
+        return queryService.findRentsToIssue(endTime).stream()
                 .map(rentMapper::map)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<RentDto> findRentsToReturn(Period timeToDeclared) {
-        return queryService.findRentsToReturn(timeToDeclared).stream()
+    public List<RentDto> findRentsToReturn(LocalDateTime endTime) {
+        return queryService.findRentsToReturn(endTime).stream()
                 .map(rentMapper::map)
                 .collect(Collectors.toList());
     }
@@ -104,7 +105,11 @@ public class RentRestAdapter implements RentQueryRest, RentCommandRest {
     }
 
     @Override
-    public BigDecimal calculatePrice(UUID vehicleId, UUID userId, LocalDateTime start, LocalDateTime end) {
-        return queryService.calculatePrice(vehicleId, userId, start, end);
+    public PriceDto calculatePrice(UUID vehicleId,
+                                   UUID userId,
+                                   LocalDateTime start,
+                                   LocalDateTime end) {
+        return new PriceDto(queryService
+                .calculatePrice(vehicleId, userId, start, end));
     }
 }

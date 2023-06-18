@@ -1,6 +1,7 @@
 package pl.zzpj.repository.rest.api.query;
 
 import pl.zzpj.repository.core.domain.model.rentModel.RentStatus;
+import pl.zzpj.repository.rest.dto.PriceDto;
 import pl.zzpj.repository.rest.dto.RentDto;
 
 import java.math.BigDecimal;
@@ -14,9 +15,11 @@ public interface RentQueryRest {
     List<RentDto> findRentsByUser(UUID userId);
     List<RentDto> findFutureRentsByVehicle(UUID vehicleId);
     List<RentDto> findRentsByStatus(RentStatus status);
-    List<RentDto> findRentsToIssue(Period timeToDeclared);
-    List<RentDto> findRentsToReturn(Period timeToDeclared);
+    List<RentDto> findRentsToIssue(LocalDateTime endTime);
+    List<RentDto> findRentsToReturn(LocalDateTime endTime);
     List<RentDto> findAllRents();
-    BigDecimal calculatePrice(UUID vehicleId, UUID userId, LocalDateTime start, LocalDateTime end); // can be static?
-
+    PriceDto calculatePrice(UUID vehicleId,
+                            UUID userId,
+                            LocalDateTime start,
+                            LocalDateTime end);
 }

@@ -16,8 +16,8 @@ public interface RentQueryService {
     List<Rent> findRentsByUser(UUID userId);
     List<Rent> findFutureRentsByVehicle(UUID vehicleId);
     List<Rent> findRentsByStatus(RentStatus status);
-    List<Rent> findRentsToIssue(Period timeToDeclared);
-    List<Rent> findRentsToReturn(Period timeToDeclared);
+    List<Rent> findRentsToIssue(LocalDateTime endTime);
+    List<Rent> findRentsToReturn(LocalDateTime endTime);
     List<Rent> findAllRents();
     boolean isVehicleAvailable(UUID vehicleId, LocalDateTime start, LocalDateTime end); // czy tu czy w vehicle service?
     boolean isCancellable(Rent rent);

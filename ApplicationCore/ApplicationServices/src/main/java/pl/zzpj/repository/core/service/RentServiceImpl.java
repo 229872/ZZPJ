@@ -42,7 +42,7 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
 
     @Override
     public List<Rent> findFutureRentsByVehicle(UUID vehicleId) {
-        return queryPort.getRentsByVehicleId(vehicleId);
+        return queryPort.getRentsByVehicleId(vehicleId); // todo
     }
 
     @Override
@@ -51,17 +51,15 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
     }
 
     @Override
-    public List<Rent> findRentsToIssue(Period timeToDeclared) {
-        LocalDateTime declaredStartTime = LocalDateTime.now().plus(timeToDeclared);
+    public List<Rent> findRentsToIssue(LocalDateTime endTime) {
         return queryPort.getRentsByStatusAndDeclaredStartDate(
-                RentStatus.CREATED, declaredStartTime);
+                RentStatus.CREATED, endTime);
     }
 
     @Override
-    public List<Rent> findRentsToReturn(Period timeToDeclared) {
-        LocalDateTime declaredStartTime = LocalDateTime.now().plus(timeToDeclared);
+    public List<Rent> findRentsToReturn(LocalDateTime endTime) {
         return queryPort.getRentsByStatusAndDeclaredStartDate(
-                RentStatus.ISSUED, declaredStartTime);
+                RentStatus.ISSUED, endTime);
     }
 
     @Override
