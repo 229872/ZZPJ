@@ -1,58 +1,92 @@
 package pl.zzpj.repository.adapter.rent;
 
+import jakarta.annotation.Nullable;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+import pl.zzpj.repository.adapter.Vehicles.mapper.VehicleFromDataToDomain;
+import pl.zzpj.repository.adapter.Vehicles.mapper.VehicleFromDomainToData;
+import pl.zzpj.repository.adapter.rent.mapper.RentFromDataToDomain;
+import pl.zzpj.repository.adapter.rent.mapper.RentFromDomainToData;
+import pl.zzpj.repository.adapter.user.mapper.AccountMapper;
+import pl.zzpj.repository.api.RentRepository;
 import pl.zzpj.repository.core.domain.model.rentModel.Rent;
 import pl.zzpj.repository.core.domain.model.rentModel.RentStatus;
+import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Vehicle;
 import pl.zzpj.repository.core.domain.model.userModel.User;
+import pl.zzpj.repository.data.rent.RentEnt;
 import pl.zzpj.repository.ports.command.rent.RentCommandPort;
 import pl.zzpj.repository.ports.query.rent.RentQueryPort;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+@Component
+@AllArgsConstructor
 public class RentRepositoryAdapter implements RentCommandPort, RentQueryPort {
-    @Override
-    public Rent add(Rent rent) {
-        return null;
-    }
+
+    private RentFromDomainToData rentFromDomainToData;
+    private RentFromDataToDomain rentFromDataToDomain;
+    private RentRepository rentRepository;
+    private AccountMapper accountMapper;
 
     @Override
-    public Rent update(Rent rent) {
-        return null;
+    public Rent upsert(Rent rent) {
+        RentEnt rentEnt = rentRepository.save(rentFromDomainToData.map(rent));
+        return rentFromDataToDomain.map(rentEnt);
     }
 
     @Override
     public Rent getRent(UUID rentId) {
-        return null;
+        return rentRepository.findById(rentId)
+                .map(rentFromDataToDomain::map)
+                .orElseThrow();
     }
 
     @Override
     public List<Rent> getRentsByStatus(RentStatus status) {
-        return null;
+        return rentRepository.findByStatus(status).stream()
+                .map(rentFromDataToDomain::map)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Rent> getRentsByStatuses(List<RentStatus> statuses) {
-        return null;
+        return rentRepository.findByStatusIn(statuses).stream()
+                .map(rentFromDataToDomain::map)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Rent> getRentsByUser(User user) {
-        return null;
+        return rentRepository.findByUser(accountMapper.mapToAccount(user))
+                .stream()
+                .map(rentFromDataToDomain::map)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Rent> getRentsByVehicle(String vehicle) {
-        return null;
+    public List<Rent> getRentsByVehicle(Vehicle vehicle) {
+        return rentRepository.findByVehicle(VehicleFromDomainToData.map(vehicle))
+                .stream()
+                .map(rentFromDataToDomain::map)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Rent> getRentsByStatusAndDeclaredStartDate(RentStatus status, LocalDateTime declaredStartDate) {
-        return null;
+        return rentRepository.findByStatusAndDeclaredStartDate(status, declaredStartDate)
+                .stream()
+                .map(rentFromDataToDomain::map)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Rent> getAllRents() {
-        return null;
+        return rentRepository.findAll()
+                .stream()
+                .map(rentFromDataToDomain::map)
+                .collect(Collectors.toList());
     }
 }

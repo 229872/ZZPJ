@@ -2,6 +2,7 @@ package pl.zzpj.repository.ports.query.rent;
 
 import pl.zzpj.repository.core.domain.model.rentModel.Rent;
 import pl.zzpj.repository.core.domain.model.rentModel.RentStatus;
+import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Vehicle;
 import pl.zzpj.repository.core.domain.model.userModel.User;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ public interface RentQueryPort {
     List<Rent> getRentsByStatus(RentStatus status);
     List<Rent> getRentsByStatuses(List<RentStatus> statuses);
     List<Rent> getRentsByUser(User user);
-    List<Rent> getRentsByVehicle(String vehicle);
+    List<Rent> getRentsByVehicle(Vehicle vehicle);
     List<Rent> getRentsByStatusAndDeclaredStartDate(RentStatus status, LocalDateTime declaredStartDate);
     List<Rent> getAllRents();
 

@@ -1,6 +1,7 @@
 package pl.zzpj.repository.ports.command.rent;
 
 import pl.zzpj.repository.core.domain.model.rentModel.Rent;
+import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Vehicle;
 import pl.zzpj.repository.core.domain.model.userModel.User;
 
 import java.math.BigDecimal;
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public interface RentCommandService {
-    Rent createRent(User user, String vehicle, BigDecimal price, LocalDateTime startDate, LocalDateTime endDate);
+    Rent createRent(User user, Vehicle vehicle, BigDecimal price, LocalDateTime startDate, LocalDateTime endDate);
     Rent cancelRent(UUID id);
     Rent issueVehicle(UUID id);
     Rent returnVehicle(UUID id);
