@@ -72,14 +72,19 @@ public class RentController {
 
     @GetMapping(value = "to-issue/{date}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<RentDto> findRentsToIssue(
-            @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime date) {
+            @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime date) {
         return adapter.findRentsToIssue(date);
     }
 
     @GetMapping(value = "to-return/{date}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<RentDto> findRentsToReturn(
-            @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime date) {
+            @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime date) {
         return adapter.findRentsToReturn(date);
+    }
+
+    @PutMapping(value = "cancel/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public RentDto cancelRent(@PathVariable UUID uuid) {
+        return adapter.cancelRent(uuid);
     }
 
     @PutMapping(value = "issue/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -13,6 +13,8 @@ import java.util.UUID;
 
 @Repository
 public interface RentRepository extends JpaRepository<RentEnt, UUID> {
+  @Query("select r from RentEnt r where r.status = ?1 and r.declaredStartDate > ?2 and r.declaredEndDate < ?3")
+  List<RentEnt> findRentsByStatusAndDeclaredDateBetween(RentStatus status, LocalDateTime declaredStartDate, LocalDateTime declaredEndDate);
   @Query("select r from RentEnt r where r.vehicle.id = ?1 and r.declaredStartDate > ?2 and r.declaredEndDate < ?3")
   List<RentEnt> findByVehicleIdAndDeclaredStartDateAfterAndDeclaredEndDateBefore(
           UUID vehicle, LocalDateTime declaredStartDate, LocalDateTime declaredEndDate);

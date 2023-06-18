@@ -9,6 +9,7 @@ public interface RentCommandRest {
     RentDto createRent(UUID userId, UUID vehicleId,
                        LocalDateTime declaredStartDate,
                        LocalDateTime declaredEndDate);
+    RentDto cancelRent(UUID id);
     RentDto issueVehicle(UUID id);
     RentDto returnVehicle(UUID id);
     RentDto returnDamagedVehicle(UUID id);

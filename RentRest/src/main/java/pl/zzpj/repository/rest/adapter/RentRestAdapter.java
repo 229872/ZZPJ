@@ -47,6 +47,11 @@ public class RentRestAdapter implements RentQueryRest, RentCommandRest {
     }
 
     @Override
+    public RentDto cancelRent(UUID id) {
+        return rentMapper.map(commandService.cancelRent(id));
+    }
+
+    @Override
     public RentDto returnVehicle(UUID id) {
         return rentMapper.map(commandService.returnVehicle(id));
     }
@@ -89,6 +94,7 @@ public class RentRestAdapter implements RentQueryRest, RentCommandRest {
 
     @Override
     public List<RentDto> findRentsToIssue(LocalDateTime endTime) {
+        log.info(endTime.toString());
         return queryService.findRentsToIssue(endTime).stream()
                 .map(rentMapper::map)
                 .collect(Collectors.toList());

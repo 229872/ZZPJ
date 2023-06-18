@@ -87,8 +87,11 @@ public class RentRepositoryAdapter implements RentCommandPort, RentQueryPort {
     }
 
     @Override
-    public List<Rent> getRentsByStatusAndDeclaredStartDate(RentStatus status, LocalDateTime declaredStartDate) {
-        return rentRepository.findByStatusAndDeclaredStartDate(status, declaredStartDate)
+    public List<Rent> getRentsByStatusAndDeclaredDatesBetween(RentStatus status,
+                                                              LocalDateTime declaredStartDate,
+                                                              LocalDateTime declaredEndDate) {
+        return rentRepository.findRentsByStatusAndDeclaredDateBetween(status,
+                        declaredStartDate, declaredEndDate)
                 .stream()
                 .map(rentFromDataToDomain::map)
                 .collect(Collectors.toList());
