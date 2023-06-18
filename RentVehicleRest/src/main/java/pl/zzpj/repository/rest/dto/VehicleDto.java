@@ -23,4 +23,5 @@ public class VehicleDto {
     private String make;
     private String model;
     private long hourlyRate;
+    private boolean isAvailable;
 }

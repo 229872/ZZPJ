@@ -16,4 +16,6 @@ public class Vehicle extends AbstractDataModel {
     private long hourlyRate;
     private boolean isAvailable;
 
+
+
 }

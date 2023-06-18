@@ -32,7 +32,9 @@ public class RentVehicleServiceImpl implements RentVehiclesCommandService, RentV
 
     @Override
     public void switchAvailability(UUID id) {
-        //TODO implement
+        Vehicle vehicle = vehiclesQueryPort.getById(id);
+        vehicle.setAvailable(!vehicle.isAvailable());
+        vehiclesCommandPort.update(vehicle);
     }
 
     @Override

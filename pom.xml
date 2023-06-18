@@ -44,6 +44,8 @@
         <module>RentRest</module>
         <module>ExternalUserServiceAdapter</module>
         <module>ExternalVehicleEquipmentService</module>
+        <module>ExternalVehicleServiceAdapter</module>
+
     </modules>
 
     <properties>
