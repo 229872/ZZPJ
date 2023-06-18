@@ -62,5 +62,10 @@ public class RentVehicleServiceImpl implements RentVehiclesCommandService, RentV
         return vehiclesQueryPort.getAllAvailable();
     }
 
+    @Override
+    public List<Vehicle> findAllByRating(String rating) {
+        return vehiclesQueryPort.getAllByRating(rating);
+    }
+
 
 }
