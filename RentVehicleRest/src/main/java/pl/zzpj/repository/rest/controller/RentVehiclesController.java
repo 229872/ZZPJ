@@ -4,9 +4,14 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import pl.zzpj.repository.core.domain.model.rentModel.vehicles.ConditionRating;
+import pl.zzpj.repository.rest.dto.CarDto;
 import pl.zzpj.repository.rest.dto.VehicleDto;
 import pl.zzpj.repository.rest.api.RentVehiclesService;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,4 +67,62 @@ public class RentVehiclesController {
         return vehiclesService.getAllByRating(rating);
     }
 
+
+    @PostConstruct
+    private void initData() {
+        VehicleDto car1 = CarDto.builder()
+                .make("Niisan")
+                .model("Juke")
+                .hourlyRate(20)
+                .isAvailable(true)
+                .damage(new ArrayList<>())
+                .rating(ConditionRating.ALLWEATHER)
+                .color("Muave")
+                .transmission("Manual")
+                .drive_type("FWD")
+                .fuel_type("Petrol")
+                .car_type("Hatchback")
+                .car_options(new ArrayList<>())
+                .specs(new ArrayList<>())
+                .doors(5)
+                .build();
+
+        VehicleDto car2 = CarDto.builder()
+                .make("Dacia")
+                .model("Sandero")
+                .hourlyRate(15)
+                .isAvailable(true)
+                .damage(new ArrayList<>())
+                .rating(ConditionRating.ALLWEATHER)
+                .color("Dark-Yellow")
+                .transmission("Automatic")
+                .drive_type("FWD")
+                .fuel_type("Diesel")
+                .car_type("Hatchback")
+                .car_options(new ArrayList<>())
+                .specs(new ArrayList<>())
+                .doors(5)
+                .build();
+
+        VehicleDto car3 = CarDto.builder()
+                .make("Fiat")
+                .model("Multipla")
+                .hourlyRate(17)
+                .isAvailable(true)
+                .damage(new ArrayList<>())
+                .rating(ConditionRating.ALLWEATHER)
+                .color("Beige")
+                .transmission("Manual")
+                .drive_type("FWD")
+                .fuel_type("Petrol")
+                .car_type("Hatchback")
+                .car_options(new ArrayList<>())
+                .specs(new ArrayList<>())
+                .doors(5)
+                .build();
+
+        vehiclesService.addVehicle(car1);
+        vehiclesService.addVehicle(car2);
+        vehiclesService.addVehicle(car3);
+    }
 }

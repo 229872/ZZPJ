@@ -14,6 +14,7 @@ import pl.zzpj.repository.ports.query.rent.RentVehiclesQueryPort;
 import pl.zzpj.repository.ports.query.user.UserQueryRepositoryPort;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
@@ -90,8 +91,8 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
         double vehicleCostPerHour = 10; // get from vehicle
         List<Rent> userRents = queryPort.getRentsByUserId(user.getClientId());
 
-        Period period = Period.between(start.toLocalDate(), end.toLocalDate());
-        double baseRentCost = period.get(ChronoUnit.HOURS) * vehicle.getHourlyRate();
+        Duration period = Duration.between(start, end);
+        double baseRentCost = period.toHours() * vehicle.getHourlyRate();
         return new BigDecimal(baseRentCost);
     }
 

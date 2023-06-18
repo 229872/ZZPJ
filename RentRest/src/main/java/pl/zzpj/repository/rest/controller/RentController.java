@@ -39,10 +39,10 @@ public class RentController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public RentDto createRent(@RequestBody @NotNull @Valid CreateRentDto createRentDto) {
-        return adapter.createRent(createRentDto.getVehicleId(),
-                createRentDto.getUserId(),
+        return adapter.createRent(createRentDto.getUserId(),
+                createRentDto.getVehicleId(),
                 createRentDto.getDeclaredStart(),
-                createRentDto.getDeclaredStart());
+                createRentDto.getDeclaredEnd());
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)

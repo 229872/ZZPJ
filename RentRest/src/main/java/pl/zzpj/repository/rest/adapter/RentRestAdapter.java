@@ -1,6 +1,7 @@
 package pl.zzpj.repository.rest.adapter;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Component;
 import pl.zzpj.repository.core.domain.model.rentModel.RentStatus;
 import pl.zzpj.repository.ports.command.rent.RentCommandService;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
+@Log
 public class RentRestAdapter implements RentQueryRest, RentCommandRest {
 
     private final RentCommandService commandService;
@@ -33,6 +35,8 @@ public class RentRestAdapter implements RentQueryRest, RentCommandRest {
             LocalDateTime declaredStartDate,
             LocalDateTime declaredEndDate
     ) {
+        log.info(userId.toString() + ' ' + vehicleId.toString() + ' '  +
+                declaredStartDate.toString() + ' '  + declaredEndDate.toString());
         return rentMapper.map(commandService.createRent(
                 userId, vehicleId, declaredStartDate, declaredEndDate));
     }
