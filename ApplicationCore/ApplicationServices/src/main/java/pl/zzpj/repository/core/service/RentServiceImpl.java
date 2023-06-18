@@ -66,9 +66,9 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
 
     @Override
     public boolean isVehicleAvailable(Vehicle vehicle, LocalDateTime start, LocalDateTime end) {
-        List<Rent> vehicleRents = queryPort.getRentsByVehicle(vehicle);
-
-        return false;
+        List<Rent> vehicleRents = queryPort.getRentsByVehicleAndDatesBetween(
+                vehicle, start, end);
+        return vehicleRents.isEmpty();
     }
 
     public boolean isCancellable(Rent rent) {
@@ -85,15 +85,15 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
     }
 
     @Override
-    public Rent createRent(User user, Vehicle vehicle, BigDecimal price, LocalDateTime startDate, LocalDateTime endDate) {
-        Rent rent = Rent.builder()
+    public Rent createRent(User user, Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate) {
+        Rent rent = Rent.createBuilder()
                 .user(user)
                 .vehicle(vehicle)
-                .price(price)
+                .price(calculatePrice(vehicle, user, startDate, endDate))
                 .startDate(startDate)
                 .endDate(endDate)
-                .build();
-        return commandPort.add(rent);
+                .createBuild();
+        return commandPort.upsert(rent);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
             return null;
         }
         rent.setStatus(RentStatus.CANCELLED);
-        return commandPort.update(rent);
+        return commandPort.upsert(rent);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
         Rent rent = queryPort.getRent(id);
         rent.setStatus(RentStatus.ISSUED);
         rent.setActualStartDate(LocalDateTime.now());
-        return commandPort.update(rent);
+        return commandPort.upsert(rent);
     }
 
     @Override
@@ -120,7 +120,7 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
         Rent rent = queryPort.getRent(id);
         rent.setStatus(RentStatus.RETURNED_GOOD);
         rent.setActualEndDate(LocalDateTime.now());
-        return commandPort.update(rent);
+        return commandPort.upsert(rent);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
         Rent rent = queryPort.getRent(id);
         rent.setStatus(RentStatus.RETURNED_DAMAGED);
         rent.setActualEndDate(LocalDateTime.now());
-        return commandPort.update(rent);
+        return commandPort.upsert(rent);
     }
 
     @Override
@@ -136,7 +136,7 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
         Rent rent = queryPort.getRent(id);
         rent.setStatus(RentStatus.NOT_RETURNED);
         rent.setActualEndDate(LocalDateTime.now());
-        return commandPort.update(rent);
+        return commandPort.upsert(rent);
     }
 
     @Override

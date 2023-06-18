@@ -15,6 +15,8 @@ import java.util.UUID;
 
 @Repository
 public interface RentRepository extends JpaRepository<RentEnt, UUID> {
+  @Query("select r from RentEnt r where r.vehicle = ?1 and r.declaredStartDate > ?2 and r.declaredEndDate < ?3")
+  List<RentEnt> findByVehicleAndDeclaredStartDateAfterAndDeclaredEndDateBefore(VehicleEnt vehicle, LocalDateTime declaredStartDate, LocalDateTime declaredEndDate);
   @Query("select r from RentEnt r where r.status = ?1 and r.declaredStartDate = ?2")
   List<RentEnt> findByStatusAndDeclaredStartDate(RentStatus status, LocalDateTime declaredStartDate);
   @Query("select r from RentEnt r where r.vehicle = ?1")

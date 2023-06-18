@@ -75,6 +75,20 @@ public class RentRepositoryAdapter implements RentCommandPort, RentQueryPort {
     }
 
     @Override
+    public List<Rent> getRentsByVehicleAndDatesBetween(
+            Vehicle vehicle,
+            LocalDateTime startDate,
+            LocalDateTime endDate
+    ) {
+        return rentRepository
+                .findByVehicleAndDeclaredStartDateAfterAndDeclaredEndDateBefore(
+                        VehicleFromDomainToData.map(vehicle), startDate, endDate)
+                .stream()
+                .map(rentFromDataToDomain::map)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<Rent> getRentsByStatusAndDeclaredStartDate(RentStatus status, LocalDateTime declaredStartDate) {
         return rentRepository.findByStatusAndDeclaredStartDate(status, declaredStartDate)
                 .stream()
