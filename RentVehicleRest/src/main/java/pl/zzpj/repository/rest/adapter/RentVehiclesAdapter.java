@@ -30,7 +30,7 @@ public class RentVehiclesAdapter implements RentVehiclesService {
 
     @Override
     public void switchAvailability(UUID id) {
-        //TODO
+        vehicleService.switchAvailability(id);
     }
 
     @Override

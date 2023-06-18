@@ -14,7 +14,6 @@ public class VehicleTire {
     private String size;
 
     private Double maximumSpeed;
-
     private Double maximumWeight;
 
     private VehicleEquipment equipment;
