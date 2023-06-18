@@ -2,19 +2,20 @@ package pl.zzpj.repository.rest.adapter;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.zzpj.repository.core.domain.model.rentModel.Rent;
 import pl.zzpj.repository.core.domain.model.rentModel.RentStatus;
-import pl.zzpj.repository.core.domain.model.userModel.User;
 import pl.zzpj.repository.ports.command.rent.RentCommandService;
 import pl.zzpj.repository.ports.query.rent.RentQueryService;
+import pl.zzpj.repository.rest.adapter.mapper.RentDomainToDtoMapper;
 import pl.zzpj.repository.rest.api.command.RentCommandRest;
 import pl.zzpj.repository.rest.api.query.RentQueryRest;
+import pl.zzpj.repository.rest.dto.RentDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -23,68 +24,87 @@ public class RentRestAdapter implements RentQueryRest, RentCommandRest {
     private final RentCommandService commandService;
     private final RentQueryService queryService;
 
+    private final RentDomainToDtoMapper rentMapper;
+
     @Override
-    public Rent createRent(Rent rent) {
-        return null;
+    public RentDto createRent(
+            UUID userId, UUID vehicleId,
+            LocalDateTime declaredStartDate,
+            LocalDateTime declaredEndDate
+    ) {
+        return rentMapper.map(commandService.createRent(
+                userId, vehicleId, declaredStartDate, declaredEndDate));
     }
 
     @Override
-    public Rent issueVehicle(Rent rent) {
-        return null;
+    public RentDto issueVehicle(UUID id) {
+        return rentMapper.map(commandService.issueVehicle(id));
     }
 
     @Override
-    public Rent returnVehicle(Rent rent) {
-        return null;
+    public RentDto returnVehicle(UUID id) {
+        return rentMapper.map(commandService.returnVehicle(id));
     }
 
     @Override
-    public Rent returnDamagedVehicle(Rent rent) {
-        return null;
+    public RentDto returnDamagedVehicle(UUID id) {
+        return rentMapper.map(commandService.returnDamagedVehicle(id));
     }
 
     @Override
-    public Rent returnMissingVehicle(Rent rent) {
-        return null;
+    public RentDto returnMissingVehicle(UUID id) {
+        return rentMapper.map(commandService.returnMissingVehicle(id));
     }
 
     @Override
-    public Rent findRent(UUID rentId) {
-        return null;
+    public RentDto findRent(UUID rentId) {
+        return rentMapper.map(queryService.findRent(rentId));
     }
 
     @Override
-    public List<Rent> findRentsByUser(User user) {
-        return null;
+    public List<RentDto> findRentsByUser(UUID userId) {
+        return queryService.findRentsByUser(userId).stream()
+                .map(rentMapper::map)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Rent> findFutureRentsByVehicle(String vehicle) {
-        return null;
+    public List<RentDto> findFutureRentsByVehicle(UUID vehicleId) {
+        return queryService.findFutureRentsByVehicle(vehicleId).stream()
+                .map(rentMapper::map)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Rent> findRentsByStatus(RentStatus status) {
-        return null;
+    public List<RentDto> findRentsByStatus(RentStatus status) {
+        return queryService.findRentsByStatus(status).stream()
+                .map(rentMapper::map)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Rent> findRentsToIssue(Period timeToDeclared) {
-        return null;
+    public List<RentDto> findRentsToIssue(Period timeToDeclared) {
+        return queryService.findRentsToIssue(timeToDeclared).stream()
+                .map(rentMapper::map)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Rent> findRentsToReturn(Period timeToDeclared) {
-        return null;
+    public List<RentDto> findRentsToReturn(Period timeToDeclared) {
+        return queryService.findRentsToReturn(timeToDeclared).stream()
+                .map(rentMapper::map)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Rent> findAllRents() {
-        return null;
+    public List<RentDto> findAllRents() {
+        return queryService.findAllRents().stream()
+                .map(rentMapper::map)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public BigDecimal calculatePrice(String vehicle, User user, LocalDateTime start, LocalDateTime end) {
-        return null;
+    public BigDecimal calculatePrice(UUID vehicleId, UUID userId, LocalDateTime start, LocalDateTime end) {
+        return queryService.calculatePrice(vehicleId, userId, start, end);
     }
 }

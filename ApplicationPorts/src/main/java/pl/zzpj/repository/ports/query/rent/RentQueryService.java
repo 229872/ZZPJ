@@ -13,13 +13,13 @@ import java.util.UUID;
 
 public interface RentQueryService {
     Rent findRent(UUID rentId);
-    List<Rent> findRentsByUser(User user);
-    List<Rent> findFutureRentsByVehicle(Vehicle vehicle);
+    List<Rent> findRentsByUser(UUID userId);
+    List<Rent> findFutureRentsByVehicle(UUID vehicleId);
     List<Rent> findRentsByStatus(RentStatus status);
     List<Rent> findRentsToIssue(Period timeToDeclared);
     List<Rent> findRentsToReturn(Period timeToDeclared);
     List<Rent> findAllRents();
-    boolean isVehicleAvailable(Vehicle vehicle, LocalDateTime start, LocalDateTime end); // czy tu czy w vehicle service?
+    boolean isVehicleAvailable(UUID vehicleId, LocalDateTime start, LocalDateTime end); // czy tu czy w vehicle service?
     boolean isCancellable(Rent rent);
-    BigDecimal calculatePrice(Vehicle vehicle, User user, LocalDateTime start, LocalDateTime end); // can be static?
+    BigDecimal calculatePrice(UUID vehicleId, UUID userId, LocalDateTime start, LocalDateTime end);
 }

@@ -56,5 +56,13 @@
             <groupId>pl.lodz.p.edu.zzpj</groupId>
             <artifactId>Repositories</artifactId>
         </dependency>
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>UserRest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>RentVehicleRest</artifactId>
+        </dependency>
     </dependencies>
 </project>

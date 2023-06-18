@@ -1,9 +1,10 @@
 package pl.zzpj.repository.rest.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.zzpj.repository.rest.adapter.RentRestAdapter;
-import pl.zzpj.repository.rest.dto.get.RentDto;
+import pl.zzpj.repository.rest.dto.RentDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,12 +18,12 @@ public class RentController {
 
     @GetMapping
     public List<RentDto> getAllRents() {
-        return null;
+        return adapter.findAllRents();
     }
 
-    @GetMapping(value = "{uuid}")
+    @GetMapping(value = "{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public RentDto getRent(@PathVariable UUID uuid) {
-        return null;
+        return adapter.findRent(uuid);
     }
 
 

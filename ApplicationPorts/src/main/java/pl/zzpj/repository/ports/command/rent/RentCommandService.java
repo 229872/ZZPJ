@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public interface RentCommandService {
-    Rent createRent(User user, Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate);
+    Rent createRent(UUID userId, UUID vehicleId, LocalDateTime startDate, LocalDateTime endDate);
     Rent cancelRent(UUID id);
     Rent issueVehicle(UUID id);
     Rent returnVehicle(UUID id);

@@ -10,10 +10,13 @@ import pl.zzpj.repository.ports.command.rent.RentCommandPort;
 import pl.zzpj.repository.ports.command.rent.RentCommandService;
 import pl.zzpj.repository.ports.query.rent.RentQueryPort;
 import pl.zzpj.repository.ports.query.rent.RentQueryService;
+import pl.zzpj.repository.ports.query.rent.RentVehiclesQueryPort;
+import pl.zzpj.repository.ports.query.user.UserQueryRepositoryPort;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,6 +27,8 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
     private RentCommandPort commandPort;
 
     private RentQueryPort queryPort;
+    private UserQueryRepositoryPort userQueryPort;
+    private RentVehiclesQueryPort vehicleQueryPort;
 
     @Override
     public Rent findRent(UUID rentId) {
@@ -31,13 +36,13 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
     }
 
     @Override
-    public List<Rent> findRentsByUser(User user) {
-        return queryPort.getRentsByUser(user);
+    public List<Rent> findRentsByUser(UUID userId) {
+        return queryPort.getRentsByUserId(userId);
     }
 
     @Override
-    public List<Rent> findFutureRentsByVehicle(Vehicle vehicle) {
-        return queryPort.getRentsByVehicle(vehicle);
+    public List<Rent> findFutureRentsByVehicle(UUID vehicleId) {
+        return queryPort.getRentsByVehicleId(vehicleId);
     }
 
     @Override
@@ -65,9 +70,9 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
     }
 
     @Override
-    public boolean isVehicleAvailable(Vehicle vehicle, LocalDateTime start, LocalDateTime end) {
-        List<Rent> vehicleRents = queryPort.getRentsByVehicleAndDatesBetween(
-                vehicle, start, end);
+    public boolean isVehicleAvailable(UUID vehicleId, LocalDateTime start, LocalDateTime end) {
+        List<Rent> vehicleRents = queryPort.getRentsByVehicleIdAndDatesBetween(
+                vehicleId, start, end);
         return vehicleRents.isEmpty();
     }
 
@@ -76,20 +81,31 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
     }
 
     @Override
-    public BigDecimal calculatePrice(Vehicle vehicle, User user, LocalDateTime start, LocalDateTime end) {
+    public BigDecimal calculatePrice(UUID vehicleId, UUID userId, LocalDateTime start, LocalDateTime end) {
+        User user = userQueryPort.getUserById(userId).orElseThrow();
+        Vehicle vehicle = vehicleQueryPort.getById(vehicleId);
+        return calculatePrice(user, vehicle, start, end);
+    }
+
+    private BigDecimal calculatePrice(User user, Vehicle vehicle, LocalDateTime start, LocalDateTime end) {
         double points = 0; // get from user
         double vehicleCostPerHour = 10; // get from vehicle
-        List<Rent> userRents = queryPort.getRentsByUser(user);
+        List<Rent> userRents = queryPort.getRentsByUserId(user.getClientId());
+
         Period period = Period.between(start.toLocalDate(), end.toLocalDate());
-        return new BigDecimal(10);
+        double baseRentCost = period.get(ChronoUnit.HOURS) * vehicle.getHourlyRate();
+        return new BigDecimal(baseRentCost);
     }
 
     @Override
-    public Rent createRent(User user, Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate) {
+    public Rent createRent(UUID userId, UUID vehicleId, LocalDateTime startDate, LocalDateTime endDate) {
+        User user = userQueryPort.getUserById(userId).orElseThrow();
+        Vehicle vehicle = vehicleQueryPort.getById(vehicleId);
+
         Rent rent = Rent.createBuilder()
                 .user(user)
                 .vehicle(vehicle)
-                .price(calculatePrice(vehicle, user, startDate, endDate))
+                .price(calculatePrice(user, vehicle, startDate, endDate))
                 .startDate(startDate)
                 .endDate(endDate)
                 .createBuild();

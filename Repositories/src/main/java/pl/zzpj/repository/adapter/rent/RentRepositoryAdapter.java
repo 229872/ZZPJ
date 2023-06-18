@@ -1,9 +1,7 @@
 package pl.zzpj.repository.adapter.rent;
 
-import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.zzpj.repository.adapter.Vehicles.mapper.VehicleFromDataToDomain;
 import pl.zzpj.repository.adapter.Vehicles.mapper.VehicleFromDomainToData;
 import pl.zzpj.repository.adapter.rent.mapper.RentFromDataToDomain;
 import pl.zzpj.repository.adapter.rent.mapper.RentFromDomainToData;
@@ -59,30 +57,30 @@ public class RentRepositoryAdapter implements RentCommandPort, RentQueryPort {
     }
 
     @Override
-    public List<Rent> getRentsByUser(User user) {
-        return rentRepository.findByUser(accountMapper.mapToAccount(user))
+    public List<Rent> getRentsByUserId(UUID userId) {
+        return rentRepository.findByUserId(userId)
                 .stream()
                 .map(rentFromDataToDomain::map)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Rent> getRentsByVehicle(Vehicle vehicle) {
-        return rentRepository.findByVehicle(VehicleFromDomainToData.map(vehicle))
+    public List<Rent> getRentsByVehicleId(UUID vehicleId) {
+        return rentRepository.findByVehicleId(vehicleId)
                 .stream()
                 .map(rentFromDataToDomain::map)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Rent> getRentsByVehicleAndDatesBetween(
-            Vehicle vehicle,
+    public List<Rent> getRentsByVehicleIdAndDatesBetween(
+            UUID vehicleId,
             LocalDateTime startDate,
             LocalDateTime endDate
     ) {
         return rentRepository
-                .findByVehicleAndDeclaredStartDateAfterAndDeclaredEndDateBefore(
-                        VehicleFromDomainToData.map(vehicle), startDate, endDate)
+                .findByVehicleIdAndDeclaredStartDateAfterAndDeclaredEndDateBefore(
+                        vehicleId, startDate, endDate)
                 .stream()
                 .map(rentFromDataToDomain::map)
                 .collect(Collectors.toList());
