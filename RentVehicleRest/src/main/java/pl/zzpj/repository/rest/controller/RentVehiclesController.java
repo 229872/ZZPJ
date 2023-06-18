@@ -57,4 +57,9 @@ public class RentVehiclesController {
         return vehiclesService.getAllAvailable();
     }
 
+    @GetMapping(value = "/getAllByRating/{rating}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<VehicleDto> getAllByRating(@PathVariable String rating){
+        return vehiclesService.getAllByRating(rating);
+    }
+
 }

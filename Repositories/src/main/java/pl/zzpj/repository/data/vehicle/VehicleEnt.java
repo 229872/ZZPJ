@@ -2,7 +2,11 @@ package pl.zzpj.repository.data.vehicle;
 
 import jakarta.persistence.*;
 import lombok.*;
+import pl.zzpj.repository.core.domain.model.rentModel.vehicles.ConditionRating;
+import pl.zzpj.repository.data.AbstractEntity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -13,13 +17,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class VehicleEnt {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", nullable = false)
-    private UUID id;
-
+public class VehicleEnt extends AbstractEntity {
     @Column
     private String make;
 
@@ -31,6 +29,36 @@ public class VehicleEnt {
 
     @Column
     private boolean isAvailable;
+
+    @Column
+    private List<String> damage;
+
+    @Column
+    ConditionRating rating;
+
+    @Column
+    String color;
+
+    @Column
+    String transmission;
+
+    @Column
+    String drive_type;
+
+    @Column
+    String fuel_type;
+
+    @Column
+    String car_type;
+
+    @Column
+    ArrayList<String> car_options;
+
+    @Column
+    ArrayList<String> specs;
+
+    @Column
+    int doors;
 
 
 }

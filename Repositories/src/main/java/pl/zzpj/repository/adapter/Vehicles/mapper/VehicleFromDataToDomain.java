@@ -1,6 +1,12 @@
 package pl.zzpj.repository.adapter.Vehicles.mapper;
 
+import org.springframework.beans.BeanUtils;
+import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Car;
+import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Pickup;
+import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Van;
 import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Vehicle;
+import pl.zzpj.repository.data.vehicle.CarEnt;
+import pl.zzpj.repository.data.vehicle.VanEnt;
 import pl.zzpj.repository.data.vehicle.VehicleEnt;
 
 import java.util.ArrayList;
@@ -8,13 +14,18 @@ import java.util.List;
 
 public class VehicleFromDataToDomain {
 
-    public static Vehicle map(VehicleEnt ent) {
-        return Vehicle.builder()
-                .make(ent.getMake())
-                .model(ent.getModel())
-                .isAvailable(ent.isAvailable())
-                .hourlyRate(ent.getHourlyRate())
-                .build();
+    public static Vehicle map(VehicleEnt vehicle) {
+        Vehicle dto;
+        if (vehicle instanceof CarEnt){
+            dto = new Car();
+        } else if (vehicle instanceof VanEnt) {
+            dto = new Van();
+        } else  {
+            dto = new Pickup();
+        }
+
+        BeanUtils.copyProperties(vehicle, dto);
+        return dto;
     }
 
     public static List<Vehicle> mapList(List<VehicleEnt> vehicleEnts) {

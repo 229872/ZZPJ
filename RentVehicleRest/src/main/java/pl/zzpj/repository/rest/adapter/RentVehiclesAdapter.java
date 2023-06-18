@@ -30,7 +30,7 @@ public class RentVehiclesAdapter implements RentVehiclesService {
 
     @Override
     public void switchAvailability(UUID id) {
-        //TODO
+        vehicleService.switchAvailability(id);
     }
 
     @Override
@@ -56,6 +56,11 @@ public class RentVehiclesAdapter implements RentVehiclesService {
     @Override
     public List<VehicleDto> getAllAvailable() {
         return VehicleFromDomainToDto.mapList(vehicleService.findAllAvailable());
+    }
+
+    @Override
+    public List<VehicleDto> getAllByRating(String rating) {
+        return VehicleFromDomainToDto.mapList(vehicleService.findAllByRating(rating));
     }
 
 

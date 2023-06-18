@@ -65,6 +65,11 @@
 
         <dependency>
             <groupId>pl.lodz.p.edu.zzpj</groupId>
+            <artifactId>ExternalVehicleServiceAdapter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.lodz.p.edu.zzpj</groupId>
             <artifactId>WeatherApi</artifactId>
         </dependency>
 

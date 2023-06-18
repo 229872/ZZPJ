@@ -32,7 +32,9 @@ public class RentVehicleServiceImpl implements RentVehiclesCommandService, RentV
 
     @Override
     public void switchAvailability(UUID id) {
-        //TODO implement
+        Vehicle vehicle = vehiclesQueryPort.getById(id);
+        vehicle.setAvailable(!vehicle.isAvailable());
+        vehiclesCommandPort.update(vehicle);
     }
 
     @Override
@@ -58,6 +60,11 @@ public class RentVehicleServiceImpl implements RentVehiclesCommandService, RentV
     @Override
     public List<Vehicle> findAllAvailable() {
         return vehiclesQueryPort.getAllAvailable();
+    }
+
+    @Override
+    public List<Vehicle> findAllByRating(String rating) {
+        return vehiclesQueryPort.getAllByRating(rating);
     }
 
 
