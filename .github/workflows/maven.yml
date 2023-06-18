@@ -9,11 +9,9 @@
 name: Java CI with Maven
 
 on:
-  push:
-    branches: [ "bczFeature" ]
     # testing github actions
-#   pull_request:
-#     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
