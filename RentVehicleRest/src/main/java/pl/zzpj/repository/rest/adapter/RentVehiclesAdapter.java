@@ -58,5 +58,10 @@ public class RentVehiclesAdapter implements RentVehiclesService {
         return VehicleFromDomainToDto.mapList(vehicleService.findAllAvailable());
     }
 
+    @Override
+    public List<VehicleDto> getAllByRating(String rating) {
+        return VehicleFromDomainToDto.mapList(vehicleService.findAllByRating(rating));
+    }
+
 
 }

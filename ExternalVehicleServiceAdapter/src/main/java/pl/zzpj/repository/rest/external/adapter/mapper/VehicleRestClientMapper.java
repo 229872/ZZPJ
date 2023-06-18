@@ -7,17 +7,19 @@ import pl.zzpj.repository.rest.external.adapter.VehicleRestClientAdapter;
 import pl.zzpj.repository.rest.external.dto.VehicleInputDto;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class VehicleRestClientMapper {
   public Vehicle vehicleInputDtoToDomain (VehicleInputDto inputDto) {
     String type = inputDto.car_type().toLowerCase();
+    String[] makeModel = inputDto.make_and_model().split("\\s+");
 
     if (type.contains("van")) {
       return Van.fromApiBuilder()
-              .make("make")
-              .model(inputDto.car_type())
+              .make(makeModel[0])
+              .model(makeModel[1])
               .hourlyRate(80)
               .isAvailable(true)
               .rating(ConditionRating.ALLWEATHER)
@@ -37,8 +39,8 @@ public class VehicleRestClientMapper {
 
     } else if (type.contains("pickup")) {
       return Pickup.fromApiBuilder()
-              .make("make")
-              .model(inputDto.car_type())
+              .make(makeModel[0])
+              .model(makeModel[1])
               .hourlyRate(80)
               .isAvailable(true)
               .rating(ConditionRating.TOUGH)
@@ -63,8 +65,8 @@ public class VehicleRestClientMapper {
         rating = ConditionRating.TOUGH;
       }
       return Car.fromApiBuilder()
-              .make("make")
-              .model(inputDto.car_type())
+              .make(makeModel[0])
+              .model(makeModel[1])
               .hourlyRate(80)
               .isAvailable(true)
               .rating(rating)

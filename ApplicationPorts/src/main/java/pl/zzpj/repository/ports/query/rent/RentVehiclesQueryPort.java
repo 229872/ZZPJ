@@ -12,6 +12,7 @@ public interface RentVehiclesQueryPort {
     List<Vehicle> getAllByMake(String make);
     List<Vehicle> getAll();
     List<Vehicle> getAllAvailable();
+    List<Vehicle> getAllByRating(String rating);
     List<Vehicle> getAllByType(String type);
 
 }

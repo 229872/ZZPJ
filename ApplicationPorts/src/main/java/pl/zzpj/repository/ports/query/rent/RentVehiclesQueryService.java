@@ -10,4 +10,5 @@ public interface RentVehiclesQueryService {
     List<Vehicle> findAllByMake(String make);
     List<Vehicle> findAll();
     List<Vehicle> findAllAvailable();
+    List<Vehicle> findAllByRating(String rating);
 }

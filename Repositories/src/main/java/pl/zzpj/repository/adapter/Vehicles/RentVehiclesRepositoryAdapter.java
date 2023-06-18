@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import pl.zzpj.repository.adapter.Vehicles.mapper.VehicleFromDataToDomain;
 import pl.zzpj.repository.adapter.Vehicles.mapper.VehicleFromDomainToData;
 import pl.zzpj.repository.api.RentVehiclesRepository;
+import pl.zzpj.repository.core.domain.model.rentModel.vehicles.ConditionRating;
 import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Vehicle;
 import pl.zzpj.repository.data.vehicle.VehicleEnt;
 import pl.zzpj.repository.ports.command.rent.RentVehiclesCommandPort;
@@ -54,6 +55,11 @@ public class RentVehiclesRepositoryAdapter implements RentVehiclesCommandPort, R
     @Override
     public List<Vehicle> getAllAvailable() {
         return VehicleFromDataToDomain.mapList(vehiclesRepository.findByisAvailableTrue());
+    }
+
+    @Override
+    public List<Vehicle> getAllByRating(String rating) {
+        return VehicleFromDataToDomain.mapList(vehiclesRepository.findByRating(ConditionRating.getByName(rating)));
     }
 
     @Override

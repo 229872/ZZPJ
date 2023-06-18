@@ -15,5 +15,6 @@ public interface RentVehiclesService {
     List<VehicleDto> getAll();
     List<VehicleDto> getAllByMake(String make);
     List<VehicleDto> getAllAvailable();
+    List<VehicleDto> getAllByRating(String rating);
 
 }
