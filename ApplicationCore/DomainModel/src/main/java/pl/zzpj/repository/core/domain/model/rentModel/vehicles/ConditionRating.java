@@ -2,10 +2,11 @@ package pl.zzpj.repository.core.domain.model.rentModel.vehicles;
 
 public enum ConditionRating {
     SUNNY ("SUNNY"),
-    OVERCAST ("OVERCAST"),
-    RAINY ("RAINY"),
-    STORMY ("STORMY"),
-    SNOWY ("SNOWY");
+    ALLWEATHER ("ALLWEATHER"),
+    TOUGH ("TOUGH"),
+    DRY ("DRY");
+
+
 
     public final String name;
 

@@ -26,6 +26,7 @@ public class VehicleDto {
     private long hourlyRate;
     private boolean isAvailable;
     List<String> damage;
+    String rating;
     String color;
     String transmission;
     String drive_type;
