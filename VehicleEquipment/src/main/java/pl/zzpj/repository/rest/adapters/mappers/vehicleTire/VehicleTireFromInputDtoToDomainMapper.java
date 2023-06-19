@@ -10,7 +10,8 @@ import pl.zzpj.repository.rest.dto.vehicleEquipment.RestTireType;
 @Component
 public class VehicleTireFromInputDtoToDomainMapper {
 
-    public VehicleTire convertTireInputCreateDtoToDomainModel(VehicleTireInputCreateDto inputDto, RestTireType tireType) {
+    public VehicleTire convertTireInputCreateDtoToDomainModel(VehicleTireInputCreateDto inputDto,
+                                                              RestTireType tireType) {
         return VehicleTire.fromApiBuilder()
                 .name(inputDto.getName())
                 .description(inputDto.getDescription())
@@ -23,10 +24,10 @@ public class VehicleTireFromInputDtoToDomainMapper {
 
     public VehicleTire convertTireInputUpdateDtoToDomainModel(VehicleTireInputUpdateDto updateDto) {
         return VehicleTire.fromApiBuilder()
-                .name(updateDto.name())
-                .description(updateDto.description())
-                .cost(updateDto.cost())
-                .maximumSpeed(updateDto.maximumSpeed())
-                .maximumWeight(updateDto.maximumWeight()).build();
+                .name(updateDto.getName())
+                .description(updateDto.getDescription())
+                .cost(updateDto.getCost())
+                .maximumSpeed(updateDto.getMaximumSpeed())
+                .maximumWeight(updateDto.getMaximumWeight()).build();
     }
 }

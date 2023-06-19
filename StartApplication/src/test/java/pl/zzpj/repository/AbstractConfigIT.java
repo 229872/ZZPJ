@@ -11,10 +11,10 @@ public abstract class AbstractConfigIT {
 
     @Container
     static protected PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
-        "postgres:14"
+            "postgres:14"
     ).withDatabaseName("zzpjdbTest")
-        .withUsername("zzpj")
-        .withPassword("zzpjpassword");
+            .withUsername("zzpj")
+            .withPassword("zzpjpassword");
 
     @BeforeAll
     static void beforeAll() {
@@ -23,7 +23,6 @@ public abstract class AbstractConfigIT {
 
     @AfterAll
     static void afterAll() {
-        postgres.stop();
         postgres.close();
     }
 }
