@@ -1,6 +1,5 @@
 package pl.zzpj.repository.rest.controller;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -13,7 +12,6 @@ import pl.zzpj.repository.rest.dto.CreateRentDto;
 import pl.zzpj.repository.rest.dto.PriceDto;
 import pl.zzpj.repository.rest.dto.RentDto;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -63,6 +61,10 @@ public class RentController {
     @GetMapping(value = "vehicle/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<RentDto> findFutureRentsByVehicle(@PathVariable UUID uuid) {
         return adapter.findFutureRentsByVehicle(uuid);
+    }
+    @GetMapping(value = "vehicle/{uuid}/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<RentDto> findAllRentsByVehicle(@PathVariable UUID uuid) {
+        return adapter.findAllRentsByVehicle(uuid);
     }
 
     @GetMapping(value = "status/{status}", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -73,6 +73,14 @@ public class RentRepositoryAdapter implements RentCommandPort, RentQueryPort {
     }
 
     @Override
+    public List<Rent> getFutureRentsByVehicleId(UUID vehicleId) {
+        return rentRepository.findByVehicleIdFromFuture(vehicleId, LocalDateTime.now())
+                .stream()
+                .map(rentFromDataToDomain::map)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<Rent> getRentsByVehicleIdAndDatesBetween(
             UUID vehicleId,
             LocalDateTime startDate,

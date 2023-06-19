@@ -12,9 +12,7 @@ import pl.zzpj.repository.rest.api.query.RentQueryRest;
 import pl.zzpj.repository.rest.dto.PriceDto;
 import pl.zzpj.repository.rest.dto.RentDto;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -74,6 +72,13 @@ public class RentRestAdapter implements RentQueryRest, RentCommandRest {
     @Override
     public List<RentDto> findRentsByUser(UUID userId) {
         return queryService.findRentsByUser(userId).stream()
+                .map(rentMapper::map)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RentDto> findAllRentsByVehicle(UUID vehicleId) {
+        return queryService.findAllRentsByVehicle(vehicleId).stream()
                 .map(rentMapper::map)
                 .collect(Collectors.toList());
     }

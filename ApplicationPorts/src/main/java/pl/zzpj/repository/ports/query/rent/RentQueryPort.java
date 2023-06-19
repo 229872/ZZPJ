@@ -13,6 +13,7 @@ public interface RentQueryPort {
     List<Rent> getRentsByStatuses(List<RentStatus> statuses);
     List<Rent> getRentsByUserId(UUID userId);
     List<Rent> getRentsByVehicleId(UUID vehicleId);
+    List<Rent> getFutureRentsByVehicleId(UUID vehicleId);
     List<Rent> getRentsByVehicleIdAndDatesBetween(UUID vehicleID,
                                                   LocalDateTime startDate,
                                                   LocalDateTime endDate);

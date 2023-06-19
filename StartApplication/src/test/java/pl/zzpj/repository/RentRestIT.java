@@ -123,8 +123,18 @@ public class RentRestIT extends AbstractConfigIT {
 
     @Test
     @Order(2)
-    void findVehicleRent_correct() {
+    void findFutureVehicleRent_correct() {
         given().get(baseURI + "rents/vehicle/" + vehicleIds.get(0))
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("$", hasSize(1));
+    }
+
+    @Test
+    @Order(2)
+    void findAllVehicleRent_correct() {
+        given().get(baseURI + "rents/vehicle/" + vehicleIds.get(0) + "/all")
                 .then()
                 .log().all()
                 .statusCode(200)

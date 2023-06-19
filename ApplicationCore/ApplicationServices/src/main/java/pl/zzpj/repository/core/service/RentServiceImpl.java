@@ -43,6 +43,11 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
     }
 
     @Override
+    public List<Rent> findAllRentsByVehicle(UUID vehicleId) {
+        return queryPort.getRentsByVehicleId(vehicleId); // todo
+    }
+
+    @Override
     public List<Rent> findFutureRentsByVehicle(UUID vehicleId) {
         return queryPort.getRentsByVehicleId(vehicleId); // todo
     }
