@@ -8,12 +8,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import pl.zzpj.repository.ports.command.rent.RentCommandService;
 
 @Configuration
-@EnableScheduling
 @AllArgsConstructor
 public class RentScheduledTaskConfig {
     private final RentCommandService commandService;
 
-    @Scheduled(fixedDelay = 2000)
+    @Scheduled(fixedDelayString = "${schedule.time.ms:300000}")
     public void updateRentsNotIssued() {
         commandService.updateRentsNotIssued();
     }

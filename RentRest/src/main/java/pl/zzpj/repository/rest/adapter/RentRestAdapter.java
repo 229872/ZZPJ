@@ -3,6 +3,8 @@ package pl.zzpj.repository.rest.adapter;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Component;
+import pl.zzpj.repository.core.domain.exception.rent.*;
+import pl.zzpj.repository.core.domain.exception.user.UserServiceNotFoundException;
 import pl.zzpj.repository.core.domain.model.rentModel.RentStatus;
 import pl.zzpj.repository.ports.command.rent.RentCommandService;
 import pl.zzpj.repository.ports.query.rent.RentQueryService;
@@ -32,40 +34,38 @@ public class RentRestAdapter implements RentQueryRest, RentCommandRest {
             UUID userId, UUID vehicleId,
             LocalDateTime declaredStartDate,
             LocalDateTime declaredEndDate
-    ) {
-        log.info(userId.toString() + ' ' + vehicleId.toString() + ' '  +
-                declaredStartDate.toString() + ' '  + declaredEndDate.toString());
+    ) throws RentInvalidDatePeriodException, UserServiceNotFoundException {
         return rentMapper.map(commandService.createRent(
                 userId, vehicleId, declaredStartDate, declaredEndDate));
     }
 
     @Override
-    public RentDto issueVehicle(UUID id) {
+    public RentDto issueVehicle(UUID id) throws RentCannotIssueVehicleException, RentNotFoundException {
         return rentMapper.map(commandService.issueVehicle(id));
     }
 
     @Override
-    public RentDto cancelRent(UUID id) {
+    public RentDto cancelRent(UUID id) throws RentNotCancellableException, RentNotFoundException {
         return rentMapper.map(commandService.cancelRent(id));
     }
 
     @Override
-    public RentDto returnVehicle(UUID id) {
+    public RentDto returnVehicle(UUID id) throws RentNotFoundException, RentVehicleNotIssuedException {
         return rentMapper.map(commandService.returnVehicle(id));
     }
 
     @Override
-    public RentDto returnDamagedVehicle(UUID id) {
+    public RentDto returnDamagedVehicle(UUID id) throws RentNotFoundException, RentVehicleNotIssuedException {
         return rentMapper.map(commandService.returnDamagedVehicle(id));
     }
 
     @Override
-    public RentDto returnMissingVehicle(UUID id) {
+    public RentDto returnMissingVehicle(UUID id) throws RentNotFoundException, RentVehicleNotIssuedException {
         return rentMapper.map(commandService.returnMissingVehicle(id));
     }
 
     @Override
-    public RentDto findRent(UUID rentId) {
+    public RentDto findRent(UUID rentId) throws RentNotFoundException {
         return rentMapper.map(queryService.findRent(rentId));
     }
 
@@ -99,7 +99,6 @@ public class RentRestAdapter implements RentQueryRest, RentCommandRest {
 
     @Override
     public List<RentDto> findRentsToIssue(LocalDateTime endTime) {
-        log.info(endTime.toString());
         return queryService.findRentsToIssue(endTime).stream()
                 .map(rentMapper::map)
                 .collect(Collectors.toList());
@@ -123,7 +122,7 @@ public class RentRestAdapter implements RentQueryRest, RentCommandRest {
     public PriceDto calculatePrice(UUID vehicleId,
                                    UUID userId,
                                    LocalDateTime start,
-                                   LocalDateTime end) {
+                                   LocalDateTime end) throws UserServiceNotFoundException {
         return new PriceDto(queryService
                 .calculatePrice(vehicleId, userId, start, end));
     }

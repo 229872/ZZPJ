@@ -7,6 +7,7 @@ import pl.zzpj.repository.adapter.rent.mapper.RentFromDataToDomain;
 import pl.zzpj.repository.adapter.rent.mapper.RentFromDomainToData;
 import pl.zzpj.repository.adapter.user.mapper.AccountMapper;
 import pl.zzpj.repository.api.RentRepository;
+import pl.zzpj.repository.core.domain.exception.rent.RentNotFoundException;
 import pl.zzpj.repository.core.domain.model.rentModel.Rent;
 import pl.zzpj.repository.core.domain.model.rentModel.RentStatus;
 import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Vehicle;
@@ -27,7 +28,6 @@ public class RentRepositoryAdapter implements RentCommandPort, RentQueryPort {
     private RentFromDomainToData rentFromDomainToData;
     private RentFromDataToDomain rentFromDataToDomain;
     private RentRepository rentRepository;
-    private AccountMapper accountMapper;
 
     @Override
     public Rent upsert(Rent rent) {
@@ -36,10 +36,10 @@ public class RentRepositoryAdapter implements RentCommandPort, RentQueryPort {
     }
 
     @Override
-    public Rent getRent(UUID rentId) {
+    public Rent getRent(UUID rentId) throws RentNotFoundException {
         return rentRepository.findById(rentId)
                 .map(rentFromDataToDomain::map)
-                .orElseThrow();
+                .orElseThrow(() -> new RentNotFoundException("Rent not found"));
     }
 
     @Override

@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import pl.zzpj.repository.core.domain.exception.rent.*;
+import pl.zzpj.repository.core.domain.exception.user.UserServiceNotFoundException;
 import pl.zzpj.repository.core.domain.model.rentModel.RentStatus;
 import pl.zzpj.repository.rest.adapter.RentRestAdapter;
 import pl.zzpj.repository.rest.dto.CreateRentDto;
@@ -26,17 +28,18 @@ public class RentController {
     @PostMapping(value = "calculate",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public PriceDto calculatePrice(@RequestBody @NotNull @Valid CreateRentDto createRentDto) {
+    public PriceDto calculatePrice(@RequestBody @NotNull @Valid CreateRentDto createRentDto) throws UserServiceNotFoundException {
         return adapter.calculatePrice(createRentDto.getVehicleId(),
                 createRentDto.getUserId(),
                 createRentDto.getDeclaredStart(),
-                createRentDto.getDeclaredStart());
+                createRentDto.getDeclaredEnd());
     }
 
     @PostMapping(value = "",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public RentDto createRent(@RequestBody @NotNull @Valid CreateRentDto createRentDto) {
+    public RentDto createRent(@RequestBody @NotNull @Valid CreateRentDto createRentDto)
+            throws RentInvalidDatePeriodException, UserServiceNotFoundException {
         return adapter.createRent(createRentDto.getUserId(),
                 createRentDto.getVehicleId(),
                 createRentDto.getDeclaredStart(),
@@ -49,7 +52,7 @@ public class RentController {
     }
 
     @GetMapping(value = "{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public RentDto findRent(@PathVariable UUID uuid) {
+    public RentDto findRent(@PathVariable UUID uuid) throws RentNotFoundException {
         return adapter.findRent(uuid);
     }
 
@@ -85,27 +88,32 @@ public class RentController {
     }
 
     @PutMapping(value = "cancel/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public RentDto cancelRent(@PathVariable UUID uuid) {
+    public RentDto cancelRent(@PathVariable UUID uuid)
+            throws RentNotCancellableException, RentNotFoundException {
         return adapter.cancelRent(uuid);
     }
 
     @PutMapping(value = "issue/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public RentDto issueVehicle(@PathVariable UUID uuid) {
+    public RentDto issueVehicle(@PathVariable UUID uuid)
+            throws RentCannotIssueVehicleException, RentNotFoundException {
         return adapter.issueVehicle(uuid);
     }
 
     @PutMapping(value = "return/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public RentDto returnVehicle(@PathVariable UUID uuid) {
+    public RentDto returnVehicle(@PathVariable UUID uuid)
+            throws RentNotFoundException, RentVehicleNotIssuedException {
         return adapter.returnVehicle(uuid);
     }
 
     @PutMapping(value = "return-damaged/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public RentDto returnDamagedVehicle(@PathVariable UUID uuid) {
+    public RentDto returnDamagedVehicle(@PathVariable UUID uuid)
+            throws RentNotFoundException, RentVehicleNotIssuedException {
         return adapter.returnDamagedVehicle(uuid);
     }
 
     @PutMapping(value = "return-missing/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public RentDto returnMissingVehicle(@PathVariable UUID uuid) {
+    public RentDto returnMissingVehicle(@PathVariable UUID uuid)
+            throws RentNotFoundException, RentVehicleNotIssuedException {
         return adapter.returnMissingVehicle(uuid);
     }
 }
