@@ -131,9 +131,7 @@ public class VehicleTiresIT extends AbstractConfigIT {
                 .when()
                 .get(String.format("%sequipment/tires/%s", baseURI, uuidSummer))
                 .then()
-                .log().all()
                 .statusCode(200)
-                .log().all()
                 .assertThat().body(Matchers.notNullValue())
                 .body("archive", equalTo(false))
                 .body("type", equalTo(RestTireType.SUMMER.name()));
