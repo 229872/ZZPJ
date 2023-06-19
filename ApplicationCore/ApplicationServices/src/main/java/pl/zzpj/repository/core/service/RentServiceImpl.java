@@ -16,9 +16,7 @@ import pl.zzpj.repository.ports.query.user.UserQueryRepositoryPort;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAmount;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,12 +42,12 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
 
     @Override
     public List<Rent> findAllRentsByVehicle(UUID vehicleId) {
-        return queryPort.getRentsByVehicleId(vehicleId); // todo
+        return queryPort.getRentsByVehicleId(vehicleId);
     }
 
     @Override
     public List<Rent> findFutureRentsByVehicle(UUID vehicleId) {
-        return queryPort.getRentsByVehicleId(vehicleId); // todo
+        return queryPort.getFutureRentsByVehicleId(vehicleId);
     }
 
     @Override
@@ -81,10 +79,6 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
         return vehicleRents.isEmpty();
     }
 
-    public boolean isCancellable(Rent rent) {
-        return false;
-    }
-
     @Override
     public BigDecimal calculatePrice(UUID vehicleId, UUID userId, LocalDateTime start, LocalDateTime end) {
         User user = userQueryPort.getUserById(userId).orElseThrow();
@@ -93,13 +87,11 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
     }
 
     private BigDecimal calculatePrice(User user, Vehicle vehicle, LocalDateTime start, LocalDateTime end) {
-        double points = 0; // get from user
-        double vehicleCostPerHour = 10; // get from vehicle
-        List<Rent> userRents = queryPort.getRentsByUserId(user.getClientId());
-
         Duration period = Duration.between(start, end);
-        double baseRentCost = period.toHours() * vehicle.getHourlyRate();
-        return new BigDecimal(baseRentCost);
+        long baseRentCost = period.toHours() * vehicle.getHourlyRate();
+        BigDecimal cost = new BigDecimal(baseRentCost);
+
+        return cost.multiply(BigDecimal.valueOf(user.getScore()));
     }
 
     @Override
@@ -125,7 +117,18 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
             return null;
         }
         rent.setStatus(RentStatus.CANCELLED);
+        updateUserScore(rent);
         return commandPort.upsert(rent);
+    }
+
+    public boolean isCancellable(Rent rent) {
+        LocalDateTime now = LocalDateTime.now();
+        if(rent.getCreatedAt().plus(5, ChronoUnit.MINUTES)
+                .isAfter(now)) {
+            return true;
+        }
+        return rent.getDeclaredStartDate().plus(7, ChronoUnit.DAYS)
+                .isAfter(now);
     }
 
     @Override
@@ -151,7 +154,7 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
         }
         rent.setStatus(RentStatus.RETURNED_GOOD);
         rent.setActualEndDate(LocalDateTime.now());
-        // todo update user points
+        updateUserScore(rent);
         return commandPort.upsert(rent);
     }
 
@@ -163,7 +166,7 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
         }
         rent.setStatus(RentStatus.RETURNED_DAMAGED);
         rent.setActualEndDate(LocalDateTime.now());
-        // todo update user points
+        updateUserScore(rent);
         return commandPort.upsert(rent);
     }
 
@@ -175,27 +178,60 @@ public class RentServiceImpl implements RentCommandService, RentQueryService {
         }
         rent.setStatus(RentStatus.NOT_RETURNED);
         rent.setActualEndDate(LocalDateTime.now());
-        // todo update user points
+        updateUserScore(rent);
+        rent.getVehicle().setAvailable(false);
         return commandPort.upsert(rent);
     }
 
     @Override
     public void updateRentsNotIssued() {
-
+        List<Rent> rentsToIssue = queryPort.getRentsByStatus(RentStatus.CREATED);
+        LocalDateTime now = LocalDateTime.now();
+        rentsToIssue.forEach(rent -> {
+            if(rent.getDeclaredStartDate().isAfter(now)) {
+                rent.setStatus(RentStatus.NOT_ISSUED);
+                updateUserScore(rent);
+                commandPort.upsert(rent);
+            }
+        });
     }
 
-    /*
-    anulowanie wypożyczenia:
-        w krótkim czasie po jego utworzeniu
-        jeśli jest przed tygodniem od rozpoczęcia
-    koszt wypożyczenia:
-        w momencie tworzenia rezerwacji jest obliczany na podstawie wyniku konta
-        przy oddaniu może być naliczona kara:
-            za przetrzymanie
-            za oddanie uszkodzonego
-            za "zgubienie" auta
-    wynik konta:
-        przechowywany w userze
-        aktualizowany przy każdorazowej zmianie stanu statusu wyporzyczenia
-     */
+    // modyfikator do ceny z powodu wyniku konta to pomiędzy -30% i +10%
+    // dlatego punkty mogą mieć wartości od 3000 do -1000
+    // w najlepszym wypadku klient może dostać 1000 punktów za jedno wypożyczenie
+    private void updateUserScore(Rent rent) {
+        double rentPoints = 0;
+        if(rent.getActualStartDate() != null) {
+            Duration deltaStart = Duration.between(rent.getDeclaredStartDate(), rent.getActualStartDate());
+            if(deltaStart.isNegative()) {
+                // odbiór przed czasem jest możliwy, ale niepożądany
+                rentPoints -= -50d;
+            } else if(deltaStart.get(ChronoUnit.MINUTES) < 60){
+                // im później klient odbierze samochód, tym mniej punktów dostaje
+                rentPoints += 200d * (60 - deltaStart.get(ChronoUnit.MINUTES));
+            }
+        }
+
+        if(rent.getActualEndDate() != null) {
+            Duration deltaEnd = Duration.between(rent.getActualEndDate(), rent.getDeclaredEndDate());
+            if (deltaEnd.isNegative()) {
+                // oddane przed zadeklarowanym czasem (klient płaci za zarezerwowany czas)
+                rentPoints += 300d;
+            } else if (deltaEnd.get(ChronoUnit.MINUTES) < 60) {
+                // klient traci 0,1 pkt% zniżki za każdą minutę opóźnienia
+                rentPoints -= 10d * (deltaEnd.get(ChronoUnit.MINUTES));
+            }
+        }
+
+        switch(rent.getStatus()) {
+            case NOT_ISSUED -> rentPoints -= 100d;
+            case CANCELLED -> rentPoints -= 50d;
+            case RETURNED_GOOD -> rentPoints += 500d;
+            case RETURNED_DAMAGED -> rentPoints -= 200d;
+            case NOT_RETURNED -> rentPoints -= 3000d; // zniweluj każdą zniżkę
+        }
+
+        // clamp
+        rent.getUser().setScore(Math.max(-1000, Math.min(3000, rentPoints)));
+    }
 }

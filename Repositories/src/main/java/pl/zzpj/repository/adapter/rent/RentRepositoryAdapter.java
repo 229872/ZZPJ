@@ -74,7 +74,9 @@ public class RentRepositoryAdapter implements RentCommandPort, RentQueryPort {
 
     @Override
     public List<Rent> getFutureRentsByVehicleId(UUID vehicleId) {
-        return rentRepository.findByVehicleIdFromFuture(vehicleId, LocalDateTime.now())
+        return rentRepository.findByVehicleIdFromFuture(vehicleId,
+                        LocalDateTime.now(),List.of(RentStatus.CREATED,
+                                RentStatus.ISSUED, RentStatus.NOT_ISSUED))
                 .stream()
                 .map(rentFromDataToDomain::map)
                 .collect(Collectors.toList());

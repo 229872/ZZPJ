@@ -7,7 +7,7 @@ public enum RentStatus {
     CREATED,
     CANCELLED,
     ISSUED,
-    NOT_ISSUED, // wymaga scheduled taska
+    NOT_ISSUED,
     RETURNED_GOOD,
     RETURNED_DAMAGED,
     NOT_RETURNED
