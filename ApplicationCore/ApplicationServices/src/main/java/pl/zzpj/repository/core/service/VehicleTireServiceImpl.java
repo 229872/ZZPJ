@@ -1,7 +1,6 @@
 package pl.zzpj.repository.core.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.zzpj.repository.core.domain.exception.vehicleEquipment.BadEquipmentTireTypeException;
 import pl.zzpj.repository.core.domain.exception.vehicleEquipment.VehicleEquipmentServiceCreateException;
@@ -36,7 +35,7 @@ public class VehicleTireServiceImpl implements VehicleTireCommandService, Vehicl
 
     @Override
     public VehicleTire updateEquipment(UUID id, VehicleTire tire) throws
-            VehicleEquipmentServiceNotFoundException, VehicleEquipmentServiceUpdateException {
+        VehicleEquipmentServiceNotFoundException, VehicleEquipmentServiceUpdateException {
         VehicleTire existingTire = queryPort.getEquipmentById(id);
         existingTire.merge(tire);
         return commandPort.update(existingTire);
@@ -49,7 +48,7 @@ public class VehicleTireServiceImpl implements VehicleTireCommandService, Vehicl
 
     @Override
     public VehicleTire setArchiveStatus(UUID id, boolean status)
-            throws VehicleEquipmentServiceNotFoundException, VehicleEquipmentServiceUpdateException {
+        throws VehicleEquipmentServiceNotFoundException, VehicleEquipmentServiceUpdateException {
         VehicleTire existingTire = queryPort.getEquipmentById(id);
         existingTire.getEquipment().setArchive(status);
         return commandPort.update(existingTire);
@@ -57,8 +56,7 @@ public class VehicleTireServiceImpl implements VehicleTireCommandService, Vehicl
 
     @Override
     public List<VehicleTire> getAllEquipment() {
-        System.out.println(weatherCommandService.getWeatherForecast(57.75, 19.45));
-
+//        System.out.println(weatherCommandService.getWeatherForecast(57.75, 19.45));
         return queryPort.getAllEquipment();
     }
 
@@ -69,7 +67,7 @@ public class VehicleTireServiceImpl implements VehicleTireCommandService, Vehicl
 
     @Override
     public VehicleTire addEquipmentNoType(VehicleTire tire)
-            throws VehicleEquipmentServiceCreateException, BadEquipmentTireTypeException {
+        throws VehicleEquipmentServiceCreateException, BadEquipmentTireTypeException {
         try {
             Random random = new Random();
             tire.setType(TireType.values()[random.nextInt(TireType.values().length)]);
