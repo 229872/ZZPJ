@@ -44,6 +44,8 @@
         <module>RentRest</module>
         <module>ExternalUserServiceAdapter</module>
         <module>ExternalVehicleEquipmentService</module>
+        <module>ExternalVehicleServiceAdapter</module>
+
         <module>WeatherApi</module>
     </modules>
 
@@ -252,6 +254,11 @@
             <dependency>
                 <groupId>pl.lodz.p.edu.zzpj</groupId>
                 <artifactId>ExternalVehicleEquipmentService</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.lodz.p.edu.zzpj</groupId>
+                <artifactId>ExternalVehicleServiceAdapter</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>

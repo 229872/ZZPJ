@@ -3,9 +3,12 @@ package pl.zzpj.repository.data.rent;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 import pl.zzpj.repository.core.domain.model.rentModel.RentStatus;
+import pl.zzpj.repository.data.AbstractEntity;
 import pl.zzpj.repository.data.user.Account;
+import pl.zzpj.repository.data.vehicle.VehicleEnt;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,15 +19,11 @@ import java.util.UUID;
 @Setter
 @ToString
 @Table(name = "rent")
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RentEnt {
+public class RentEnt extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", nullable = false)
-    private UUID id;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -34,8 +33,9 @@ public class RentEnt {
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private Account user;
 
-    @Column
-    private String vehicle; //todo
+    @ManyToOne(optional = false, cascade = {CascadeType.REFRESH})
+    @JoinColumn(name = "vehicle_id", nullable = false, updatable = false)
+    private VehicleEnt vehicle;
 
     @Column
     private BigDecimal price;
@@ -68,18 +68,5 @@ public class RentEnt {
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof RentEnt rentEnt)) return false;
-
-        return id.equals(rentEnt.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
     }
 }
