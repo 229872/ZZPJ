@@ -1,18 +1,19 @@
 package pl.zzpj.repository.rest.api.query;
 
+import pl.zzpj.repository.core.domain.exception.rent.RentNotFoundException;
+import pl.zzpj.repository.core.domain.exception.user.UserServiceNotFoundException;
 import pl.zzpj.repository.core.domain.model.rentModel.RentStatus;
 import pl.zzpj.repository.rest.dto.PriceDto;
 import pl.zzpj.repository.rest.dto.RentDto;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.List;
 import java.util.UUID;
 
 public interface RentQueryRest {
-    RentDto findRent(UUID rentId);
+    RentDto findRent(UUID rentId) throws RentNotFoundException;
     List<RentDto> findRentsByUser(UUID userId);
+    List<RentDto> findAllRentsByVehicle(UUID vehicleId);
     List<RentDto> findFutureRentsByVehicle(UUID vehicleId);
     List<RentDto> findRentsByStatus(RentStatus status);
     List<RentDto> findRentsToIssue(LocalDateTime endTime);
@@ -21,5 +22,5 @@ public interface RentQueryRest {
     PriceDto calculatePrice(UUID vehicleId,
                             UUID userId,
                             LocalDateTime start,
-                            LocalDateTime end);
+                            LocalDateTime end) throws UserServiceNotFoundException;
 }

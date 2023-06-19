@@ -1,5 +1,6 @@
 package pl.zzpj.repository.ports.query.rent;
 
+import pl.zzpj.repository.core.domain.exception.rent.RentNotFoundException;
 import pl.zzpj.repository.core.domain.model.rentModel.Rent;
 import pl.zzpj.repository.core.domain.model.rentModel.RentStatus;
 
@@ -8,11 +9,12 @@ import java.util.List;
 import java.util.UUID;
 
 public interface RentQueryPort {
-    Rent getRent(UUID rentId);
+    Rent getRent(UUID rentId) throws RentNotFoundException;
     List<Rent> getRentsByStatus(RentStatus status);
     List<Rent> getRentsByStatuses(List<RentStatus> statuses);
     List<Rent> getRentsByUserId(UUID userId);
     List<Rent> getRentsByVehicleId(UUID vehicleId);
+    List<Rent> getFutureRentsByVehicleId(UUID vehicleId);
     List<Rent> getRentsByVehicleIdAndDatesBetween(UUID vehicleID,
                                                   LocalDateTime startDate,
                                                   LocalDateTime endDate);

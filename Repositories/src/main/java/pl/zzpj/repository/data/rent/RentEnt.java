@@ -29,11 +29,11 @@ public class RentEnt extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     private RentStatus status;
 
-    @ManyToOne(optional = false, cascade = {CascadeType.REFRESH})
+    @ManyToOne(optional = false, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private Account user;
 
-    @ManyToOne(optional = false, cascade = {CascadeType.REFRESH})
+    @ManyToOne(optional = false, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "vehicle_id", nullable = false, updatable = false)
     private VehicleEnt vehicle;
 
