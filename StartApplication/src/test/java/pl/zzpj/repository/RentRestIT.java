@@ -55,7 +55,7 @@ public class RentRestIT extends AbstractConfigIT {
         System.out.println(adminJwt);
 
         vehicleIds = given()
-                .get(baseURI + "rentVehicles/getAll")
+                .get(baseURI + "vehicles/getAll")
                 .then()
                 .statusCode(200)
                 .extract().jsonPath().getList("id", UUID.class);
