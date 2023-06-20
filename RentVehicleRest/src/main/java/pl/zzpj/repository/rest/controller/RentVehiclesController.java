@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.zzpj.repository.core.domain.model.rentModel.vehicles.ConditionRating;
 import pl.zzpj.repository.rest.dto.CarDto;
+import pl.zzpj.repository.rest.dto.EditVehicleDto;
 import pl.zzpj.repository.rest.dto.VehicleDto;
 import pl.zzpj.repository.rest.api.RentVehiclesService;
 
@@ -17,7 +18,7 @@ import java.util.UUID;
 
 
 @RestController()
-@RequestMapping("/rentVehicles")
+@RequestMapping("/vehicles")
 public class RentVehiclesController {
     @Autowired
     private RentVehiclesService vehiclesService;
@@ -28,7 +29,7 @@ public class RentVehiclesController {
     }
 
     @PatchMapping(value = "/update/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public VehicleDto updateVehicle(@PathVariable String id,@RequestBody VehicleDto vehicleDto){
+    public VehicleDto updateVehicle(@PathVariable("id") String id,@RequestBody EditVehicleDto vehicleDto){
         return vehiclesService.updateVehicle(UUID.fromString(id), vehicleDto);
     }
 
@@ -37,13 +38,13 @@ public class RentVehiclesController {
          vehiclesService.switchAvailability(UUID.fromString(id));
     }
 
-    @DeleteMapping(value = "/remove/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void removeVehicle(@PathVariable String id){
+    @DeleteMapping(value = "/remove/{id}")
+    public void removeVehicle(@PathVariable("id") String id){
         vehiclesService.removeVehicle(UUID.fromString(id));
     }
 
-    @GetMapping(value = "/getById/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public VehicleDto getById(@PathVariable String id){
+    @GetMapping(value = "/getById/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public VehicleDto getById(@PathVariable("id") String id){
         return vehiclesService.getById(UUID.fromString(id));
     }
 

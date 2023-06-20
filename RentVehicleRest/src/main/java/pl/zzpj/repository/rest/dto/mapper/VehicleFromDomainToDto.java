@@ -17,29 +17,30 @@ public class VehicleFromDomainToDto {
 
     public static VehicleDto map(Vehicle vehicle) {
         VehicleDto dto;
-        if (vehicle instanceof Car){
-            dto = new CarDto();
-        } else if (vehicle instanceof Van) {
+        if (vehicle.getCar_type().toLowerCase().contains("van")){
             dto = new VanDto();
-        } else  {
+        } else if (vehicle.getCar_type().toLowerCase().contains("pickup")){
+
             dto = new PickupDto();
+        } else  {
+            dto = new CarDto();
         }
 
         BeanUtils.copyProperties(vehicle, dto);
-        switch (vehicle.getRating()) {
-            case DRY:
-                dto.setRating(ConditionRating.DRY);
-                break;
-            case SUNNY:
-                dto.setRating(ConditionRating.SUNNY);
-                break;
-            case TOUGH:
-                dto.setRating(ConditionRating.TOUGH);
-                break;
-            default:
-                dto.setRating(ConditionRating.ALLWEATHER);
-                break;
-        }
+//        switch (vehicle.getRating()) {
+//            case DRY:
+//                dto.setRating(ConditionRating.DRY);
+//                break;
+//            case SUNNY:
+//                dto.setRating(ConditionRating.SUNNY);
+//                break;
+//            case TOUGH:
+//                dto.setRating(ConditionRating.TOUGH);
+//                break;
+//            default:
+//                dto.setRating(ConditionRating.ALLWEATHER);
+//                break;
+//        }
         return dto;
     }
 

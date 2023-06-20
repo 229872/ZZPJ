@@ -14,12 +14,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "vehicleType", visible = true)
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = VanDto.class, name = "VAN"),
-        @JsonSubTypes.Type(value = CarDto.class, name = "CAR"),
-        @JsonSubTypes.Type(value = PickupDto.class, name = "PICKUP")
-})
+//@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "vehicleType", visible = true)
+//@JsonSubTypes({
+//        @JsonSubTypes.Type(value = VanDto.class, name = "VAN"),
+//        @JsonSubTypes.Type(value = CarDto.class, name = "CAR"),
+//        @JsonSubTypes.Type(value = PickupDto.class, name = "PICKUP")
+//})
 public class VehicleDto {
     private UUID id;
     private String make;
