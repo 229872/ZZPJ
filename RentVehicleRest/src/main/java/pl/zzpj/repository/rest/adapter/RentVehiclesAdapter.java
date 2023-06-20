@@ -2,7 +2,9 @@ package pl.zzpj.repository.rest.adapter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pl.zzpj.repository.core.domain.model.rentModel.vehicles.Vehicle;
 import pl.zzpj.repository.core.service.RentVehicleServiceImpl;
+import pl.zzpj.repository.rest.dto.EditVehicleDto;
 import pl.zzpj.repository.rest.dto.mapper.VehicleFromDtoToDomain;
 import pl.zzpj.repository.rest.api.RentVehiclesService;
 import pl.zzpj.repository.rest.dto.VehicleDto;
@@ -24,8 +26,16 @@ public class RentVehiclesAdapter implements RentVehiclesService {
     }
 
     @Override
-    public VehicleDto updateVehicle(UUID id, VehicleDto vehicle) {
-        return VehicleFromDomainToDto.map(vehicleService.updateVehicle(id, VehicleFromDtoToDomain.map(vehicle)));
+    public VehicleDto updateVehicle(UUID id, EditVehicleDto vehicle) {
+        Vehicle vehFromDb = vehicleService.findById(id);
+        vehFromDb.setHourlyRate(vehicle.getHourlyRate());
+        if (vehicle.getDamage() != null){
+            vehFromDb.getDamage().addAll(vehicle.getDamage());
+        }
+        if (vehicle.getColor() != null) {
+            vehFromDb.setColor(vehicle.getColor());
+        }
+        return VehicleFromDomainToDto.map(vehicleService.updateVehicle(id, vehFromDb));
     }
 
     @Override
