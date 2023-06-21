@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import pl.zzpj.repository.rest.api.UserService;
@@ -56,7 +57,7 @@ public class AuthenticationController {
     }
   }
 
-  @GetMapping("/confirm")
+  @GetMapping(value = "/confirm", produces = MediaType.APPLICATION_JSON_VALUE)
   @RolesAllowed(GUEST)
   public ResponseEntity<?> confirmAccount(@RequestParam String token) {
     try {
@@ -76,6 +77,9 @@ public class AuthenticationController {
 
 
 
+  @Value("${administrator.email:rebojeb948@aaorsi.com}")
+  private String adminEmail;
+
   @PostConstruct
   private void initAdmin() {
     try {
@@ -91,12 +95,12 @@ public class AuthenticationController {
 
 
       PersonInputDTO person = new PersonInputDTO("John", "Doe",
-              "Bri'ish", "1967-12-29", address);
+              "Man", "1967-12-29", address);
 
       userService.createUser(new UserInputDTO(
               "admin",
               "Kochamzzpj!",
-              "soroj32379@onlcool.com",
+              adminEmail,
               person, "997", "555", "374927342", ADMIN, null, "pl"
       ));
 
