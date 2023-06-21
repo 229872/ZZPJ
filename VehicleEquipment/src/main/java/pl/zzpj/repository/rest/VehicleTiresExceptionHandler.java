@@ -67,16 +67,16 @@ public class VehicleTiresExceptionHandler {
         return new ResponseEntity<ErrorMessage>(message, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ErrorMessage> handleOtherError(Exception ex,
-                                                         WebRequest request) {
-        ErrorMessage message = new ErrorMessage(
-            HttpStatus.OK.value(),
-            new Date(),
-            ex.getMessage(),
-            request.getDescription(false));
-        return new ResponseEntity<ErrorMessage>(message, HttpStatus.OK);
-    }
+//    @ExceptionHandler(Exception.class)
+//    @ResponseStatus(HttpStatus.OK)
+//    public ResponseEntity<ErrorMessage> handleOtherError(Exception ex,
+//                                                         WebRequest request) {
+//        ErrorMessage message = new ErrorMessage(
+//            HttpStatus.OK.value(),
+//            new Date(),
+//            ex.getMessage(),
+//            request.getDescription(false));
+//        return new ResponseEntity<ErrorMessage>(message, HttpStatus.OK);
+//    }
 
 }
